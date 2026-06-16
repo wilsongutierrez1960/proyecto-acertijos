@@ -3,379 +3,1143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AcertiLab · Desafios del Conocimiento</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>AcertiLab · Módulo D — Examen Final QPM</title>
 <style>
-:root{--bg:#0a0d14;--bg2:#111520;--bg3:#181d2c;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);--text:#e8eaf0;--muted:#7a7f96;--accent-math:#4fffb0;--accent-logic:#ff9d4d;--accent-qpm:#7eb8ff;--accent-math-dim:rgba(79,255,176,0.12);--accent-logic-dim:rgba(255,157,77,0.12);--accent-qpm-dim:rgba(126,184,255,0.12);--success:#4fffb0;--error:#ff5e7a;--radius:12px;--radius-sm:8px;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
-header{position:sticky;top:0;z-index:10;padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);backdrop-filter:blur(8px);background:rgba(10,13,20,0.85);}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;}
-.logo-dot{color:var(--accent-math);}
-.score-board{display:flex;align-items:center;gap:1.5rem;font-family:'DM Mono',monospace;font-size:0.8rem;}
-.score-item{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.score-label{color:var(--muted);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.08em;}
-.score-val{font-size:1.05rem;font-weight:500;color:var(--text);}
-.score-val.pts{color:var(--accent-math);}
-.hero{position:relative;z-index:1;text-align:center;padding:3.5rem 2rem 2.5rem;}
-.hero-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border2);padding:4px 12px;border-radius:100px;margin-bottom:1.2rem;}
-h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;max-width:680px;margin:0 auto 1rem;}
-h1 em{font-style:normal;color:var(--accent-math);}
-.hero-sub{color:var(--muted);max-width:500px;margin:0 auto 2rem;font-size:0.9rem;}
-.tabs{position:relative;z-index:1;display:flex;justify-content:center;gap:0.5rem;padding:0 2rem 2rem;flex-wrap:wrap;}
-.tab-btn{font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;padding:7px 18px;border-radius:100px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
-.tab-btn:hover{border-color:rgba(255,255,255,0.3);color:var(--text);}
-.tab-btn.active-math{background:var(--accent-math-dim);border-color:var(--accent-math);color:var(--accent-math);}
-.tab-btn.active-logic{background:var(--accent-logic-dim);border-color:var(--accent-logic);color:var(--accent-logic);}
-.tab-btn.active-qpm{background:var(--accent-qpm-dim);border-color:var(--accent-qpm);color:var(--accent-qpm);}
-.tab-dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
-main{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 1.5rem 4rem;}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;margin-bottom:1rem;}
-.card.math-card{border-top:2px solid var(--accent-math);}
-.card.logic-card{border-top:2px solid var(--accent-logic);}
-.card.qpm-card{border-top:2px solid var(--accent-qpm);}
-.card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.2rem;}
-.card-meta{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
-.badge{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;}
-.badge-math{background:var(--accent-math-dim);color:var(--accent-math);}
-.badge-logic{background:var(--accent-logic-dim);color:var(--accent-logic);}
-.badge-qpm{background:var(--accent-qpm-dim);color:var(--accent-qpm);}
-.badge-diff{background:rgba(255,255,255,0.06);color:var(--muted);}
-.q-number{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);}
-.pts-pill{font-family:'DM Mono',monospace;font-size:0.72rem;padding:4px 10px;border-radius:100px;border:1px solid var(--border2);color:var(--muted);white-space:nowrap;}
-.module-tag{font-family:'DM Mono',monospace;font-size:0.6rem;color:rgba(126,184,255,0.45);margin-bottom:5px;}
-.question{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:600;line-height:1.4;color:var(--text);margin-bottom:0.5rem;}
-.question-hint{font-size:0.8rem;color:var(--muted);margin-bottom:1.1rem;font-style:italic;}
-.options{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;margin-bottom:0.8rem;}
-@media(max-width:540px){.options{grid-template-columns:1fr;}}
-.opt-btn{font-family:'DM Sans',sans-serif;font-size:0.85rem;text-align:left;padding:0.7rem 0.9rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);cursor:pointer;transition:all 0.15s;line-height:1.4;display:flex;align-items:flex-start;gap:8px;}
-.opt-key{font-family:'DM Mono',monospace;font-size:0.68rem;min-width:18px;height:18px;border-radius:3px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0;margin-top:1px;}
-.opt-btn:hover:not(:disabled){border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.04);}
-.opt-btn.correct{border-color:var(--success);background:rgba(79,255,176,0.1);color:var(--success);}
-.opt-btn.wrong{border-color:var(--error);background:rgba(255,94,122,0.1);color:var(--error);}
-.opt-btn:disabled{cursor:default;}
-.feedback{display:none;padding:0.9rem 1.1rem;border-radius:var(--radius-sm);font-size:0.85rem;line-height:1.65;margin-top:0.4rem;}
-.feedback.show{display:block;}
-.feedback.fb-correct{background:rgba(79,255,176,0.07);border:1px solid rgba(79,255,176,0.25);color:#a8ffd8;}
-.feedback.fb-wrong{background:rgba(255,94,122,0.07);border:1px solid rgba(255,94,122,0.25);color:#ffa0b4;}
-.feedback strong{display:block;margin-bottom:4px;font-weight:500;}
-.eq-box{font-family:'DM Mono',monospace;font-size:0.78rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem 1rem;margin:0.7rem 0 1rem;color:var(--muted);white-space:pre-wrap;line-height:1.9;}
-.eq-hl{color:var(--accent-qpm);}
-.progress-bar-wrap{background:var(--bg3);border-radius:100px;height:3px;overflow:hidden;margin-bottom:1.8rem;}
-.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent-math),var(--accent-qpm));border-radius:100px;transition:width 0.4s ease;}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;margin-bottom:1.8rem;}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem 1rem;text-align:center;}
-.stat-card .val{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;}
-.stat-card .lbl{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
-.section-title{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
-.section-title::after{content:'';flex:1;height:1px;background:var(--border);}
-#result-screen{text-align:center;padding:3rem 1.5rem;display:none;}
-#result-screen h2{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;margin-bottom:0.5rem;}
-.final-score{font-family:'DM Mono',monospace;font-size:3.2rem;font-weight:500;color:var(--accent-math);margin:1rem 0;}
-.breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;max-width:440px;margin:1.5rem auto 2rem;}
-.restart-btn{font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.88rem;padding:10px 24px;border-radius:100px;border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;transition:all 0.2s;}
-.restart-btn:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.3);}
-footer{position:relative;z-index:1;text-align:center;padding:1.5rem;border-top:1px solid var(--border);color:var(--muted);font-size:0.72rem;font-family:'DM Mono',monospace;}
+  :root {
+    --bg:        #0d1117;
+    --surface:   #161b22;
+    --border:    #30363d;
+    --accent:    #e6a817;
+    --accent2:   #2ea043;
+    --danger:    #da3633;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --radius:    10px;
+    --font-mono: 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────────────── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .logo span { color: var(--accent); }
+
+  /* ── TIMER ───────────────────────────────────── */
+  #timer-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #1f2937;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 16px;
+  }
+  #timer-display {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 72px;
+    text-align: center;
+    transition: color 0.3s;
+  }
+  #timer-display.warning { color: #f97316; }
+  #timer-display.danger  { color: var(--danger); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+  .timer-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── PROGRESO ────────────────────────────────── */
+  .progress-bar-wrap {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+  /* ── PANTALLA DE INICIO ──────────────────────── */
+  #screen-start {
+    max-width: 680px;
+    margin: 60px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .exam-badge {
+    display: inline-block;
+    background: rgba(230,168,23,.12);
+    border: 1px solid rgba(230,168,23,.35);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  #screen-start h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  #screen-start h1 em { color: var(--accent); font-style: normal; }
+  #screen-start p { color: var(--muted); margin-bottom: 30px; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 28px 0;
+  }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 14px;
+  }
+  .info-card .val {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .info-card .key { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+
+  .rules {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    text-align: left;
+    margin-bottom: 28px;
+  }
+  .rules h3 { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .rules li { margin-bottom: 8px; font-size: 14px; color: var(--muted); list-style: none; padding-left: 20px; position: relative; }
+  .rules li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  /* ── BOTONES ─────────────────────────────────── */
+  .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0d1117;
+  }
+  .btn-primary:hover { background: #f0b929; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── PANTALLA EXAMEN ─────────────────────────── */
+  #screen-exam { display: none; padding: 28px 24px; max-width: 820px; margin: 0 auto; }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .q-num {
+    background: rgba(230,168,23,.15);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .q-module {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .q-text {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    line-height: 1.55;
+  }
+
+  /* ── OPCIONES ────────────────────────────────── */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: left;
+  }
+  .opt:hover:not(.locked) { border-color: var(--accent); background: rgba(230,168,23,.05); }
+
+  .opt-letter {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    transition: background 0.15s;
+  }
+  .opt-text { font-size: 14px; line-height: 1.5; padding-top: 2px; }
+
+  /* estados */
+  .opt.selected    { border-color: var(--accent); background: rgba(230,168,23,.08); }
+  .opt.selected .opt-letter { background: var(--accent); color: #0d1117; }
+  .opt.correct     { border-color: var(--accent2); background: rgba(46,160,67,.1); }
+  .opt.correct .opt-letter { background: var(--accent2); color: #fff; }
+  .opt.wrong       { border-color: var(--danger); background: rgba(218,54,51,.08); }
+  .opt.wrong .opt-letter { background: var(--danger); color: #fff; }
+  .opt.locked      { cursor: default; }
+
+  /* ── FEEDBACK & PISTA ────────────────────────── */
+  .feedback {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    display: none;
+  }
+  .feedback.ok  { background: rgba(46,160,67,.12); border: 1px solid rgba(46,160,67,.3); color: #3fb950; }
+  .feedback.err { background: rgba(218,54,51,.1);  border: 1px solid rgba(218,54,51,.3);  color: #f85149; }
+
+  .hint-wrap { margin-top: 14px; }
+  .btn-hint {
+    background: transparent;
+    border: 1px dashed rgba(230,168,23,.45);
+    color: var(--muted);
+    font-size: 13px;
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-hint:hover { border-color: var(--accent); color: var(--accent); }
+  .hint-box {
+    display: none;
+    margin-top: 10px;
+    background: rgba(230,168,23,.07);
+    border: 1px solid rgba(230,168,23,.25);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #c9a227;
+    line-height: 1.55;
+  }
+
+  /* ── NAV PREGUNTAS ───────────────────────────── */
+  .q-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .q-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+  }
+  .dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+  .dot.active   { background: var(--accent);  color: #0d1117; }
+  .dot.answered { background: rgba(46,160,67,.35); color: #3fb950; }
+  .dot.wrong-d  { background: rgba(218,54,51,.35); color: #f85149; }
+
+  /* ── PANTALLA RESULTADO ──────────────────────── */
+  #screen-result {
+    display: none;
+    max-width: 680px;
+    margin: 50px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 6px solid var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+  }
+  .score-circle .pct  { font-size: 38px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .score-circle .sub  { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  #screen-result h2   { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+  #screen-result .msg { color: var(--muted); margin-bottom: 28px; }
+
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .r-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 10px;
+  }
+  .r-card .val  { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .r-card .key  { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .r-card.ok  .val { color: var(--accent2); }
+  .r-card.err .val { color: var(--danger);  }
+  .r-card.acc .val { color: var(--accent);  }
+  .r-card.tim .val { color: #818cf8; }
+
+  .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ── TIEMPO AGOTADO ──────────────────────────── */
+  #screen-timeout {
+    display: none;
+    max-width: 500px;
+    margin: 80px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .timeout-icon { font-size: 64px; margin-bottom: 16px; }
+  #screen-timeout h2 { font-size: 28px; font-weight: 800; color: var(--danger); margin-bottom: 10px; }
+  #screen-timeout p  { color: var(--muted); margin-bottom: 24px; }
+
+  /* ── FOOTER ──────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 28px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media(max-width:600px){
+    .info-grid   { grid-template-columns: 1fr 1fr; }
+    .result-grid { grid-template-columns: 1fr 1fr; }
+    #timer-display { font-size: 18px; }
+  }
 </style>
 </head>
 <body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════ -->
 <header>
-  <div class="logo">Acertij<span class="logo-dot">&#183;</span>Lab</div>
-  <div class="score-board">
-    <div class="score-item"><span class="score-label">Puntos</span><span class="score-val pts" id="hdr-score">0</span></div>
-    <div class="score-item"><span class="score-label">Racha</span><span class="score-val" id="hdr-streak">0</span></div>
-    <div class="score-item"><span class="score-label">Progreso</span><span class="score-val" id="hdr-progress">0/25</span></div>
+  <div class="logo">Acerti<span>Lab</span></div>
+  <div id="timer-box" style="display:none;">
+    <div>
+      <div class="timer-label">Tiempo restante</div>
+      <div id="timer-display">30:00</div>
+    </div>
   </div>
 </header>
-<section class="hero">
-  <div class="hero-tag">Edicion QPM &middot; IMF Post-Course &middot; v2</div>
-  <h1>Desafia tu <em>mente</em><br>con rigor y logica</h1>
-  <p class="hero-sub">25 acertijos en Matematica Curiosa, Logica y Politica Monetaria QPM. Rachas de 3+ correctas: bono 25%. Rachas de 5+: bono 50%.</p>
-</section>
-<div class="tabs">
-  <button class="tab-btn active-math" onclick="filterCat('all',event)"><span class="tab-dot"></span> Todas (25)</button>
-  <button class="tab-btn" onclick="filterCat('math',event)"><span class="tab-dot" style="background:var(--accent-math)"></span> Matematica (5)</button>
-  <button class="tab-btn" onclick="filterCat('logic',event)"><span class="tab-dot" style="background:var(--accent-logic)"></span> Logica (5)</button>
-  <button class="tab-btn" onclick="filterCat('qpm',event)"><span class="tab-dot" style="background:var(--accent-qpm)"></span> Mision QPM (15)</button>
+
+<!-- ═══ BARRA DE PROGRESO ════════════════════════════ -->
+<div class="progress-bar-wrap" id="progress-wrap" style="display:none;">
+  <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+  <div class="progress-label" id="prog-label">0 / 28</div>
 </div>
-<main>
-  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
-  <div class="stats-row">
-    <div class="stat-card"><div class="val" id="stat-correct" style="color:var(--accent-math)">0</div><div class="lbl">Correctas</div></div>
-    <div class="stat-card"><div class="val" id="stat-wrong" style="color:var(--error)">0</div><div class="lbl">Incorrectas</div></div>
-    <div class="stat-card"><div class="val" id="stat-streak">0</div><div class="lbl">Racha max.</div></div>
+
+<!-- ═══ PANTALLA INICIO ══════════════════════════════ -->
+<div id="screen-start">
+  <div class="exam-badge">Módulo D · Examen Final</div>
+  <h1>Examen Final <em>QPM</em></h1>
+  <p>Repaso integral de Módulos 1–6 del Quarterly Projection Model del FMI</p>
+
+  <div class="info-grid">
+    <div class="info-card"><div class="val">28</div><div class="key">Preguntas</div></div>
+    <div class="info-card"><div class="val">30</div><div class="key">Minutos</div></div>
+    <div class="info-card"><div class="val">M1–M6</div><div class="key">Cobertura</div></div>
   </div>
-  <div id="quiz-container"></div>
-  <div id="result-screen">
-    <div style="font-size:3rem" id="result-emoji">&#x1F3C6;</div>
-    <h2>Ronda completada!</h2>
-    <div class="final-score" id="final-score-val">0 pts</div>
-    <p style="color:var(--muted);margin-bottom:1rem" id="final-msg"></p>
-    <div class="breakdown" id="final-breakdown"></div>
-    <button class="restart-btn" onclick="restart()">&#x21BA; Reiniciar</button>
+
+  <div class="rules">
+    <h3>Instrucciones</h3>
+    <ul>
+      <li>Seleccioná una opción por pregunta y confirmá con el botón <strong>Responder</strong>.</li>
+      <li>El temporizador comienza al iniciar el examen. Al agotarse se registran las respuestas hasta ese momento.</li>
+      <li>Podés revelar la pista 💡 en cualquier momento — no resta puntos.</li>
+      <li>Podés navegar entre preguntas con los puntos numerados.</li>
+      <li>Al terminar recibirás tu puntaje detallado por módulo.</li>
+    </ul>
   </div>
-</main>
-<footer>AcertiLab v2 &middot; QPM IMF Edition &middot; 25 preguntas &middot; HTML5 Vanilla &middot; 1366x768</footer>
+
+  <button class="btn btn-primary" onclick="startExam()">Comenzar examen →</button>
+  <br><br>
+  <a href="index.html" class="btn btn-ghost">← Volver al inicio</a>
+</div>
+
+<!-- ═══ PANTALLA EXAMEN ═══════════════════════════════ -->
+<div id="screen-exam">
+  <div id="question-area"></div>
+
+  <div class="q-nav">
+    <button class="btn btn-ghost" id="btn-prev" onclick="navigate(-1)">← Anterior</button>
+    <div class="q-dots" id="q-dots"></div>
+    <button class="btn btn-ghost" id="btn-next" onclick="navigate(1)">Siguiente →</button>
+  </div>
+
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn btn-primary" onclick="confirmFinish()" id="btn-finish">Terminar examen</button>
+  </div>
+</div>
+
+<!-- ═══ PANTALLA TIEMPO AGOTADO ══════════════════════ -->
+<div id="screen-timeout">
+  <div class="timeout-icon">⏰</div>
+  <h2>Tiempo agotado</h2>
+  <p>Se registraron tus respuestas hasta este momento.</p>
+  <button class="btn btn-primary" onclick="showResults()">Ver mis resultados</button>
+</div>
+
+<!-- ═══ PANTALLA RESULTADOS ══════════════════════════ -->
+<div id="screen-result">
+  <div class="score-circle">
+    <div class="pct" id="res-pct">—</div>
+    <div class="sub" id="res-sub">0 / 28</div>
+  </div>
+  <h2 id="res-title">—</h2>
+  <p class="msg" id="res-msg">—</p>
+
+  <div class="result-grid">
+    <div class="r-card ok" ><div class="val" id="r-ok" >0</div><div class="key">Correctas</div></div>
+    <div class="r-card err"><div class="val" id="r-err">0</div><div class="key">Incorrectas</div></div>
+    <div class="r-card acc"><div class="val" id="r-acc">0%</div><div class="key">Precisión</div></div>
+    <div class="r-card tim"><div class="val" id="r-tim">—</div><div class="key">Tiempo usado</div></div>
+  </div>
+
+  <!-- desglose por módulo -->
+  <div id="module-breakdown" style="margin-bottom:28px;"></div>
+
+  <div class="result-actions">
+    <button class="btn btn-primary" onclick="retakeExam()">Reintentar examen</button>
+    <a href="index.html" class="btn btn-ghost">← Inicio</a>
+  </div>
+</div>
+
+<footer>
+  AcertiLab · <a href="index.html">Inicio</a> · Módulo D — Examen Final QPM
+</footer>
+
 <script>
-const Q=[
-{id:1,cat:'math',diff:'Media',pts:100,
- q:'Cuanto es 0.999... (cero coma nueve periodico infinito)?',
- hint:'Serie geometrica: 0.9 + 0.09 + 0.009 + ...',
- opts:['Menos que 1','Exactamente 1','Aproximadamente 1','Indefinido'],ans:1,
- exp:'0.999... = 1 exactamente. Si x=0.999..., entonces 10x=9.999..., restando 9x=9, por lo tanto x=1. Tambien por series geometricas: suma=(9/10)/(1-1/10)=1.'},
-{id:2,cat:'math',diff:'Dificil',pts:150,
- q:'La paradoja de Zenon dice que Aquiles nunca alcanzara a la tortuga. Que rama matematica la resuelve formalmente?',
- hint:'Tiene que ver con sumar infinitos terminos que convergen a un valor finito.',
- opts:['Geometria euclidiana','Calculo de limites y series convergentes','Teoria de conjuntos de Cantor','Algebra lineal'],ans:1,
- exp:'El calculo de limites: la suma de la serie 1+1/2+1/4+... = 2. Un tiempo finito. La serie es infinita en terminos pero su suma es finita, lo que resuelve la paradoja de Zenon.'},
-{id:3,cat:'math',diff:'Facil',pts:75,
- q:'En Fibonacci (1,1,2,3,5,8,13,...), a que numero famoso converge la razon entre terminos consecutivos?',
- hint:'Aparece en espirales de girasoles y proporciones del arte y la arquitectura.',
- opts:['pi aprox 3.1415','phi aprox 1.618, la razon aurea','e aprox 2.718','raiz de 2 aprox 1.414'],ans:1,
- exp:'La razon Fn+1/Fn converge a phi=(1+raiz(5))/2 aprox 1.618, el numero aureo. Aparece en la naturaleza, el arte y la arquitectura.'},
-{id:4,cat:'math',diff:'Media',pts:100,
- q:'Un banco ofrece 100% de interes anual. Al componer cada vez mas frecuentemente (mensual, diario, continuo...), hacia que valor tiende el monto final por $1 invertido?',
- hint:'Este es el origen del numero mas importante del analisis matematico.',
- opts:['2.0 exactamente','Infinito','e aprox 2.718...','pi aprox 3.1415...'],ans:2,
- exp:'El limite de (1+1/n)^n cuando n tiende a infinito es e aprox 2.71828... el numero de Euler. Por eso e es fundamental en finanzas: la capitalizacion continua es el techo teorico del crecimiento compuesto.'},
-{id:5,cat:'math',diff:'Dificil',pts:150,
- q:'La paradoja del Mentiroso ("Esta afirmacion es falsa") inspiro a Godel. Que demostro su Teorema de Incompletitud (1931)?',
- hint:'Piensa en lo que esto implica para cualquier sistema formal matematico.',
- opts:['Que las matematicas son inconsistentes','Que en todo sistema formal suficientemente expresivo existen verdades no demostrables dentro del mismo sistema','Que el lenguaje humano es imperfecto','Que la logica clasica es incorrecta'],ans:1,
- exp:'El Teorema de Incompletitud de Godel: en cualquier sistema formal consistente y suficientemente poderoso existen proposiciones verdaderas que no pueden probarse dentro del sistema. Godel construyo una afirmacion equivalente a "esta proposicion no es demostrable".'},
-{id:6,cat:'logic',diff:'Facil',pts:75,
- q:'12 pelotas identicas en apariencia: una pesa diferente (sin saber si mas o menos). Con balanza sin pesas y solo 3 pesadas, podes identificar la pelota distinta?',
- hint:'En 3 pesadas hay 3^3=27 posibles resultados.',
- opts:['No, se necesitan al menos 4 pesadas','Si, siempre es posible con la estrategia correcta','Si, pero solo si la pelota rara es mas pesada','No hay suficiente informacion'],ans:1,
- exp:'Si es posible. Con 3^3=27 combinaciones de resultados podemos distinguir entre 24 casos (12 pelotas x 2 opciones: mas o menos pesada). La estrategia divide el grupo en tercios sucesivos.'},
-{id:7,cat:'logic',diff:'Media',pts:100,
- q:'En una isla: Caballeros (siempre dicen verdad) y Villanos (siempre mienten). Alguien dice "Soy un villano". Que es esa persona?',
- hint:'Analiza: puede un caballero o un villano hacer esa afirmacion sin contradiccion?',
- opts:['Un caballero','Un villano','Ninguno puede hacerla, es una paradoja autorreferencial','Podria ser cualquiera de los dos'],ans:2,
- exp:'Ninguno puede decirlo. Si fuera caballero, "soy villano" seria mentira: contradiccion. Si fuera villano, "soy villano" seria verdad: contradiccion. Nadie en la isla puede hacer esa afirmacion.'},
-{id:8,cat:'logic',diff:'Facil',pts:75,
- q:'Granjero con lobo, cabra y repollo. Bote cabe el mas uno. Lobo come cabra; cabra come repollo si quedan solos. Minimo de viajes para cruzar todo?',
- hint:'La clave: podes llevar algo de vuelta.',
- opts:['5 viajes','7 viajes','9 viajes','Es imposible'],ans:1,
- exp:'7 viajes: (1) Lleva cabra. (2) Regresa. (3) Lleva lobo. (4) Regresa con cabra. (5) Lleva repollo. (6) Regresa. (7) Lleva cabra. Llevar algo de vuelta es la clave para evitar combinaciones peligrosas.'},
-{id:9,cat:'logic',diff:'Media',pts:100,
- q:'Hay 3 cajas: dos rojas, dos azules, una de cada. TODAS estan MAL etiquetadas. Sacas una bola de la caja etiquetada "Roja/Azul" y sale roja. Que tiene esa caja?',
- hint:'Como todas las etiquetas estan MAL puestas, la caja "Roja/Azul" no puede tener una de cada color.',
- opts:['Una roja y una azul','Dos rojas','Dos azules','No se puede determinar'],ans:1,
- exp:'Como la etiqueta esta mal, la caja "Roja/Azul" contiene dos del mismo color. Sacaste roja -> tiene dos rojas. Entonces la caja etiquetada "Roja/Roja" no puede tener dos rojas -> tiene dos azules. Y "Azul/Azul" -> tiene una de cada.'},
-{id:10,cat:'logic',diff:'Dificil',pts:150,
- q:'100 prisioneros numerados del 1 al 100. Cada uno debe adivinar su propio numero sin verse. Que estrategia maximiza el numero de aciertos simultaneos?',
- hint:'Existe una estrategia que permite que en promedio aprox 50 personas acierte, no solo una.',
- opts:['Cada uno dice el numero que ve mas repetido en los demas','Cada uno dice un numero al azar','Cada uno dice el numero que hace la suma de todos par (o impar, segun acuerdo previo)','Cada uno dice el complemento del numero de la persona anterior'],ans:2,
- exp:'La estrategia de paridad: acuerdan que la suma total sea par. Cada prisionero ve la suma del resto y dice el numero que hace la suma total del tipo acordado. En promedio 50 aciertan. Es un resultado clasico de teoria de informacion coordinada.'},
-{id:11,cat:'qpm',diff:'Facil',pts:100,module:'Modulo 1.1 - Estado Estacionario',
- q:'En el estado estacionario del QPM, cual es el valor de todas las variables de brecha (_GAP)?',
- hint:'_GAP = variable menos su tendencia _BAR.',
- eq:'L_GDP_GAP = L_GDP - L_GDP_BAR\nRR_GAP    = RR - RR_BAR\nL_Z_GAP   = L_Z - L_Z_BAR',
- opts:['Igual a su tendencia (_BAR)','Cero (0)','Igual al steady-state (ss_)','Indeterminado'],ans:1,
- exp:'En estado estacionario todas las brechas son exactamente cero: L_GDP_GAP=0, RR_GAP=0, L_Z_GAP=0. La economia opera sobre su senda de equilibrio sin desviaciones ciclicas.'},
-{id:12,cat:'qpm',diff:'Media',pts:125,module:'Modulo 1.1 - Canales de Transmision',
- q:'Cuales son los DOS canales de transmision de la politica monetaria capturados por el MCI (Monetary Conditions Index)?',
- hint:'MCI = b4 x RR_GAP + (1-b4) x (-L_Z_GAP). Que representa cada termino?',
- eq:'MCI = b4 x RR_GAP + (1-b4) x (-L_Z_GAP)',
- opts:['Canal fiscal y canal externo','Canal de tasa de interes real (RR_GAP) y canal del tipo de cambio real (L_Z_GAP)','Canal de credito y canal de expectativas','Canal de salarios y canal de precios de activos'],ans:1,
- exp:'El MCI captura dos canales: (1) Canal de tasa de interes: RR_GAP>0 encarece el credito y frena la demanda. (2) Canal del tipo de cambio: L_Z_GAP<0 (apreciacion real) abarata importaciones y reduce demanda domestica. b4=0.7 pondera la importancia relativa.'},
-{id:13,cat:'qpm',diff:'Media',pts:125,module:'Modulo 1.2 - Regla de Taylor',
- q:'La regla de Taylor del QPM es forward-looking. Con cuantos trimestres de anticipacion mira el banco central la inflacion al fijar la tasa?',
- hint:'Observa el subindice temporal en D4L_CPI dentro de la ecuacion de politica monetaria.',
- eq:'RS = g1*RS{-1} + (1-g1)*[RSNEUTRAL\n     + g2*(D4L_CPI{+4}-D4L_CPI_TAR{+4})\n     + g3*L_GDP_GAP]',
- opts:['1 trimestre adelante','2 trimestres adelante','4 trimestres adelante (1 ano)','No es forward-looking'],ans:2,
- exp:'La regla mira 4 trimestres hacia adelante (1 ano): RS responde a la desviacion proyectada de D4L_CPI{+4} respecto a la meta. Refleja la practica de bancos centrales de inflation targeting que publican proyecciones a 12 meses.'},
-{id:14,cat:'qpm',diff:'Dificil',pts:175,module:'Modulo 1.2 - UIP Modificada',
- q:'La UIP modificada del QPM incluye el parametro e1 (backwardness). Que captura este termino?',
- hint:'La UIP pura es el caso limite e1=0.',
- eq:'L_S = (1-e1)*L_S{+1} + e1*(L_S{-1} + 2/4*...)\n      + (-RS + RS_RW + PREM)/4',
- opts:['Captura la inflacion externa esperada','Inercia cambiaria: el tipo de cambio pasado influye en el presente (expectativas backward-looking)','Es solo una correccion tecnica de calibracion','Captura el diferencial de tasas reales'],ans:1,
- exp:'e1=0.4 introduce inercia cambiaria: parte de las expectativas del TC se forman mirando hacia atras (L_S{-1}). Refleja que los agentes no son perfectamente racionales y el TC no ajusta instantaneamente al diferencial de tasas. La UIP pura seria e1=0.'},
-{id:15,cat:'qpm',diff:'Dificil',pts:175,module:'Modulo 1.2 - Ecuacion de Fisher',
- q:'Si la meta de inflacion sube de 2% a 4% y RR_BAR=0.5%, cual es la nueva RSNEUTRAL en estado estacionario?',
- hint:'RSNEUTRAL = RR_BAR + inflacion esperada (ecuacion de Fisher).',
- eq:'RSNEUTRAL = RR_BAR + D4L_CPI{+1}\nEn ss: RSNEUTRAL = RR_BAR + D4L_CPI_TAR',
- opts:['4.0%','4.5%','6.0%','2.5%'],ans:1,
- exp:'RSNEUTRAL = RR_BAR + D4L_CPI_TAR = 0.5% + 4% = 4.5%. Al subir la meta de 2% a 4%, la tasa nominal neutral sube de 2.5% a 4.5%, preservando la misma tasa real de largo plazo (0.5%).'},
-{id:16,cat:'qpm',diff:'Facil',pts:100,module:'Post-Course Q1 - Aplicacion Primaria',
- q:'Cual es la aplicacion PRIMARIA del modelo canonico QPM (Quarterly Projection Model)?',
- hint:'Piensa en ciclo economico + inflacion + reaccion de politica. No en largo plazo ni en tipo de cambio como objetivo.',
- opts:['Producir el mejor pronostico de inflacion de corto plazo','Pronosticar dinamicas de largo plazo y la politica para impulsar el crecimiento','Analizar y pronosticar dinamicas ciclicas junto con la reaccion de politica monetaria para retornar la inflacion a la meta','Analizar dinamicas ciclicas junto con la politica para mantener el tipo de cambio nominal en la meta'],ans:2,
- exp:'El QPM es principalmente una herramienta para analizar y pronosticar las dinamicas ciclicas de la economia, junto con la reaccion de politica monetaria necesaria para llevar la inflacion de vuelta a la meta. No es un modelo de largo plazo ni tiene el tipo de cambio como objetivo principal.'},
-{id:17,cat:'qpm',diff:'Facil',pts:100,module:'Post-Course Q2 - Canales Clave',
- q:'Cuales son los canales clave de transmision de politica monetaria que incorpora el QPM canonico?',
- hint:'Son los dos componentes del MCI del modelo.',
- opts:['Canal de precio de activos y canal de credito','Canal de prestamos bancarios y canal de hoja de balance','Canal de tipo de cambio indirecto y canal de credito','Canal del tipo de cambio y canal de la tasa de interes'],ans:3,
- exp:'El QPM incorpora el canal de tasa de interes (via RR_GAP en el MCI) y el canal del tipo de cambio (via L_Z_GAP en el MCI). Estos son los dos mecanismos centrales de transmision en una economia pequena y abierta.'},
-{id:18,cat:'qpm',diff:'Media',pts:125,module:'Post-Course Q3 - Phillips y Apertura',
- q:'En la curva de Phillips del QPM, para una economia MAS abierta, que deberia ocurrir con el coeficiente a3 (peso del output gap en el costo marginal real)?',
- hint:'RMC = a3*L_GDP_GAP + (1-a3)*L_Z_GAP. En economias mas abiertas hay mas insumos importados.',
- eq:'RMC = a3*L_GDP_GAP + (1-a3)*L_Z_GAP\nDLA_CPI = a1*DLA_CPI{-1} + (1-a1)*DLA_CPI{+1} + a2*RMC',
- opts:['a1 deberia ser mayor, por mas agentes mirando inflacion pasada','a2 deberia ser mayor, por pass-through mas rapido de costos','a3 deberia ser MENOR, por mayor participacion de insumos y bienes importados','Los tres coeficientes deberian ser menores'],ans:2,
- exp:'a3 deberia ser menor en economias mas abiertas: el costo marginal real depende menos del output gap domestico y mas del tipo de cambio real (L_Z_GAP), porque una mayor fraccion de insumos o bienes finales son importados. Esto da mas peso a (1-a3)*L_Z_GAP.'},
-{id:19,cat:'qpm',diff:'Media',pts:125,module:'Post-Course Q4 - Logica UIP',
- q:'Cual describe mejor la logica de la condicion UIP en el QPM para una economia pequena abierta?',
- hint:'Enfocate en el rol del banco central: interviene sistematicamente o no?',
- opts:['El BC interviene en el mercado FX para mantener el tipo de cambio fijo','El BC ajusta la oferta monetaria para suavizar las fluctuaciones del TC','La oferta y demanda en FX responden al diferencial de tasas y prima de riesgo, determinando el TC nominal sin intervencion sistematica del BC','La meta de depreciacion y la tasa externa determinan completamente la tasa domestica'],ans:2,
- exp:'En el QPM, la oferta y demanda en el mercado FX cambian en respuesta al diferencial de tasas de interes y la prima de riesgo, determinando el tipo de cambio nominal. El banco central NO interviene sistematicamente en el mercado FX; usa la tasa de interes como instrumento principal.'},
-{id:20,cat:'qpm',diff:'Facil',pts:100,module:'Post-Course Q5 - Regla de Politica',
- q:'Segun la regla de politica monetaria del QPM canonico, que debe hacer el banco central?',
- hint:'Cual es el instrumento? A que variables responde?',
- opts:['Usar la tasa de interes, ajustandola al desalineamiento cambiario y ciclo crediticio','Usar la reserva monetaria domestica, ajustandola a la brecha de inflacion esperada y ciclo de negocios','Usar la tasa de interes, ajustandola a la brecha de inflacion esperada y al ciclo de negocios','Usar el tipo de cambio, ajustandolo al ciclo y la brecha de inflacion'],ans:2,
- exp:'El QPM prescribe usar la tasa de interes como variable clave de politica, ajustandola en respuesta a las desviaciones esperadas de la inflacion respecto a la meta (D4L_CPI{+4}-D4L_CPI_TAR{+4}) y al ciclo de negocios (L_GDP_GAP). Es una regla de Taylor forward-looking.'},
-{id:21,cat:'qpm',diff:'Media',pts:125,module:'Post-Course Q6 - Condicion de Consistencia',
- q:'Cual es la interpretacion correcta de la condicion DLA_Z_BAR = RR_BAR - RR_RW_BAR - PREM del QPM?',
- hint:'Conecta las tendencias de largo plazo del TC real con las tasas reales de equilibrio.',
- eq:'DLA_Z_BAR{+1} = RR_BAR - RR_RW_BAR - PREM',
- opts:['En el largo plazo, el TC nominal no depende de la inflacion domestica','La tasa de cambio del TC real es determinada por el TC nominal y el diferencial de inflacion','El BC debe fijar simultaneamente el TC nominal y la inflacion','En el largo plazo, la depreciacion del TC nominal esta determinada por la meta de inflacion domestica, la externa y la tasa de cambio del TC real'],ans:3,
- exp:'La condicion de consistencia dice que en el largo plazo, la depreciacion nominal (DLA_S) es completamente determinada por: la meta de inflacion domestica (D4L_CPI_TAR), la inflacion externa (ss_DLA_CPI_RW) y la tasa de cambio del TC real de largo plazo (DLA_Z_BAR). Garantiza coherencia entre tendencias nominales y reales.'},
-{id:22,cat:'qpm',diff:'Media',pts:125,module:'Post-Course Q7 - Solucion del Modelo',
- q:'Que caracteristica es NECESARIA en un modelo estocastico de expectativas racionales para poder resolverlo?',
- hint:'Piensa en la condicion matematica basica de cualquier sistema de ecuaciones.',
- opts:['Parsimonia (pocos parametros)','El numero total de ecuaciones y variables no debe superar 20','El numero de variables debe ser igual al numero de ecuaciones linealmente independientes','Supuestos realistas sobre el comportamiento de los agentes'],ans:2,
- exp:'La condicion necesaria es que el numero de variables sea igual al numero de ecuaciones linealmente independientes. Sin esto, el sistema esta subdeterminado (infinitas soluciones) o sobredeterminado (sin solucion). Es independiente del tamano del modelo.'},
-{id:23,cat:'qpm',diff:'Dificil',pts:150,module:'Post-Course Q8 - Tendencias y Condiciones',
- q:'Un modelo tiene 6 variables de tendencia y 2 condiciones de consistencia que las incluyen. Cuantas condiciones adicionales (ej: AR(1)) se necesitan para describir completamente las tendencias?',
- hint:'Cada variable debe estar determinada por exactamente una ecuacion.',
- opts:['Una','Cuatro','Tres','Seis'],ans:1,
- exp:'Con 6 variables y 2 condiciones de consistencia ya dadas, se necesitan 6-2=4 condiciones adicionales (tipicamente procesos AR(1)) para completar el sistema. Cada variable de tendencia debe tener exactamente una ecuacion que la determine.'},
-{id:24,cat:'qpm',diff:'Dificil',pts:150,module:'Post-Course Q13 - IRFs y Shocks',
- q:'Al comparar IRFs ante shocks de demanda, cost-push y politica monetaria, que deberia ser VERDADERO sobre output e inflacion?',
- hint:'Piensa en la direccion de causalidad de cada shock sobre produccion y precios.',
- opts:['Inflacion y tasa de interes se mueven en la misma direccion ante cost-push y demanda, pero opuesta ante politica','Inflacion y tasa de interes se mueven igual ante cost-push, pero opuesta ante demanda y politica','Output e inflacion se mueven en la MISMA direccion ante shock de demanda, pero en OPUESTA ante cost-push y politica','Output e inflacion se mueven igual ante demanda y cost-push, pero en opuesta ante politica'],ans:2,
- exp:'Un shock de demanda positivo sube tanto output como inflacion (misma direccion). Un shock cost-push sube inflacion pero baja output (via mayor tasa de interes). Un shock de politica contractiva baja tanto output como inflacion. Por ello: output e inflacion van juntos ante demanda, pero en opuesta ante cost-push y politica.'},
-{id:25,cat:'qpm',diff:'Dificil',pts:175,module:'Post-Course Q24 - Estado Estacionario',
- q:'Cual de las siguientes es VERDADERA respecto al estado estacionario del QPM?',
- hint:'Revisa los valores del steady-state del modelo adjunto: DLA_GDP_BAR=2.5%, D4L_CPI=2%, RS=2.5%, RS_RW=2.75%.',
- eq:'ss: DLA_GDP_BAR=2.5  D4L_CPI=2  RS=2.5\n    RR=0.5  DLA_S=-1.5  L_GDP_GAP=0  PREM=1.25',
- opts:['Las tasas de crecimiento de las variables son cero en estado estacionario','Las variables de brecha (gap) son cero en estado estacionario','La inflacion es cero en estado estacionario','Las tasas de interes domestica y externa son iguales en estado estacionario'],ans:1,
- exp:'Las variables de brecha (gap) son cero en estado estacionario. Las tasas de crecimiento NO son cero (DLA_GDP_BAR=2.5%). La inflacion NO es cero (meta=2%). Las tasas domestica (RS=2.5%) y externa (RS_RW=2.75%) no son iguales porque existe prima de riesgo (PREM=1.25%).'}
+// ═══════════════════════════════════════════════════════
+//  BANCO DE PREGUNTAS — 28 preguntas M1–M6
+// ═══════════════════════════════════════════════════════
+const QUESTIONS = [
+  // ── M1: Introducción al QPM ─────────────────────────
+  {
+    mod: "M1",
+    q: "¿Cuál es el principal objetivo del QPM (Quarterly Projection Model) del FMI?",
+    opts: [
+      "Modelar el mercado de valores de economías emergentes",
+      "Producir proyecciones de mediano plazo consistentes para apoyar la política monetaria",
+      "Estimar el comercio bilateral entre países miembros",
+      "Calcular la deuda pública óptima de cada economía"
+    ],
+    ans: 1,
+    hint: "💡 El QPM es una herramienta de proyección y análisis de política. Su función central no es financiera ni comercial, sino de apoyo a decisiones de política monetaria."
+  },
+  {
+    mod: "M1",
+    q: "En el QPM, la brecha del producto (output gap) se define como:",
+    opts: [
+      "La diferencia entre exportaciones e importaciones",
+      "La variación anual del PIB real",
+      "La desviación del PIB real respecto a su nivel potencial",
+      "El cociente entre PIB nominal y PIB real"
+    ],
+    ans: 2,
+    hint: "💡 Pensá en qué mide una 'brecha': compara el nivel efectivo contra un nivel de referencia. En macro, el nivel de referencia es el potencial (tendencia)."
+  },
+  {
+    mod: "M1",
+    q: "¿Qué tipo de modelo es el QPM según su estructura?",
+    opts: [
+      "Modelo de equilibrio general dinámico estocástico (DSGE) completamente microfundado",
+      "Modelo semi-estructural de pequeña escala con expectativas forward-looking",
+      "Modelo VAR bayesiano de gran escala",
+      "Modelo insumo-producto de Leontief"
+    ],
+    ans: 1,
+    hint: "💡 El QPM es semi-estructural: tiene estructura económica pero no deriva todo desde primeros principios microeconómicos. Es de 'pequeña escala' (pocas ecuaciones clave)."
+  },
+  {
+    mod: "M1",
+    q: "En el QPM, las expectativas de inflación son principalmente:",
+    opts: [
+      "Adaptativas puras (dependen solo del pasado)",
+      "Racionales en el sentido de Muth",
+      "Una mezcla de expectativas forward-looking y backward-looking",
+      "Constantes e iguales a la meta de inflación"
+    ],
+    ans: 2,
+    hint: "💡 El QPM captura que los agentes miran tanto el pasado (inercia) como el futuro (expectativas de política). Ningún extremo puro describe bien la realidad."
+  },
+
+  // ── M2: Ecuaciones Fundamentales ────────────────────
+  {
+    mod: "M2",
+    q: "La curva IS en el QPM relaciona la brecha del producto principalmente con:",
+    opts: [
+      "La tasa de inflación pasada y el tipo de cambio nominal",
+      "La tasa de interés real y la brecha del producto rezagada",
+      "El precio del petróleo y la oferta monetaria",
+      "El déficit fiscal y la deuda pública"
+    ],
+    ans: 1,
+    hint: "💡 La IS vincula demanda agregada con condiciones monetarias. En el QPM, los dos determinantes principales son el costo del crédito (tasa real) y la persistencia (rezago del propio gap)."
+  },
+  {
+    mod: "M2",
+    q: "La Curva de Phillips en el QPM expresa la inflación como función de:",
+    opts: [
+      "Solo la brecha del producto corriente",
+      "La brecha del producto, la inflación esperada, y la inflación importada",
+      "Únicamente el tipo de cambio y el precio del petróleo",
+      "El agregado monetario M2 y la velocidad de circulación"
+    ],
+    ans: 1,
+    hint: "💡 La Curva de Phillips neo-keynesiana tiene tres componentes: presión de demanda (gap), expectativas (forward y backward), y costos externos (tipo de cambio / commodities)."
+  },
+  {
+    mod: "M2",
+    q: "La Paridad de Tasas de Interés (UIP) en el QPM implica que:",
+    opts: [
+      "El tipo de cambio nominal permanece fijo en el largo plazo",
+      "El diferencial de tasas de interés compensa la depreciación esperada ajustada por prima de riesgo",
+      "La tasa de interés doméstica siempre iguala la tasa internacional",
+      "El tipo de cambio real se aprecia cuando la inflación doméstica sube"
+    ],
+    ans: 1,
+    hint: "💡 La UIP es la condición de arbitraje financiero: si las tasas difieren, el tipo de cambio debe moverse para igualar retornos. La prima de riesgo ajusta para economías emergentes."
+  },
+  {
+    mod: "M2",
+    q: "En la regla de Taylor del QPM, la tasa de política monetaria responde a:",
+    opts: [
+      "Solo la brecha de inflación respecto a la meta",
+      "La brecha de inflación y la brecha del producto, con suavizamiento intertemporal",
+      "Exclusivamente las reservas internacionales y el tipo de cambio",
+      "La tasa de interés de la Reserva Federal de EE. UU."
+    ],
+    ans: 1,
+    hint: "💡 La regla de Taylor estándar tiene dos argumentos: cuánto se desvía la inflación de la meta y cuánto se desvía el producto de su potencial. El parámetro de suavizamiento (interest rate smoothing) refleja que el banco central no cambia tasas abruptamente."
+  },
+
+  // ── M3: Estado Estacionario y Calibración ───────────
+  {
+    mod: "M3",
+    q: "En el QPM, el 'estado estacionario' de la tasa de interés real neutral es:",
+    opts: [
+      "Cero, por definición de equilibrio",
+      "La tasa de interés real consistente con brecha del producto nula e inflación en meta",
+      "La tasa de política del banco central en el último período observado",
+      "La tasa de interés real internacional más la prima de riesgo país"
+    ],
+    ans: 1,
+    hint: "💡 El estado estacionario es el equilibrio de largo plazo: output gap = 0, inflación = meta. La tasa neutral es la que sostiene ese equilibrio sin presiones cíclicas."
+  },
+  {
+    mod: "M3",
+    q: "Al calibrar el parámetro de persistencia de la brecha del producto (ρ_y), un valor cercano a 1 indica:",
+    opts: [
+      "Alta volatilidad y reversión rápida al equilibrio",
+      "Alta persistencia: las desviaciones del producto tardan en cerrarse",
+      "Que el modelo converge instantáneamente al estado estacionario",
+      "Que la política monetaria es inefectiva"
+    ],
+    ans: 1,
+    hint: "💡 Un coeficiente AR cercano a 1 indica persistencia (proceso casi-unitario). El gap demora muchos períodos en desaparecer. Cercano a 0 sería reversión rápida."
+  },
+  {
+    mod: "M3",
+    q: "¿Qué es el 'filtro de Hodrick-Prescott' en el contexto del QPM?",
+    opts: [
+      "Una regla de política monetaria óptima",
+      "Un método para descomponer una serie en tendencia y componente cíclico",
+      "Un estimador de máxima verosimilitud para modelos DSGE",
+      "Un índice de condiciones monetarias (MCI)"
+    ],
+    ans: 1,
+    hint: "💡 El filtro HP es una herramienta estadística, no de política. Descompone (por ejemplo) el PIB en una tendencia suave y un ciclo —que equivale al output gap."
+  },
+  {
+    mod: "M3",
+    q: "En IRIS Toolbox, el comando para guardar una base de datos de series de tiempo es:",
+    opts: [
+      "save()",
+      "dbsave()",
+      "export()",
+      "writematrix()"
+    ],
+    ans: 1,
+    hint: "💡 IRIS tiene su propio conjunto de comandos para gestión de datos. Los comandos de bases de datos comienzan con 'db'. El análogo de save() para databases en IRIS es dbsave()."
+  },
+
+  // ── M4: Gestión de Datos MATLAB/IRIS ────────────────
+  {
+    mod: "M4",
+    q: "En IRIS, el tipo de objeto utilizado para manejar series de tiempo con frecuencia trimestral es:",
+    opts: [
+      "timeseries (de MATLAB nativo)",
+      "tseries",
+      "timetable",
+      "xts"
+    ],
+    ans: 1,
+    hint: "💡 IRIS define su propio tipo para series de tiempo. No usa la clase nativa de MATLAB (timeseries/timetable) sino su propio objeto: tseries."
+  },
+  {
+    mod: "M4",
+    q: "El comando `simulate` en IRIS se usa para:",
+    opts: [
+      "Estimar los parámetros del modelo por máxima verosimilitud",
+      "Resolver la trayectoria del modelo hacia adelante dado un conjunto de condiciones",
+      "Importar datos desde Excel al workspace de MATLAB",
+      "Graficar las funciones de impulso-respuesta"
+    ],
+    ans: 1,
+    hint: "💡 Simulate ≠ solve ≠ estimate. Simulate toma el modelo ya resuelto y genera trayectorias. Pensá en 'correr el modelo en el tiempo' con condiciones dadas."
+  },
+  {
+    mod: "M4",
+    q: "Los 'mnemonics' en el QPM/IRIS se refieren a:",
+    opts: [
+      "Técnicas de memorización para aprender ecuaciones",
+      "Los nombres cortos (códigos) asignados a variables del modelo",
+      "Los comentarios en el código MATLAB",
+      "Los archivos de log generados durante la estimación"
+    ],
+    ans: 1,
+    hint: "💡 En modelado macroeconómico, un 'mnemonic' es simplemente el nombre o código de una variable. Por ejemplo, CPI_GAP es el mnemonic para la brecha de inflación."
+  },
+  {
+    mod: "M4",
+    q: "Las 'measurement equations' en el QPM cumplen la función de:",
+    opts: [
+      "Definir las relaciones estructurales entre variables no observables",
+      "Vincular las variables no observables del modelo con los datos observados",
+      "Establecer las condiciones de estado estacionario",
+      "Fijar los valores iniciales para la simulación"
+    ],
+    ans: 1,
+    hint: "💡 El modelo tiene variables latentes (gap, tendencia). Las measurement equations son el puente entre esos conceptos teóricos y los datos que efectivamente observamos en la realidad."
+  },
+
+  // ── M5: Filtro de Kalman y Estimación ───────────────
+  {
+    mod: "M5",
+    q: "El filtro de Kalman en el contexto del QPM se usa principalmente para:",
+    opts: [
+      "Calibrar la regla de Taylor de forma manual",
+      "Estimar variables no observables (tendencias, brechas) combinando el modelo con los datos",
+      "Simular shocks de política monetaria hacia adelante",
+      "Calcular el valor presente de la deuda pública"
+    ],
+    ans: 1,
+    hint: "💡 Kalman es un algoritmo de estimación recursiva. En el QPM, permite extraer variables latentes (output gap, inflación tendencial) que no se observan directamente."
+  },
+  {
+    mod: "M5",
+    q: "El parámetro ρ (rho) en las ecuaciones de shocks del QPM controla:",
+    opts: [
+      "La magnitud del pass-through del tipo de cambio",
+      "La persistencia del shock: qué tan prolongado es su efecto",
+      "La velocidad de convergencia del tipo de cambio al equilibrio",
+      "El peso de las expectativas forward-looking en la Curva de Phillips"
+    ],
+    ans: 1,
+    hint: "💡 En un proceso AR(1) del tipo ε_t = ρ·ε_{t-1} + η_t, el parámetro ρ determina cuánto 'dura' el shock. ρ alto = shock persistente; ρ ≈ 0 = shock transitorio."
+  },
+  {
+    mod: "M5",
+    q: "La desviación estándar de los shocks (σ) en el QPM determina:",
+    opts: [
+      "La velocidad de ajuste de las expectativas inflacionarias",
+      "El tamaño típico de las perturbaciones aleatorias que afectan cada ecuación",
+      "El nivel de la tasa de interés neutral",
+      "La pendiente de la Curva de Phillips"
+    ],
+    ans: 1,
+    hint: "💡 σ calibra cuán grandes son los errores del modelo. Un σ grande implica que esa ecuación tiene mucha 'sorpresa'; uno pequeño que el modelo explica bien esa variable."
+  },
+  {
+    mod: "M5",
+    q: "Para que un modelo lineal como el QPM tenga 'solución única estable', se requiere:",
+    opts: [
+      "Que todas las raíces del sistema estén dentro del círculo unitario",
+      "Que el número de variables no predeterminadas iguale el número de raíces explosivas (condición de Blanchard-Kahn)",
+      "Que la regla de Taylor tenga coeficiente de inflación mayor que 1 (principio de Taylor) y las demás ecuaciones sean estables",
+      "Que el banco central fije la tasa de interés nominal de forma exógena"
+    ],
+    ans: 1,
+    hint: "💡 Blanchard-Kahn: en un sistema lineal con variables jump (forward-looking), la solución es única y estable si el número de raíces fuera del círculo unitario = número de variables de salto. No es solo sobre la regla de Taylor."
+  },
+  {
+    mod: "M5",
+    q: "El orden correcto de comandos en IRIS para trabajar con un modelo es:",
+    opts: [
+      "simulate → solve → model",
+      "model → solve → simulate",
+      "solve → model → filter",
+      "filter → model → solve"
+    ],
+    ans: 1,
+    hint: "💡 Primero se carga/define el modelo (model), luego se resuelve el sistema de ecuaciones (solve), y recién entonces se pueden hacer simulaciones o filtrado (simulate/filter)."
+  },
+
+  // ── M6: Economía Abierta y Calibración Avanzada ─────
+  {
+    mod: "M6",
+    q: "En la Curva de Phillips del QPM para economía abierta, el parámetro g1 (calibración) representa:",
+    opts: [
+      "El peso de la inflación importada en la inflación doméstica",
+      "La respuesta de la inflación a la brecha del producto",
+      "El coeficiente de suavizamiento de la tasa de interés",
+      "La elasticidad del tipo de cambio a la tasa de interés"
+    ],
+    ans: 1,
+    hint: "💡 En la Curva de Phillips g1 típicamente multiplica la brecha del producto. Es la pendiente de la curva: cuánta inflación genera un % de exceso de demanda."
+  },
+  {
+    mod: "M6",
+    q: "En la Regla de Taylor del QPM para economía abierta, el parámetro g2 usualmente calibra:",
+    opts: [
+      "La respuesta de la tasa de política a la brecha del producto",
+      "El peso del tipo de cambio en el índice de condiciones monetarias",
+      "La velocidad de depreciación del tipo de cambio real",
+      "La meta de inflación a largo plazo"
+    ],
+    ans: 0,
+    hint: "💡 En la regla de Taylor estándar: i = r* + π* + g1·(π − π*) + g2·y_gap. El g2 es el coeficiente sobre la brecha del producto. g1 sería la respuesta a la inflación."
+  },
+  {
+    mod: "M6",
+    q: "El Índice de Condiciones Monetarias (MCI) en el QPM combina:",
+    opts: [
+      "Tasa de interés real y tipo de cambio real efectivo",
+      "Oferta monetaria M1 y reservas internacionales",
+      "Tasa de inflación y tasa de desempleo",
+      "Déficit fiscal y deuda pública como % del PIB"
+    ],
+    ans: 0,
+    hint: "💡 El MCI resume las condiciones monetarias en dos dimensiones: el costo del crédito (tasa real) y la competitividad cambiaria (tipo de cambio real). Ambas afectan demanda agregada."
+  },
+  {
+    mod: "M6",
+    q: "La UIP modificada para economías emergentes incorpora una prima de riesgo (ψ) que:",
+    opts: [
+      "Siempre se cancela en el largo plazo y no afecta el estado estacionario",
+      "Puede ser constante o variable y afecta el diferencial de tasas de equilibrio",
+      "Solo depende del precio del petróleo",
+      "Es igual a cero por definición en el QPM estándar"
+    ],
+    ans: 1,
+    hint: "💡 Las economías emergentes tienen riesgo soberano y de liquidez que genera una prima sobre la UIP básica. Esta prima puede moverse con el ciclo o ser constante según la versión del modelo."
+  },
+  {
+    mod: "M6",
+    q: "En el estado estacionario del QPM para economía abierta, el tipo de cambio real:",
+    opts: [
+      "Se deprecia continuamente a la tasa de inflación doméstica",
+      "Es constante: no hay cambio en competitividad en el equilibrio de largo plazo",
+      "Converge al tipo de cambio nominal",
+      "Depende exclusivamente de las reservas internacionales del banco central"
+    ],
+    ans: 1,
+    hint: "💡 En el estado estacionario no hay desequilibrios. El tipo de cambio real no tiene tendencia (es estacionario): la PPC relativa se cumple en el largo plazo."
+  },
+  {
+    mod: "M6",
+    q: "La condición de 'economía pequeña abierta' en el QPM implica que:",
+    opts: [
+      "El país puede influir en la tasa de interés mundial y el precio de los commodities",
+      "Las variables externas (tasa mundial, demanda externa, precios de commodities) son exógenas al modelo doméstico",
+      "El tipo de cambio es fijo por definición del modelo",
+      "Las exportaciones son siempre iguales a las importaciones en el estado estacionario"
+    ],
+    ans: 1,
+    hint: "💡 'Pequeña' = tomadora de precios. No puede afectar el exterior. Las variables globales entran como condiciones de borde exógenas, no como variables endógenas del sistema."
+  },
+  {
+    mod: "M6",
+    q: "En el QPM, ¿cuál de las siguientes afirmaciones sobre la calibración es correcta?",
+    opts: [
+      "Los parámetros se estiman siempre por mínimos cuadrados ordinarios",
+      "La calibración combina estimación econométrica, juicio experto y propiedades del estado estacionario",
+      "Una vez calibrado el modelo no puede modificarse en ninguna variable",
+      "La calibración es idéntica para todos los países que usan el QPM"
+    ],
+    ans: 1,
+    hint: "💡 El QPM es un modelo de trabajo: la calibración mezcla datos, teoría y juicio. No hay una sola calibración universal — cada país adapta los parámetros a su economía."
+  }
 ];
 
-let S={answered:{},score:0,correct:0,wrong:0,streak:0,maxStreak:0,currentFilter:'all'};
-const TOTAL=25;
+// ═══════════════════════════════════════════════════════
+//  ESTADO GLOBAL
+// ═══════════════════════════════════════════════════════
+let current   = 0;
+let answers   = new Array(QUESTIONS.length).fill(null); // índice de opción elegida
+let confirmed = new Array(QUESTIONS.length).fill(false);
+let timerInterval = null;
+let secondsLeft   = 30 * 60;
+let startTime     = null;
+let examFinished  = false;
 
-function getVisible(){return S.currentFilter==='all'?Q:Q.filter(q=>q.cat===S.currentFilter);}
-function countAns(){return Object.keys(S.answered).filter(k=>!k.includes('_')).length;}
+// ═══════════════════════════════════════════════════════
+//  INICIO
+// ═══════════════════════════════════════════════════════
+function startExam() {
+  document.getElementById('screen-start').style.display   = 'none';
+  document.getElementById('screen-exam').style.display    = 'block';
+  document.getElementById('timer-box').style.display      = 'flex';
+  document.getElementById('progress-wrap').style.display  = 'flex';
 
-function updateHeader(){
-  document.getElementById('hdr-score').textContent=S.score;
-  document.getElementById('hdr-streak').textContent=S.streak+(S.streak>=3?'&#x1F525;':'');
-  document.getElementById('hdr-progress').textContent=countAns()+'/'+TOTAL;
-  document.getElementById('progress-fill').style.width=(countAns()/TOTAL*100)+'%';
-  document.getElementById('stat-correct').textContent=S.correct;
-  document.getElementById('stat-wrong').textContent=S.wrong;
-  document.getElementById('stat-streak').textContent=S.maxStreak;
+  startTime = Date.now();
+  buildDots();
+  renderQuestion(0);
+  startTimer();
 }
 
-const EQ_VARS=/(L_GDP_GAP|RR_GAP|L_Z_GAP|MCI|RSNEUTRAL|RS|D4L_CPI|RR_BAR|L_S|DLA_Z_BAR|RMC|DLA_GDP_BAR)/g;
+// ═══════════════════════════════════════════════════════
+//  TEMPORIZADOR
+// ═══════════════════════════════════════════════════════
+function startTimer() {
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      timeOut();
+    }
+  }, 1000);
+}
 
-function buildCard(q){
-  const cc={math:'math-card',logic:'logic-card',qpm:'qpm-card'}[q.cat];
-  const cl={math:'Matematica',logic:'Logica',qpm:'Mision QPM'}[q.cat];
-  const cb={math:'badge-math',logic:'badge-logic',qpm:'badge-qpm'}[q.cat];
-  const keys=['A','B','C','D'];
-  const isAns=S.answered[q.id]!==undefined;
-  const ua=S.answered[q.id];
-  const eqH=q.eq?'<div class="eq-box">'+q.eq.replace(EQ_VARS,'<span class="eq-hl">$1</span>')+'</div>':'';
-  const modH=q.module?'<div class="module-tag">'+q.module+'</div>':'';
-  const optsH=q.opts.map((o,i)=>{
-    let ex='';
-    if(isAns){if(i===q.ans)ex=' correct';else if(i===ua&&ua!==q.ans)ex=' wrong';}
-    return '<button class="opt-btn'+ex+'" onclick="answer('+q.id+','+i+')" '+(isAns?'disabled':'')+'>'+
-      '<span class="opt-key">'+keys[i]+'</span>'+o+'</button>';
+function updateTimerDisplay() {
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  const el = document.getElementById('timer-display');
+  el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = '';
+  if (secondsLeft <= 300) el.className = 'warning';
+  if (secondsLeft <= 60)  el.className = 'danger';
+}
+
+function timeOut() {
+  examFinished = true;
+  document.getElementById('screen-exam').style.display    = 'none';
+  document.getElementById('screen-timeout').style.display = 'block';
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER PREGUNTA
+// ═══════════════════════════════════════════════════════
+function renderQuestion(idx) {
+  current = idx;
+  const q   = QUESTIONS[idx];
+  const sel = answers[idx];
+  const con = confirmed[idx];
+  const letters = ['A','B','C','D'];
+
+  let optsHTML = q.opts.map((o, i) => {
+    let cls = 'opt';
+    if (con) {
+      cls += ' locked';
+      if (i === q.ans)          cls += ' correct';
+      else if (i === sel && i !== q.ans) cls += ' wrong';
+    } else {
+      if (i === sel) cls += ' selected';
+    }
+    return `<button class="${cls}" onclick="selectOpt(${i})" ${con ? 'disabled' : ''}>
+              <div class="opt-letter">${letters[i]}</div>
+              <div class="opt-text">${o}</div>
+            </button>`;
   }).join('');
-  let fbH='';
-  if(isAns){
-    const ok=ua===q.ans;
-    const bon=S.answered[q.id+'_bonus']?' <em>(+'+S.answered[q.id+'_bonus']+' pts por racha!)</em>':'';
-    fbH='<div class="feedback show '+(ok?'fb-correct':'fb-wrong')+'">'+
-      '<strong>'+(ok?'Correcto!':'No exactamente...')+'</strong>'+q.exp+bon+'</div>';
+
+  let feedbackHTML = '';
+  if (con) {
+    if (sel === q.ans) {
+      feedbackHTML = `<div class="feedback ok" style="display:block;">✓ Correcto</div>`;
+    } else {
+      feedbackHTML = `<div class="feedback err" style="display:block;">✗ Incorrecto — La respuesta correcta es <strong>${letters[q.ans]}</strong>.</div>`;
+    }
   }
-  return '<div class="card '+cc+'" id="card-'+q.id+'">'+
-    '<div class="card-header"><div>'+modH+
-    '<div class="card-meta"><span class="badge '+cb+'">'+cl+'</span>'+
-    '<span class="badge badge-diff">'+q.diff+'</span></div>'+
-    '<div class="q-number">Pregunta #'+q.id+'</div></div>'+
-    '<div class="pts-pill">'+q.pts+' pts</div></div>'+
-    '<div class="question">'+q.q+'</div>'+
-    (q.hint?'<div class="question-hint">'+q.hint+'</div>':'')+
-    eqH+'<div class="options">'+optsH+'</div>'+fbH+'</div>';
+
+  const confirmBtn = con
+    ? ''
+    : `<button class="btn btn-primary" style="margin-top:18px;" onclick="confirmAnswer()" ${sel === null ? 'disabled' : ''} id="btn-confirm">Responder</button>`;
+
+  const area = document.getElementById('question-area');
+  area.innerHTML = `
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-num">Pregunta ${idx+1} de ${QUESTIONS.length}</span>
+        <span class="q-module">${q.mod}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${optsHTML}</div>
+      ${feedbackHTML}
+      ${confirmBtn}
+      <div class="hint-wrap">
+        <button class="btn-hint" onclick="toggleHint(this)">💡 Revelar pista</button>
+        <div class="hint-box">${q.hint}</div>
+      </div>
+    </div>`;
+
+  updateDots();
+  updateProgress();
+  updateNavButtons();
 }
 
-function render(){
-  const c=document.getElementById('quiz-container');
-  if(countAns()===TOTAL){c.innerHTML='';showResult();return;}
-  document.getElementById('result-screen').style.display='none';
-  const v=getVisible();
-  const labels={all:'Todos los acertijos',math:'Matematica Curiosa',logic:'Desafios de Logica',qpm:'Mision QPM'};
-  c.innerHTML='<div class="section-title">'+labels[S.currentFilter]+' &middot; '+v.length+' preguntas</div>'+
-    v.map(buildCard).join('');
+// ═══════════════════════════════════════════════════════
+//  INTERACCIONES
+// ═══════════════════════════════════════════════════════
+function selectOpt(i) {
+  if (confirmed[current]) return;
+  answers[current] = i;
+  renderQuestion(current);
 }
 
-function answer(qId,optIdx){
-  if(S.answered[qId]!==undefined)return;
-  const q=Q.find(x=>x.id===qId);
-  const ok=optIdx===q.ans;
-  S.answered[qId]=optIdx;
-  if(ok){
-    S.correct++;S.streak++;
-    if(S.streak>S.maxStreak)S.maxStreak=S.streak;
-    let bon=0;
-    if(S.streak>=5)bon=Math.floor(q.pts*0.5);
-    else if(S.streak>=3)bon=Math.floor(q.pts*0.25);
-    S.score+=q.pts+bon;
-    if(bon>0)S.answered[qId+'_bonus']=bon;
-  }else{S.wrong++;S.streak=0;}
-  updateHeader();
-  const card=document.getElementById('card-'+qId);
-  if(card){
-    card.querySelectorAll('.opt-btn').forEach(function(b,i){
-      b.disabled=true;
-      if(i===q.ans)b.classList.add('correct');
-      else if(i===optIdx&&!ok)b.classList.add('wrong');
-    });
-    const fb=document.createElement('div');
-    const bon=S.answered[qId+'_bonus']?' <em>(+'+S.answered[qId+'_bonus']+' pts por racha!)</em>':'';
-    fb.className='feedback show '+(ok?'fb-correct':'fb-wrong');
-    fb.innerHTML='<strong>'+(ok?'Correcto!':'No exactamente...')+'</strong>'+q.exp+bon;
-    card.appendChild(fb);
+function confirmAnswer() {
+  if (answers[current] === null) return;
+  confirmed[current] = true;
+  renderQuestion(current);
+  // auto-avanzar si no es la última
+  if (current < QUESTIONS.length - 1) {
+    setTimeout(() => navigate(1), 800);
   }
-  if(countAns()===TOTAL)setTimeout(showResult,800);
 }
 
-function showResult(){
-  document.getElementById('quiz-container').innerHTML='';
-  const rs=document.getElementById('result-screen');
-  rs.style.display='block';
-  const pct=Math.round(S.correct/TOTAL*100);
-  let emoji='&#x1F914;',msg='Sigue practicando, el rigor se construye paso a paso.';
-  if(pct>=88){emoji='&#x1F3C6;';msg='Dominio excepcional! Estas listo para calibracion avanzada y Kalman filter.';}
-  else if(pct>=70){emoji='&#x1F3AF;';msg='Muy buen desempeno. Dominas los fundamentos del QPM y la logica de politica.';}
-  else if(pct>=50){emoji='&#x1F4C8;';msg='Buen intento. Repasa los canales de transmision y condiciones de consistencia.';}
-  document.getElementById('result-emoji').innerHTML=emoji;
-  document.getElementById('final-score-val').textContent=S.score+' pts';
-  document.getElementById('final-msg').textContent=msg;
-  const bc={math:{c:0,t:0},logic:{c:0,t:0},qpm:{c:0,t:0}};
-  Q.forEach(function(q){bc[q.cat].t++;if(S.answered[q.id]===q.ans)bc[q.cat].c++;});
-  const lb={math:'Matematica',logic:'Logica',qpm:'QPM'};
-  document.getElementById('final-breakdown').innerHTML=
-    Object.entries(bc).map(function(e){return '<div class="stat-card"><div class="val" style="font-size:1.2rem">'+e[1].c+'/'+e[1].t+'</div><div class="lbl">'+lb[e[0]]+'</div></div>';}).join('');
+function toggleHint(btn) {
+  const box = btn.nextElementSibling;
+  const open = box.style.display === 'block';
+  box.style.display   = open ? 'none' : 'block';
+  btn.textContent     = open ? '💡 Revelar pista' : '🔼 Ocultar pista';
 }
 
-function filterCat(cat,evt){
-  S.currentFilter=cat;
-  document.querySelectorAll('.tab-btn').forEach(function(b){b.className='tab-btn';});
-  const am={all:'active-math',math:'active-math',logic:'active-logic',qpm:'active-qpm'};
-  if(evt&&evt.currentTarget)evt.currentTarget.classList.add(am[cat]||'active-math');
-  render();
+function navigate(dir) {
+  const next = current + dir;
+  if (next < 0 || next >= QUESTIONS.length) return;
+  renderQuestion(next);
 }
 
-updateHeader();render();
+function updateNavButtons() {
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === QUESTIONS.length - 1;
+}
+
+// ═══════════════════════════════════════════════════════
+//  PUNTOS DE NAVEGACIÓN
+// ═══════════════════════════════════════════════════════
+function buildDots() {
+  const wrap = document.getElementById('q-dots');
+  wrap.innerHTML = QUESTIONS.map((_,i) =>
+    `<button class="dot" id="dot-${i}" onclick="renderQuestion(${i})">${i+1}</button>`
+  ).join('');
+}
+
+function updateDots() {
+  QUESTIONS.forEach((q, i) => {
+    const d = document.getElementById(`dot-${i}`);
+    if (!d) return;
+    d.className = 'dot';
+    if (i === current) { d.classList.add('active'); return; }
+    if (confirmed[i]) {
+      d.classList.add(answers[i] === q.ans ? 'answered' : 'wrong-d');
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  BARRA DE PROGRESO
+// ═══════════════════════════════════════════════════════
+function updateProgress() {
+  const done = confirmed.filter(Boolean).length;
+  const pct  = (done / QUESTIONS.length) * 100;
+  document.getElementById('prog-fill').style.width  = pct + '%';
+  document.getElementById('prog-label').textContent = `${done} / ${QUESTIONS.length}`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  TERMINAR EXAMEN
+// ═══════════════════════════════════════════════════════
+function confirmFinish() {
+  const pending = confirmed.filter(Boolean).length;
+  if (pending < QUESTIONS.length) {
+    const restantes = QUESTIONS.length - pending;
+    if (!confirm(`Tenés ${restantes} pregunta(s) sin confirmar. ¿Terminar igual?`)) return;
+  }
+  clearInterval(timerInterval);
+  examFinished = true;
+  showResults();
+}
+
+function showResults() {
+  document.getElementById('screen-exam').style.display    = 'none';
+  document.getElementById('screen-timeout').style.display = 'none';
+  document.getElementById('screen-result').style.display  = 'block';
+
+  const elapsed   = Math.round((Date.now() - startTime) / 1000);
+  const elMin     = Math.floor(elapsed / 60);
+  const elSec     = elapsed % 60;
+  const timeUsed  = `${String(elMin).padStart(2,'0')}:${String(elSec).padStart(2,'0')}`;
+
+  let ok = 0, err = 0;
+  QUESTIONS.forEach((q, i) => {
+    if (!confirmed[i]) return;
+    if (answers[i] === q.ans) ok++;
+    else err++;
+  });
+
+  const total   = ok + err;
+  const pct     = total > 0 ? Math.round((ok / QUESTIONS.length) * 100) : 0;
+
+  document.getElementById('res-pct').textContent = pct + '%';
+  document.getElementById('res-sub').textContent = `${ok} / ${QUESTIONS.length}`;
+  document.getElementById('r-ok').textContent    = ok;
+  document.getElementById('r-err').textContent   = err;
+  document.getElementById('r-acc').textContent   = total > 0 ? Math.round((ok/total)*100)+'%' : '—';
+  document.getElementById('r-tim').textContent   = timeUsed;
+
+  // título y mensaje
+  let title, msg;
+  if      (pct >= 90) { title = '🏆 Excelente'; msg = 'Dominio sólido del QPM. Listo para la evaluación oficial.'; }
+  else if (pct >= 75) { title = '✅ Muy bien';   msg = 'Buen manejo general. Revisá los ítems incorrectos.'; }
+  else if (pct >= 60) { title = '📚 Aprobado';   msg = 'Base sólida. Reforzá los módulos con mayor dificultad.'; }
+  else                { title = '🔄 A reforzar'; msg = 'Repasá los módulos con más errores antes del examen oficial.'; }
+
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-msg').textContent   = msg;
+
+  // desglose por módulo
+  const mods = {};
+  QUESTIONS.forEach((q, i) => {
+    if (!mods[q.mod]) mods[q.mod] = { ok: 0, total: 0 };
+    mods[q.mod].total++;
+    if (confirmed[i] && answers[i] === q.ans) mods[q.mod].ok++;
+  });
+
+  const breakdown = document.getElementById('module-breakdown');
+  breakdown.innerHTML = `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+      <h3 style="font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Resultado por módulo</h3>
+      ${Object.entries(mods).map(([mod, d]) => {
+        const p = Math.round((d.ok / d.total) * 100);
+        const col = p >= 75 ? 'var(--accent2)' : p >= 50 ? 'var(--accent)' : 'var(--danger)';
+        return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <span style="font-size:12px;font-weight:700;color:var(--muted);min-width:30px;">${mod}</span>
+          <div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;">
+            <div style="width:${p}%;height:100%;background:${col};border-radius:4px;transition:width 0.6s;"></div>
+          </div>
+          <span style="font-size:13px;font-weight:700;color:${col};min-width:48px;text-align:right;">${d.ok}/${d.total}</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  REINTENTAR
+// ═══════════════════════════════════════════════════════
+function retakeExam() {
+  answers   = new Array(QUESTIONS.length).fill(null);
+  confirmed = new Array(QUESTIONS.length).fill(false);
+  current   = 0;
+  secondsLeft   = 30 * 60;
+  examFinished  = false;
+
+  document.getElementById('screen-result').style.display  = 'none';
+  document.getElementById('screen-exam').style.display    = 'block';
+  document.getElementById('timer-display').className      = '';
+
+  startTime = Date.now();
+  buildDots();
+  renderQuestion(0);
+  updateTimerDisplay();
+  startTimer();
+}
 </script>
 </body>
 </html>

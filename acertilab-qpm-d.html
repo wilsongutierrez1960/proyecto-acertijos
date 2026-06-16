@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AcertiLab · Plataforma de Acertijos Educativos</title>
+<style>
+  :root {
+    --bg:      #0d1117;
+    --surface: #161b22;
+    --border:  #30363d;
+    --accent:  #e6a817;
+    --green:   #2ea043;
+    --purple:  #818cf8;
+    --red:     #da3633;
+    --text:    #e6edf3;
+    --muted:   #8b949e;
+    --radius:  10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  .logo span { color: var(--accent); }
+  .version {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--border);
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── HERO ───────────────────────────── */
+  .hero {
+    text-align: center;
+    padding: 64px 24px 48px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(230,168,23,.12);
+    border: 1px solid rgba(230,168,23,.3);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .hero h1 em { color: var(--accent); font-style: normal; }
+  .hero p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── STATS ──────────────────────────── */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 0 24px 48px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat .val { font-size: 28px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .stat .key { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-top: 4px; }
+
+  /* ── GRID DE MÓDULOS ────────────────── */
+  .modules-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px 64px;
+  }
+  .section-title {
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  /* ── TARJETA ────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-color, var(--accent));
+    opacity: 0.7;
+  }
+  .card:hover { border-color: var(--card-color, var(--accent)); transform: translateY(-2px); }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .card-icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .card-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    background: rgba(255,255,255,.06);
+    color: var(--card-color, var(--accent));
+    border: 1px solid rgba(255,255,255,.1);
+  }
+
+  .card h2 {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .meta-item strong { color: var(--text); }
+
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 8px;
+    transition: background 0.15s, border-color 0.15s;
+    width: fit-content;
+  }
+  .card:hover .card-cta {
+    background: rgba(255,255,255,.1);
+    border-color: var(--card-color, var(--accent));
+    color: var(--card-color, var(--accent));
+  }
+
+  /* ── TARJETA EXAMEN (full-width) ────── */
+  .card.full {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    gap: 28px;
+  }
+  .card.full .card-body { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+
+  /* ── FOOTER ─────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media(max-width: 640px) {
+    .hero h1 { font-size: 28px; }
+    .modules-grid { grid-template-columns: 1fr; }
+    .card.full { flex-direction: column; }
+    .stats { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════ -->
+<header>
+  <div class="logo">Acerti<span>Lab</span></div>
+  <span class="version">v1.2</span>
+</header>
+
+<!-- ═══ HERO ═════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-badge">Plataforma Educativa · QPM / FMI</div>
+  <h1>Aprendé con <em>acertijos</em><br>interactivos</h1>
+  <p>Módulos de práctica para el Quarterly Projection Model del FMI y matemática aplicada. Sin registro, directo al grano.</p>
+</div>
+
+<!-- ═══ STATS ════════════════════════════════ -->
+<div class="stats">
+  <div class="stat"><div class="val">94</div><div class="key">Preguntas totales</div></div>
+  <div class="stat"><div class="val">4</div><div class="key">Módulos</div></div>
+  <div class="stat"><div class="val">M1–M6</div><div class="key">Cobertura QPM</div></div>
+  <div class="stat"><div class="val">100%</div><div class="key">Gratuito</div></div>
+</div>
+
+<!-- ═══ MÓDULOS ═══════════════════════════════ -->
+<div class="modules-section">
+  <div class="section-title">Módulos disponibles</div>
+
+  <div class="modules-grid">
+
+    <!-- Módulo A -->
+    <a class="card" href="acertilab-fun.html" style="--card-color: var(--green);">
+      <div class="card-header">
+        <div class="card-icon">🧮</div>
+        <span class="card-badge">Módulo A</span>
+      </div>
+      <h2>Matemática & Lógica</h2>
+      <p>Acertijos de razonamiento matemático y lógico para calentar motores. Ideal como punto de partida.</p>
+      <div class="card-meta">
+        <span class="meta-item">📝 <strong>10</strong> preguntas</span>
+        <span class="meta-item">⏱ Sin límite</span>
+        <span class="meta-item">📊 Nivel introductorio</span>
+      </div>
+      <div class="card-cta">Ir al módulo →</div>
+    </a>
+
+    <!-- Módulo B -->
+    <a class="card" href="acertilab-qpm.html" style="--card-color: var(--accent);">
+      <div class="card-header">
+        <div class="card-icon">📐</div>
+        <span class="card-badge">Módulo B</span>
+      </div>
+      <h2>QPM Núcleo</h2>
+      <p>Preguntas sobre los conceptos fundamentales del QPM: ecuaciones estructurales, estado estacionario y calibración básica.</p>
+      <div class="card-meta">
+        <span class="meta-item">📝 <strong>28</strong> preguntas</span>
+        <span class="meta-item">⏱ Sin límite</span>
+        <span class="meta-item">📊 Intermedio</span>
+      </div>
+      <div class="card-cta">Ir al módulo →</div>
+    </a>
+
+    <!-- Módulo C -->
+    <a class="card" href="acertilab-qpm-c.html" style="--card-color: var(--purple);">
+      <div class="card-header">
+        <div class="card-icon">⚙️</div>
+        <span class="card-badge">Módulo C</span>
+      </div>
+      <h2>QPM Aplicado — M4 a M6</h2>
+      <p>Gestión de datos en MATLAB/IRIS, filtro de Kalman, calibración avanzada y economía abierta. Incluye pistas de razonamiento diagnóstico.</p>
+      <div class="card-meta">
+        <span class="meta-item">📝 <strong>28</strong> preguntas</span>
+        <span class="meta-item">💡 Con pistas</span>
+        <span class="meta-item">📊 Avanzado</span>
+      </div>
+      <div class="card-cta">Ir al módulo →</div>
+    </a>
+
+    <!-- Módulo D — EXAMEN FINAL (full width) -->
+    <a class="card full" href="acertilab-qpm-d.html" style="--card-color: var(--red);">
+      <div class="card-icon" style="font-size:48px;">🏆</div>
+      <div class="card-body">
+        <div class="card-header" style="margin-bottom:0;">
+          <h2>Examen Final QPM</h2>
+          <span class="card-badge">Módulo D · NUEVO</span>
+        </div>
+        <p>Repaso integral de todos los módulos (M1–M6). Temporizador de 30 minutos, pistas opcionales y desglose de resultados por módulo. Evaluá tu preparación antes del examen oficial.</p>
+        <div class="card-meta">
+          <span class="meta-item">📝 <strong>28</strong> preguntas</span>
+          <span class="meta-item">⏱ <strong>30 min</strong></span>
+          <span class="meta-item">💡 Pistas opcionales</span>
+          <span class="meta-item">📊 Todos los niveles</span>
+        </div>
+        <div class="card-cta">Iniciar examen →</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════ -->
+<footer>
+  AcertiLab · Proyecto educativo QPM/FMI ·
+  <a href="https://github.com/wilsongutierrez1960/proyecto-acertijos" target="_blank">GitHub</a>
+</footer>
+
+</body>
+</html>
