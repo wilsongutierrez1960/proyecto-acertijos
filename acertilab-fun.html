@@ -70,6 +70,31 @@
       border-radius: 2px;
     }
 
+    .module-links {
+      display: flex;
+      gap: 0.5rem;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+    .module-links a {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.55rem;
+      border-radius: 2px;
+      transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .module-links a:hover { border-color: var(--accent); color: var(--accent); }
+    .module-links a.current { border-color: var(--accent); color: var(--accent); }
+    @media (max-width: 560px) {
+      .module-links a:not(.current) { display: none; }
+      .top-nav { flex-wrap: wrap; }
+    }
+
     h1 {
       font-family: var(--font-display);
       font-size: clamp(1.8rem, 4vw, 2.6rem);
@@ -199,6 +224,12 @@
   <nav class="top-nav">
     <a class="back-link" href="index.html">← inicio</a>
     <span class="module-badge">Módulo A</span>
+    <div class="module-links">
+      <a href="acertilab-fun.html" class="current">A · Lógica</a>
+      <a href="acertilab-qpm.html">B · QPM</a>
+      <a href="acertilab-qpm-c.html">C · Aplicado</a>
+      <a href="acertilab-qpm-d.html">D · Examen</a>
+    </div>
   </nav>
 
   <h1>Matemática &amp; Lógica</h1>
