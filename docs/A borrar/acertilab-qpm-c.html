@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AcertiLab · Módulo C — QPM Aplicado</title>
+  <style>
+    :root {
+      --bg:       #0d1117;
+      --surface:  #161b22;
+      --border:   #21262d;
+      --accent:   #d2a679;
+      --accent2:  #3fb950;
+      --muted:    #8b949e;
+      --text:     #e6edf3;
+      --correct:  #1a4a2e;
+      --wrong:    #4a1a1a;
+      --correct-border: #3fb950;
+      --wrong-border:   #f78166;
+      --hint-bg:  #1c2333;
+      --hint-border: #d2a679;
+      --font-display: 'Georgia', serif;
+      --font-body:    'Segoe UI', Arial, sans-serif;
+      --font-mono:    'Consolas', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+
+    /* HEADER */
+    .top-nav { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; }
+    .back-link {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--muted); text-decoration: none; letter-spacing: 0.1em;
+    }
+    .back-link:hover { color: var(--accent); }
+    .module-badge {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: 0.2rem 0.6rem; border-radius: 2px;
+    }
+    .module-links { display: flex; gap: 0.5rem; margin-left: auto; flex-wrap: wrap; }
+    .module-links a {
+      font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em;
+      text-decoration: none; color: var(--muted); border: 1px solid var(--border);
+      padding: 0.2rem 0.55rem; border-radius: 2px;
+      transition: border-color 0.15s, color 0.15s; white-space: nowrap;
+    }
+    .module-links a:hover { border-color: var(--accent); color: var(--accent); }
+    .module-links a.current { border-color: var(--accent); color: var(--accent); }
+    @media (max-width: 560px) {
+      .module-links a:not(.current) { display: none; }
+      .top-nav { flex-wrap: wrap; }
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: normal; margin-bottom: 0.5rem;
+    }
+    .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .subtitle-note {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: var(--accent); margin-bottom: 2rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* TABS */
+    .section-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .tab-btn {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border);
+      background: transparent; color: var(--muted);
+      border-radius: 3px; cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .tab-btn:hover, .tab-btn.active { border-color: var(--accent); color: var(--accent); }
+
+    /* PROGRESO */
+    .progress-wrap { margin-bottom: 2rem; }
+    .progress-info {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 0.7rem;
+      color: var(--muted); margin-bottom: 0.4rem;
+    }
+    .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .progress-fill {
+      height: 100%; background: var(--accent);
+      border-radius: 2px; transition: width 0.4s ease; width: 0%;
+    }
+
+    /* SECCIÓN HEADER */
+    .section-header {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); border-left: 2px solid var(--accent);
+      padding-left: 0.75rem; margin: 2rem 0 1.25rem;
+    }
+
+    /* PREGUNTAS */
+    .question-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 1.75rem;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .question-block.answered-correct { border-color: var(--correct-border); background: var(--correct); }
+    .question-block.answered-wrong   { border-color: var(--wrong-border);   background: var(--wrong); }
+
+    .q-header { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.9rem; }
+    .q-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; flex-shrink: 0; }
+    .q-text { font-size: 0.975rem; line-height: 1.65; }
+
+    .q-formula {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 4px; padding: 0.6rem 1rem;
+      font-family: var(--font-mono); font-size: 0.82rem;
+      color: var(--accent2); margin: 0.75rem 0; letter-spacing: 0.02em;
+      white-space: pre-wrap;
+    }
+
+    /* PISTA */
+    .hint-box {
+      background: var(--hint-bg);
+      border: 1px solid var(--hint-border);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0 0;
+      font-size: 0.82rem;
+      color: var(--accent);
+      line-height: 1.6;
+    }
+    .hint-box::before {
+      content: '💡 Pista: ';
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* OPCIONES */
+    .options { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 1rem; }
+    .opt {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--border); border-radius: 4px;
+      background: var(--bg); cursor: pointer;
+      font-size: 0.875rem; line-height: 1.5;
+      transition: border-color 0.15s, background 0.15s;
+      text-align: left; color: var(--text); width: 100%;
+    }
+    .opt:hover:not(:disabled) { border-color: var(--accent); }
+    .opt:disabled { cursor: default; }
+    .opt.correct { border-color: var(--correct-border); background: #1a3a22; color: #7ee89a; }
+    .opt.wrong   { border-color: var(--wrong-border);   background: #3a1a1a; color: #f78166; }
+    .opt.reveal  { border-color: var(--correct-border); background: #1a3a22; color: #7ee89a; }
+    .opt-key { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); width: 1.2rem; flex-shrink: 0; padding-top: 0.1rem; }
+
+    /* FEEDBACK */
+    .feedback {
+      margin-top: 1rem; font-size: 0.85rem;
+      color: var(--muted); line-height: 1.6; display: none;
+      border-top: 1px solid var(--border); padding-top: 0.9rem;
+    }
+    .feedback.show { display: block; }
+    .feedback strong { color: var(--text); }
+    .feedback code {
+      font-family: var(--font-mono); font-size: 0.82rem;
+      color: var(--accent2); background: var(--bg);
+      padding: 0.1rem 0.35rem; border-radius: 3px;
+    }
+
+    /* SCORE */
+    .score-panel {
+      display: none; background: var(--surface);
+      border: 1px solid var(--accent2); border-radius: 6px;
+      padding: 2rem; text-align: center; margin-top: 2rem;
+    }
+    .score-panel.show { display: block; }
+    .score-num { font-family: var(--font-display); font-size: 3.5rem; color: var(--accent2); line-height: 1; }
+    .score-label { color: var(--muted); margin-top: 0.5rem; font-size: 0.9rem; }
+    .score-breakdown { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+    .btn-retry {
+      margin-top: 1.5rem; padding: 0.6rem 1.5rem;
+      background: transparent; border: 1px solid var(--accent);
+      color: var(--accent); border-radius: 4px;
+      font-family: var(--font-mono); font-size: 0.8rem;
+      letter-spacing: 0.1em; cursor: pointer;
+    }
+    .btn-retry:hover { background: var(--accent); color: var(--bg); }
+
+    /* ── AcertiLab: banner de progreso + revisión ─────────── */
+    .al-banner {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .al-banner .al-badge { font-weight: 700; color: var(--accent); }
+    .al-banner .al-muted { color: var(--muted); }
+    .al-banner .al-link-btn {
+      margin-left: auto;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .al-banner .al-link-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .al-review-panel {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+    }
+    .al-review-panel.show { display: block; }
+    .al-review-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .al-review-item:last-child { border-bottom: none; }
+    .al-review-item.wrong { color: #f78166; }
+    .al-review-item.correct { color: #7ee89a; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="top-nav">
+    <a class="back-link" href="index.html">← inicio</a>
+    <span class="module-badge">Módulo C · FMI</span>
+    <div class="module-links">
+      <a href="acertilab-fun.html">A · Lógica</a>
+      <a href="acertilab-qpm.html">B · QPM</a>
+      <a href="acertilab-qpm-c.html" class="current">C · Aplicado</a>
+      <a href="acertilab-qpm-d.html">D · Examen</a>
+    </div>
+  </nav>
+
+  <h1>QPM Aplicado</h1>
+  <p class="subtitle">28 preguntas · Módulos 4–6 del curso FMI</p>
+  <p class="subtitle-note">Cada pregunta incluye una pista de razonamiento antes de las opciones</p>
+
+  <div class="al-banner" id="alBanner"></div>
+  <div class="al-review-panel" id="alReview"></div>
+  <div style="text-align:right;margin-bottom:1rem;">
+    <button class="al-link-btn" style="margin-left:0;" onclick="AcertiLabExport.exportModule('C', {sectionLabels:{m4:'Módulo 4 · Datos', m5:'Módulo 5 · Kalman', m6:'Módulo 6 · Calibración'}})">📄 Exportar resultado (PDF)</button>
+  </div>
+
+  <div class="section-tabs">
+    <button class="tab-btn active" onclick="filterSection('all', this)">Todas</button>
+    <button class="tab-btn" onclick="filterSection('m4', this)">Módulo 4 · Datos</button>
+    <button class="tab-btn" onclick="filterSection('m5', this)">Módulo 5 · Kalman</button>
+    <button class="tab-btn" onclick="filterSection('m6', this)">Módulo 6 · Calibración</button>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span id="progressText">0 / 28 respondidas</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div class="score-panel" id="scorePanel">
+    <div class="score-num" id="scoreNum"></div>
+    <div class="score-label">respuestas correctas de 28</div>
+    <div class="score-breakdown" id="scoreBreak"></div>
+    <button class="btn-retry" onclick="location.reload()">Reintentar</button>
+  </div>
+
+</div>
+
+<script src="acertilab-storage.js"></script>
+<script src="acertilab-export.js"></script>
+<script src="acertilab-ui.js"></script>
+<script>
+const questions = [
+
+  // ── MÓDULO 4: DATOS Y REPORTES ───────────────────────────────────────────
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "¿Cuál es el comando correcto en IRIS Toolbox para guardar la base de datos 'dt' en el archivo 'data_filtered.csv'?",
+    hint: "En IRIS, las bases de datos tienen comandos propios distintos a los de MATLAB base. El prefijo 'db' identifica operaciones sobre bases de datos IRIS (db = database). Pensá: ¿cuál es el verbo para 'guardar' una db?",
+    formula: null,
+    opts: [
+      "dt = save('data_filtered.csv');",
+      "dbsave(dt, 'data_filtered.csv');",
+      "save(dt, 'data_filtered.csv');",
+      "dbexport(dt, 'data_filtered.csv');"
+    ],
+    ans: 1,
+    exp: "<strong>dbsave(dt, 'data_filtered.csv')</strong> es el comando IRIS para guardar una base de datos en formato CSV. <code>save()</code> es MATLAB base y guarda en formato .mat. <code>dbexport</code> no existe en IRIS. El prefijo <strong>db</strong> marca todos los comandos de gestión de bases de datos en IRIS."
+  },
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "¿Cuál es el comando IRIS correcto para crear una serie de tiempo 'my_ts' con valor 2 en el segundo trimestre de 2018?",
+    hint: "En IRIS, el tiempo trimestral se expresa con la función qq(año, trimestre). La función tseries() crea series temporales. El resultado debe asignarse a una variable — ¿qué sintaxis de MATLAB hace eso?",
+    formula: "my_ts = tseries(qq(2018,2), 2);",
+    opts: [
+      "tseries(my_ts, 2018Q2, 2);",
+      "tseries(my_ts, qq(2018,2), 2);",
+      "my_ts = tseries(2018Q2, 2);",
+      "my_ts = tseries(qq(2018,2), 2);"
+    ],
+    ans: 3,
+    exp: "<strong>my_ts = tseries(qq(2018,2), 2)</strong> es la sintaxis correcta. <code>qq(2018,2)</code> genera la fecha trimestral Q2-2018. <code>tseries(fecha, valor)</code> construye la serie. La asignación <code>my_ts =</code> es obligatoria — sin ella, MATLAB ejecuta pero no guarda el resultado. <code>2018Q2</code> sin la función qq() no es sintaxis válida en IRIS."
+  },
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "En el código MATLAB/IRIS: simulate(m, d, qq(1,2):qq(4,3), 'deviation', false); ¿Qué instrucciones se están emitiendo?",
+    hint: "Descomponé el comando argumento por argumento: (1) m = modelo, (2) d = base de datos con condiciones iniciales y shocks, (3) el rango de fechas qq(año,trimestre), (4) 'deviation',false = simular niveles, no desviaciones. El rango qq(1,2):qq(4,3) va del Q2 del año 1 al Q3 del año 4.",
+    formula: "simulate(m, d, qq(1,2):qq(4,3), 'deviation', false);",
+    opts: [
+      "Simular el efecto de shocks en la base 'd' sobre variables del modelo 'm', Q2-año1 a Q3-año4. Calcular diferencias del balanced growth path.",
+      "Simular las variables del modelo 'd' entre Q2-año1 y Q3-año4. Tomar shocks del modelo 'm'.",
+      "Simular las variables del modelo 'm' entre Q2-año1 y Q3-año4. Tomar shocks y condiciones iniciales de la base 'd'.",
+      "Simular las variables del modelo 'm' entre Q1-año2 y Q4-año3. Tomar shocks de la base 'd'."
+    ],
+    ans: 2,
+    exp: "La sintaxis de <strong>simulate</strong> en IRIS es: simulate(<em>modelo</em>, <em>base_datos</em>, <em>rango</em>, opciones). El primer argumento es siempre el <strong>modelo (m)</strong>, el segundo la <strong>base de datos (d)</strong> con condiciones iniciales y shocks. <code>'deviation',false</code> indica que se simulan <strong>niveles</strong>, no desviaciones del estado estacionario. El rango qq(1,2):qq(4,3) = Q2-año1 a Q3-año4."
+  },
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "¿Cuál de las siguientes afirmaciones es FALSA sobre la funcionalidad de MATLAB/IRIS?",
+    hint: "Pensá en lo que permite IRIS para trabajar con múltiples calibraciones. Recordá que en IRIS podés tener varios parámetros en un mismo objeto modelo. La pregunta apunta a si podés graficar dos calibraciones juntas sin usar un loop explícito.",
+    formula: null,
+    opts: [
+      "Los objetos modelo deben tener valores numéricos asignados antes de ser resueltos.",
+      "Los objetos modelo pueden contener múltiples calibraciones y sus soluciones simultáneamente.",
+      "Se puede simular un modelo bajo múltiples calibraciones con un solo comando.",
+      "La única forma de graficar resultados de dos calibraciones en el mismo gráfico es usando un loop."
+    ],
+    ans: 3,
+    exp: "La afirmación <strong>FALSA</strong> es la D. IRIS permite graficar múltiples calibraciones en el mismo gráfico <strong>sin necesidad de un loop explícito</strong>, usando las capacidades vectorizadas de los objetos modelo. Un modelo IRIS puede contener N parametrizaciones y simularlas/graficarlas con un solo comando, precisamente para facilitar el análisis de sensibilidad."
+  },
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "¿Por qué se usan convenciones de nomenclatura (mnemonics) en los códigos de modelos QPM?",
+    hint: "Los mnemonics como L_GDP_GAP, DLA_CPI, RR_BAR tienen una lógica interna: el prefijo indica la transformación (L=log, D=diferencia, DLA=diferencia log anualizada) y el sufijo indica el tipo (_BAR=tendencia, _GAP=brecha, _RW=externo). Esto permite loops y búsquedas automáticas.",
+    formula: null,
+    opts: [
+      "Indicar información sobre el contenido de las variables en sus nombres",
+      "Agilizar la codificación y permitir consistencia entre miembros del equipo",
+      "Mejor agrupación de variables para operaciones de búsqueda/loop",
+      "Capturar todas las posibilidades reales de nombrar variables"
+    ],
+    ans: 3,
+    exp: "Las tres primeras opciones son <strong>ventajas reales</strong> de los mnemonics: comunicar contenido, facilitar trabajo en equipo y permitir loops automáticos (ej: buscar todas las variables que terminan en _GAP). La opción D es la <strong>FALSA</strong>: los mnemonics son convenciones acotadas — no pueden capturar todas las posibilidades de nomenclatura, sino que las restringen deliberadamente para ganar consistencia."
+  },
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "¿Cuál es la diferencia principal entre el filtro Hodrick-Prescott (HP) y el filtro Band-Pass (BP)?",
+    hint: "Ambos filtros descomponen una serie en tendencia y ciclo, pero operan en el dominio de frecuencias de distinta manera. El HP elimina frecuencias 'bajas' (tendencia de largo plazo). El BP es más flexible: podés elegir qué rango de frecuencias conservar, lo que te permite aislar ciclos de cualquier duración.",
+    formula: null,
+    opts: [
+      "El BP se aplica a series con tendencia lineal y el HP a series con tendencia exponencial",
+      "El HP solo se usa con series estacionarias y el BP con series no estacionarias",
+      "El HP se usa con series no estacionarias y el BP solo con series estacionarias",
+      "El BP aísla cualquier rango de frecuencias; el HP solo aísla frecuencias bajas de las altas"
+    ],
+    ans: 3,
+    exp: "La diferencia clave es de <strong>flexibilidad en el dominio de frecuencias</strong>. El <strong>HP Filter</strong> separa componentes de baja frecuencia (tendencia) de los de alta frecuencia (ciclo), con un único parámetro λ que controla la suavidad. El <strong>Band-Pass Filter</strong> es más general: permite aislar <strong>cualquier rango de frecuencias</strong>, por ejemplo solo los ciclos entre 6 y 32 trimestres (ciclo de negocios clásico de Baxter-King)."
+  },
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "En el flujo de trabajo QPM, ¿cuál es el propósito del script a02_makedata.m?",
+    hint: "En la estructura estándar del QPM del FMI, los scripts tienen roles específicos: a01 lee el modelo, a02 prepara los datos, a03 filtra, a04 proyecta. El nombre 'makedata' es literal: hace los datos en el formato que IRIS necesita, mapeando las variables observadas a las variables del modelo.",
+    formula: null,
+    opts: [
+      "Resolver el modelo y generar la solución de expectativas racionales",
+      "Importar datos históricos, transformarlos y construir la base de datos de observaciones para el filtro de Kalman",
+      "Ejecutar el filtro de Kalman y extraer las variables no observables",
+      "Generar los gráficos y tablas del reporte de proyección"
+    ],
+    ans: 1,
+    exp: "El script <strong>a02_makedata.m</strong> es el puente entre los datos brutos y el modelo. Sus tareas: importar datos históricos (<code>dbload</code>), aplicar transformaciones (logaritmos, anualizaciones, empalmes), y construir el objeto <code>dd</code> con las <strong>variables OBS_</strong> que el filtro de Kalman va a usar para comparar el modelo con la realidad. Sin datos bien preparados, el filtro produce resultados sin sentido."
+  },
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "¿Cuál es el propósito de las 'measurement equations' en el código IRIS del QPM?",
+    hint: "El modelo tiene variables teóricas (L_GDP, L_CPI) y variables observadas (OBS_L_GDP, OBS_L_CPI). Las measurement equations son el puente. El filtro de Kalman necesita saber cómo se relacionan las variables del modelo con los datos que realmente podés observar y medir.",
+    formula: "OBS_L_GDP = L_GDP;\nOBS_L_CPI = L_CPI;\nOBS_RS = RS;",
+    opts: [
+      "Definir las ecuaciones de comportamiento de los agentes económicos en el modelo estructural",
+      "Vincular las variables del modelo teórico con las variables observables en los datos reales",
+      "Establecer las restricciones de largo plazo que garantizan la consistencia del estado estacionario",
+      "Calcular las brechas (gaps) como diferencia entre niveles observados y tendencias"
+    ],
+    ans: 1,
+    exp: "Las <strong>measurement equations</strong> conectan el mundo del modelo con el mundo de los datos. En el QPM, OBS_L_GDP = L_GDP dice: 'lo que observo en los datos del PIB corresponde a la variable L_GDP del modelo'. El <strong>filtro de Kalman</strong> usa estas ecuaciones para calcular los errores de predicción (diferencia entre lo que el modelo predice y lo que los datos muestran) y así actualizar las estimaciones de las variables no observables."
+  },
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "¿Qué modelo de expectativas racionales requiere para tener solución única?",
+    hint: "En álgebra lineal, un sistema tiene solución única cuando el número de ecuaciones independientes iguala el número de incógnitas. En un modelo de expectativas racionales, cada variable forward-looking necesita su propia ecuación que la ancle. Si hay más variables que ecuaciones, el modelo tiene infinitas soluciones (indeterminado).",
+    formula: null,
+    opts: [
+      "Parsimonia en el número de parámetros",
+      "El número combinado de ecuaciones y variables no debe superar 20",
+      "El número de variables debe igualar el número de ecuaciones linealmente independientes",
+      "Supuestos realistas sobre el comportamiento de los agentes"
+    ],
+    ans: 2,
+    exp: "La condición matemática fundamental es que el <strong>número de variables iguale el número de ecuaciones linealmente independientes</strong>. En modelos de expectativas racionales (tipo Blanchard-Kahn), además se requiere que el número de variables 'explosivas' (eigenvalores fuera del círculo unitario) iguale el número de variables forward-looking. Esto garantiza la <strong>solución única y estable</strong> que buscamos."
+  },
+  {
+    section: "m4", sectionLabel: "Módulo 4 · Gestión de Datos en MATLAB/IRIS",
+    q: "En un modelo con 6 variables de tendencia y 2 condiciones de consistencia ya especificadas, ¿cuántos procesos adicionales (condiciones o AR(1)) se necesitan?",
+    hint: "Regla simple: necesitás tantas ecuaciones como variables. Si tenés 6 variables de tendencia y ya tenés 2 ecuaciones (las condiciones de consistencia), ¿cuántas faltan para completar el sistema?",
+    formula: null,
+    opts: ["Una", "Cuatro", "Tres", "Seis"],
+    ans: 1,
+    exp: "Con <strong>6 variables</strong> de tendencia y <strong>2 condiciones de consistencia</strong> ya escritas, faltan <strong>4 ecuaciones más</strong> (típicamente procesos AR(1) del tipo: tendencia_t = ρ·tendencia_{t-1} + shock). En el QPM estándar esto se ve claramente: DLA_Z_BAR y la condición de Fisher son las 2 consistencias; RR_BAR, DLA_GDP_BAR, DLA_Z_BAR y D4L_CPI_TAR tienen sus AR(1) = 4 procesos adicionales."
+  },
+
+  // ── MÓDULO 5: FILTRO DE KALMAN ───────────────────────────────────────────
+  {
+    section: "m5", sectionLabel: "Módulo 5 · Filtro de Kalman",
+    q: "Después de calibrar el QPM y correr el filtro de Kalman, decidís reducir sustancialmente la desviación estándar de los shocks en la curva de Phillips. ¿Qué pasará con la estimación del output gap?",
+    hint: "El filtro de Kalman asigna los movimientos de las variables observadas a distintas fuentes según cuánto 'ruido' se le atribuye a cada ecuación. Si reducís el shock de Phillips, el filtro interpreta que la inflación está determinada casi completamente por el output gap (y no por shocks de oferta). Entonces, para explicar los movimientos de inflación, necesita un output gap más volátil.",
+    formula: null,
+    opts: [
+      "Probablemente se volvería más volátil",
+      "Probablemente se volvería menos volátil",
+      "Probablemente no cambiaría",
+      "Es incierto cómo cambiaría el output gap"
+    ],
+    ans: 0,
+    exp: "Al reducir <code>s(SHK_DLA_CPI)</code>, el filtro interpreta que la inflación tiene <strong>poco ruido propio</strong> y está casi enteramente determinada por el output gap vía la curva de Phillips. Para explicar los movimientos observados de inflación, el filtro necesita un <strong>output gap más volátil</strong>. La lógica es de señal/ruido: menos ruido en Phillips → más señal de ciclo → gap más activo."
+  },
+  {
+    section: "m5", sectionLabel: "Módulo 5 · Filtro de Kalman",
+    q: "El output estuvo creciendo rápido varios trimestres y la inflación está muy por encima de la meta. ¿Cómo interpretará el filtro de Kalman este crecimiento del output?",
+    hint: "El filtro de Kalman es bayesiano: combina el modelo con los datos. Preguntate: si el output crece rápido Y la inflación sube, ¿qué dice la curva de Phillips? Una inflación alta implica costos marginales altos, lo que implica que el output gap es positivo (economía recalentada), no que el potencial aumentó.",
+    formula: "DLA_CPI = a1·DLA_CPI{-1} + (1-a1)·DLA_CPI{+1} + a2·RMC + shock\nRMC = a3·L_GDP_GAP + (1-a3)·L_Z_GAP",
+    opts: [
+      "Si la inflación está muy por encima de la meta, atribuirá el crecimiento al mayor crecimiento del PIB potencial",
+      "Si la inflación está muy por encima de la meta, atribuirá el crecimiento al aumento del output gap",
+      "Si la inflación está muy por encima de la meta, atribuirá el crecimiento a la caída del output gap",
+      "Si la inflación está muy por encima de la meta, atribuirá el crecimiento a condiciones monetarias restrictivas recientes"
+    ],
+    ans: 1,
+    exp: "La clave es la <strong>inflación alta</strong>. La curva de Phillips dice que inflación alta implica RMC alto, que implica <strong>output gap positivo</strong> (economía operando por encima del potencial). El filtro de Kalman ve dos señales consistentes: output creciendo rápido + inflación alta → las atribuye al mismo fenómeno: <strong>aumento del output gap</strong>. Si la inflación hubiera estado baja, habría atribuido el crecimiento al potencial."
+  },
+  {
+    section: "m5", sectionLabel: "Módulo 5 · Filtro de Kalman",
+    q: "El output gap estimado por el filtro de Kalman no co-mueve con la inflación en muchos períodos, aunque tu información previa indica que los costos domésticos deberían responder al ciclo. ¿Cuál es la causa más probable y cómo corregirla?",
+    hint: "Si el output gap no co-mueve con inflación, el filtro no está usando la Phillips para identificar el ciclo. Preguntate: ¿qué parámetro le dice al filtro cuánto 'confiar' en la relación output gap → inflación? Es la desviación estándar del shock en la Phillips. Si es muy alta, el filtro interpreta que la inflación tiene mucho ruido propio y no necesita del output gap para explicarla.",
+    formula: null,
+    opts: [
+      "La desviación estándar de shocks en la curva IS puede ser muy alta. Recalibrar: reducir.",
+      "La desviación estándar de shocks en la curva IS puede ser muy baja. Recalibrar: aumentar.",
+      "La desviación estándar de shocks en la curva de Phillips puede ser muy alta. Recalibrar: reducir.",
+      "La desviación estándar de shocks en la curva de Phillips puede ser muy baja. Recalibrar: aumentar."
+    ],
+    ans: 2,
+    exp: "El problema es que el filtro interpreta los movimientos de inflación como <strong>ruido puro</strong> (shocks de oferta) y no como señal del ciclo. Causa: la desviación estándar del shock de Phillips <code>s(SHK_DLA_CPI)</code> está <strong>muy alta</strong>. Corrección: reducirla. Con menor ruido en Phillips, el filtro se ve 'obligado' a usar el output gap para explicar los movimientos de inflación, y el gap pasa a co-moverse con ella."
+  },
+  {
+    section: "m5", sectionLabel: "Módulo 5 · Filtro de Kalman",
+    q: "¿Qué tipo de solución siempre buscamos en un modelo de expectativas racionales?",
+    hint: "Un modelo macroeconómico que genere trayectorias explosivas (variables que divergen hacia infinito) sería inútil para proyecciones. La condición de Blanchard-Kahn establece precisamente cuándo existe una solución que no explota. Pensá: ¿qué característica necesita la solución para ser usable en política?",
+    formula: null,
+    opts: [
+      "Una única solución estable",
+      "Una única solución inestable",
+      "Solo soluciones inestables",
+      "Solo soluciones estables"
+    ],
+    ans: 0,
+    exp: "Buscamos <strong>una única solución estable</strong> (condición de Blanchard-Kahn). 'Única' porque si hubiera múltiples soluciones estables, el modelo sería indeterminado y no podríamos hacer proyecciones. 'Estable' porque necesitamos que las variables converjan al estado estacionario tras un shock, no que exploten. Múltiples soluciones estables significan que las expectativas son indeterminadas, un problema severo para la credibilidad del IT."
+  },
+  {
+    section: "m5", sectionLabel: "Módulo 5 · Filtro de Kalman",
+    q: "¿Cuál es la línea de código mal ubicada en este fragmento IRIS?",
+    hint: "El modelo debe estar resuelto ANTES de poder filtrarlo. El comando solve(m) computa la solución de expectativas racionales del modelo. El filtro de Kalman filter(m,...) necesita esa solución para construir las matrices de predicción. Revisá el orden lógico: 1) cargar modelo, 2) resolver, 3) preparar datos, 4) filtrar.",
+    formula: "[m,p,mss] = readmodel();\nd = dbload('history.csv');\ndd.OBS_var = d.var;\n[m_kf,g,v,delta,pe] = filter(m,dd,sdate:edate);\nm = solve(m);   % ← ¿está bien acá?\nh = g.mean;\nd = dbextend(d,h);",
+    opts: [
+      "d = dbload('history.csv'); debe ir al final, después de d = dbextend(d,h);",
+      "dd.OBS_variablename2 = tseries(...); debe ir después del filter()",
+      "m = solve(m); debe ir después de readmodel() y antes del filter()",
+      "d = dbextend(d,h); debe ir después de dbload()"
+    ],
+    ans: 2,
+    exp: "La línea <strong>m = solve(m)</strong> está mal ubicada: aparece <em>después</em> del filtro, pero debería ir <em>antes</em>. El orden correcto es: (1) <code>readmodel()</code> → carga el modelo sin solución, (2) <code>solve(m)</code> → computa la solución de expectativas racionales, (3) preparar datos, (4) <code>filter(m,...)</code> → aplica Kalman usando la solución ya computada. Filtrar un modelo no resuelto produce error o resultados incorrectos."
+  },
+  {
+    section: "m5", sectionLabel: "Módulo 5 · Filtro de Kalman",
+    q: "¿Qué representa el parámetro 'rho' (ρ) en las ecuaciones de tendencias del QPM, como rho_RR_BAR(0.8)?",
+    hint: "Las tendencias del QPM siguen procesos AR(1): tendencia_t = ρ·tendencia_{t-1} + (1-ρ)·ss + shock. El parámetro ρ controla qué tan persistente es la tendencia. Si ρ=1, la tendencia es un paseo aleatorio. Si ρ=0, la tendencia vuelve instantáneamente al estado estacionario. ¿Qué implica ρ=0.8 calibrado en el QPM?",
+    formula: "RR_BAR = rho_RR_BAR(0.8)*RR_BAR{-1} + (1-rho_RR_BAR(0.8))*ss_RR_BAR(0.5) + SHK_RR_BAR",
+    opts: [
+      "La tasa neutral real converge inmediatamente al estado estacionario tras un shock",
+      "La tasa neutral real sigue un paseo aleatorio sin convergencia al estado estacionario",
+      "La tasa neutral real converge gradualmente al estado estacionario con velocidad controlada por ρ",
+      "La tasa neutral real es constante e igual al estado estacionario en todo momento"
+    ],
+    ans: 2,
+    exp: "Con ρ=0.8, la <strong>tasa neutral real (RR_BAR)</strong> converge gradualmente al estado estacionario (ss_RR_BAR=0.5%). Un shock a RR_BAR se disipa a una tasa de (1-0.8)=20% por trimestre. Esto captura la idea de que la tasa neutral puede desviarse temporalmente de su valor de largo plazo (cambios en productividad, demografía) pero eventualmente regresa. Si ρ=1 sería no estacionario; si ρ=0 sería estacionario instantáneo."
+  },
+  {
+    section: "m5", sectionLabel: "Módulo 5 · Filtro de Kalman",
+    q: "¿Por qué el filtro de Kalman es preferible al filtro HP para estimar el output gap en el contexto del QPM?",
+    hint: "El filtro HP es puramente estadístico: separa tendencia de ciclo sin usar información económica. El filtro de Kalman usa el modelo QPM completo: sabe que la inflación debe co-moverse con el gap, que la tasa de interés reacciona al gap, etc. ¿Cuál usa más información?",
+    formula: null,
+    opts: [
+      "El filtro HP es más preciso porque usa más puntos de datos en su estimación",
+      "El filtro de Kalman usa el modelo estructural como información a priori, haciendo que el gap estimado sea consistente con las relaciones económicas del QPM",
+      "El filtro HP produce estimaciones en tiempo real mientras el Kalman requiere la serie completa",
+      "El filtro de Kalman es más simple de implementar y requiere menos parámetros"
+    ],
+    ans: 1,
+    exp: "La ventaja del <strong>filtro de Kalman</strong> en el QPM es que usa el modelo estructural como información a priori: sabe que el gap debe co-moverse con la inflación (Phillips), afectar la tasa de interés (Taylor) y responder al MCI (IS). El HP ignora toda esa información y puede producir un gap que no tiene relación con la inflación — exactamente el problema del Q20 del curso. El Kalman produce un gap <strong>económicamente coherente</strong>."
+  },
+  {
+    section: "m5", sectionLabel: "Módulo 5 · Filtro de Kalman",
+    q: "En la filtración de Kalman del QPM, ¿qué representa la variable 'PREM' (prima de riesgo país) y cómo afecta al tipo de cambio?",
+    hint: "Mirá la UIP modificada del modelo. La PREM aparece junto a la tasa externa RS_RW. Si la prima de riesgo sube, ¿qué le ocurre al tipo de cambio? Pensá en el diferencial de tasas: para que se cumpla la UIP con una prima mayor, el tipo de cambio debe ajustarse.",
+    formula: "L_S = (1-e1)*L_S{+1} + e1*(L_S{-1} + ...) + (-RS + RS_RW + PREM)/4 + shock",
+    opts: [
+      "La prima de riesgo reduce la tasa de interés doméstica necesaria para atraer capitales externos",
+      "La prima de riesgo eleva el tipo de cambio nominal (depreciación), reflejando mayor riesgo percibido del país",
+      "La prima de riesgo afecta solo al tipo de cambio real a través del diferencial de inflación",
+      "La prima de riesgo se cancela en el estado estacionario y no afecta el tipo de cambio de largo plazo"
+    ],
+    ans: 1,
+    exp: "En la UIP, <strong>PREM</strong> entra con signo positivo en el factor que determina L_S (el tipo de cambio nominal). Un aumento de la prima de riesgo eleva L_S = <strong>depreciación nominal</strong>: los inversores exigen mayor rendimiento para mantener activos domésticos, lo que presiona el tipo de cambio. En el estado estacionario del modelo, PREM=1.25% — no es cero, reflejando que incluso en equilibrio hay un diferencial de riesgo persistente."
+  },
+  {
+    section: "m5", sectionLabel: "Módulo 5 · Filtro de Kalman",
+    q: "¿Cuál es la interpretación económica del coeficiente b4(0.7) en la ecuación del MCI?",
+    hint: "MCI = b4·RR_GAP + (1-b4)·(-L_Z_GAP). El MCI pondera el canal de tasa de interés (b4) y el canal cambiario (1-b4). Si b4=0.7, ¿qué canal domina? Y, ¿qué nos dice eso sobre la estructura de la economía modelada?",
+    formula: "MCI = b4(0.7)*RR_GAP + (1-b4(0.7))*(-L_Z_GAP)",
+    opts: [
+      "El 70% del efecto monetario sobre la demanda opera vía tasa de interés real y el 30% vía tipo de cambio real",
+      "La tasa de interés real tiene un impacto 70% mayor que el tipo de cambio real sobre la inflación directamente",
+      "El banco central fija la tasa de interés en el 70% de los períodos y deja flotar el tipo de cambio el resto",
+      "El 70% de la varianza del output gap se explica por shocks de tasa de interés"
+    ],
+    ans: 0,
+    exp: "b4=0.7 significa que el <strong>70% de las condiciones monetarias</strong> operan vía <strong>canal de tasa de interés real</strong> (RR_GAP) y el <strong>30% vía canal cambiario</strong> (-L_Z_GAP). Un tipo de cambio apreciado (L_Z_GAP negativo) implica condiciones más restrictivas (encarece exportaciones). Esta ponderación refleja la estructura de la economía: en economías muy abiertas, b4 sería menor (más peso cambiario); en economías más cerradas, mayor."
+  },
+
+  // ── MÓDULO 6: CALIBRACIÓN ────────────────────────────────────────────────
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "Recalibraste la curva de Phillips para capturar más expectativas backward-looking (aumentaste a1). Sin otro cambio. Al comparar las IRFs a un shock de costos (cost-push), ¿cuál es el resultado más probable?",
+    hint: "Un a1 más alto significa que la inflación de hoy depende más de la inflación de ayer. Esto hace que los shocks inflacionarios sean más persistentes. Para bajar una inflación más persistente, el banco central (vía Taylor) debe subir más la tasa, generando un mayor efecto contractivo sobre el output gap.",
+    formula: "DLA_CPI = a1·DLA_CPI{-1} + (1-a1)·DLA_CPI{+1} + a2·RMC + shock\n(a1 aumenta de 0.7 a, por ejemplo, 0.85)",
+    opts: [
+      "Con más backward-looking, el gap se vuelve menos negativo pero la inflación vuelve a meta más lentamente",
+      "Con más backward-looking, el gap se vuelve más negativo y la inflación vuelve a meta más lentamente",
+      "Con más backward-looking, el gap se vuelve más negativo pero la inflación vuelve a meta más rápido",
+      "Con más backward-looking, el gap se vuelve menos negativo y la inflación vuelve a meta más rápido"
+    ],
+    ans: 1,
+    exp: "Más backward-looking (mayor a1) → shocks de inflación son más <strong>persistentes</strong>. Para anclar la inflación, el banco central debe ser más agresivo (Taylor → mayor suba de tasas → mayor caída del output gap). Resultado: <strong>gap más negativo</strong> (más recesión) y <strong>retorno más lento</strong> a la meta de inflación. Esto ilustra el trade-off: expectativas no ancladas elevan el costo en producto de desinflación (mayor sacrifice ratio)."
+  },
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "Al revisar las IRFs, el output gap no reacciona en la dirección correcta ante un shock contractivo de política monetaria (aumento de tasa). ¿Qué parámetro debés ajustar?",
+    hint: "Trazá el canal: sube RS → sube RR → sube RR_GAP → MCI más restrictivo → cae L_GDP_GAP. Si el gap no baja (o sube) ante una suba de tasa, el problema está en el coeficiente que transmite el MCI al output gap. Buscá en la ecuación IS.",
+    formula: "L_GDP_GAP = b1·L_GDP_GAP{-1} - b2·MCI + b3·L_GDP_RW_GAP + shock",
+    opts: [
+      "Desviación estándar del shock de política monetaria",
+      "Calibración del estado estacionario del crecimiento del output",
+      "Persistencia del output gap (b1)",
+      "Elasticidad del output gap al gap de tasa de interés real (b2 en el MCI)"
+    ],
+    ans: 3,
+    exp: "El canal es: shock RS → RR_GAP → MCI → L_GDP_GAP. Si el gap no reacciona correctamente, el problema está en <strong>b2</strong> (elasticidad del output gap al MCI) o en b4 (peso de la tasa real en el MCI). En la ecuación IS, el coeficiente <strong>b2(0.3)</strong> multiplica al MCI. Si es muy bajo, el output gap no responde suficientemente a las condiciones monetarias. Aumentar b2 amplifica la respuesta del gap al shock de tasa."
+  },
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "¿Cuál de las siguientes afirmaciones es VERDADERA respecto al estado estacionario del QPM?",
+    hint: "El estado estacionario es el punto de equilibrio de largo plazo del modelo. Pensá en qué significa cada variable en ese equilibrio: la inflación está en meta, las brechas son cero, los gaps son cero. Eso implica cosas específicas sobre tasas de crecimiento y niveles.",
+    formula: "Estado estacionario del modelo (ver tabla de valores ss_*)",
+    opts: [
+      "Las tasas de crecimiento de las variables son cero en el estado estacionario",
+      "Las variables de brecha (gap) son cero en el estado estacionario",
+      "La inflación es cero en el estado estacionario",
+      "Las tasas de interés doméstica y externa son iguales en el estado estacionario"
+    ],
+    ans: 1,
+    exp: "La afirmación VERDADERA es que los <strong>gaps son cero</strong> en el estado estacionario: L_GDP_GAP=0, RR_GAP=0, L_Z_GAP=0, MCI=0. Las otras son falsas: (A) las tasas de <em>crecimiento</em> no son cero — el PIB crece al 2.5% en ss; (C) la inflación en ss = meta = 2%, no cero; (D) RS=2.5% ≠ RS_RW=2.75% porque existe la prima de riesgo país (PREM=1.25%) que permite diferencial de tasas."
+  },
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "En una economía más abierta que la modelada en el QPM estándar, ¿cómo deberían cambiar los coeficientes de la curva de Phillips?",
+    hint: "En una economía más abierta, una mayor proporción de los bienes consumidos son importados. Los precios internos dependen más del tipo de cambio real (L_Z_GAP) y menos solo del ciclo doméstico (L_GDP_GAP). Mirá cómo entra el tipo de cambio en RMC y qué coeficiente lo pondera.",
+    formula: "RMC = a3·L_GDP_GAP + (1-a3)·L_Z_GAP",
+    opts: [
+      "a1 debería ser relativamente mayor, porque más agentes miran la inflación pasada para fijar expectativas",
+      "a2 debería ser relativamente mayor, porque el pass-through de costos a inflación es más rápido",
+      "a3 debería ser relativamente menor, porque hay mayor participación de insumos o bienes importados",
+      "Todos los coeficientes a1, a2 y a3 deberían ser relativamente menores"
+    ],
+    ans: 2,
+    exp: "En una economía <strong>más abierta</strong>, el tipo de cambio real (L_Z_GAP) tiene mayor peso en los costos marginales reales. El coeficiente <strong>a3 menor</strong> significa que (1-a3) es mayor, dándole más peso al L_Z_GAP en el RMC. Esto refleja la mayor participación de bienes importados en la canasta: un tipo de cambio depreciado encarece más los costos en economías abiertas. El coeficiente a2 también podría ser mayor (pass-through más rápido), pero el cambio más directo y estructural es en a3."
+  },
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "¿Cuál es la aplicación primaria del modelo QPM en un banco central con esquema de metas de inflación?",
+    hint: "El QPM no es un modelo de pronóstico de muy corto plazo (eso lo hacen modelos ARIMA o indicadores adelantados). Tampoco es un modelo de crecimiento de largo plazo. Su diseño es específico: el horizonte de política monetaria, donde importa la dinámica cíclica y la respuesta de la tasa.",
+    formula: null,
+    opts: [
+      "Producir el mejor pronóstico posible de inflación en el horizonte de muy corto plazo",
+      "Pronosticar la dinámica de largo plazo de la economía y la reacción de política para estimular el crecimiento",
+      "Analizar y pronosticar la dinámica cíclica de la economía junto con la reacción de política monetaria necesaria para llevar la inflación a la meta",
+      "Analizar y pronosticar la dinámica cíclica junto con la reacción de política necesaria para mantener el tipo de cambio nominal en la meta"
+    ],
+    ans: 2,
+    exp: "El QPM es primariamente una herramienta para <strong>analizar y proyectar la dinámica cíclica</strong> y determinar la <strong>respuesta de política monetaria</strong> para llevar la inflación a la meta en el horizonte de mediano plazo (típicamente 6-8 trimestres). No es un modelo de muy corto plazo (no captura bien efectos inmediatos) ni de largo plazo (no modela crecimiento endógeno). Es el modelo del <em>ciclo de política monetaria</em> bajo IT."
+  },
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "¿Cuáles son los dos principales canales de transmisión de política monetaria que incorpora el QPM canónico?",
+    hint: "Mirá la ecuación del MCI: combina dos elementos. La política monetaria (tasa RS) afecta la demanda por dos vías distintas. Una es directa (el costo del crédito para consumo e inversión), la otra es indirecta (a través del tipo de cambio). ¿Cuáles son?",
+    formula: "MCI = b4·RR_GAP + (1-b4)·(-L_Z_GAP)",
+    opts: [
+      "El canal de precios de activos y el canal de crédito",
+      "El canal de préstamos bancarios y el canal de hoja de balance",
+      "El canal indirecto del tipo de cambio y el canal de crédito",
+      "El canal del tipo de cambio y el canal de tasa de interés"
+    ],
+    ans: 3,
+    exp: "El QPM incorpora dos canales explícitos: (1) <strong>Canal de tasa de interés</strong>: RS → RR → RR_GAP → MCI → L_GDP_GAP (afecta consumo e inversión vía costo del crédito); (2) <strong>Canal del tipo de cambio</strong>: RS → UIP → L_S → L_Z_GAP → MCI y RMC → L_GDP_GAP y DLA_CPI (afecta competitividad y precios importados). Ambos están integrados en el MCI, que los pondera según b4."
+  },
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "¿Cuál es la interpretación correcta de la condición de consistencia de largo plazo en el QPM: DLA_Z_BAR{+1} = RR_BAR − RR_RW_BAR − PREM?",
+    hint: "Esta es la versión de largo plazo de la UIP. Pensá: si las tendencias del tipo de cambio real, la tasa real doméstica y la externa están en estado estacionario, ¿qué determina la tasa de depreciación real de equilibrio? La respuesta conecta la PPP relativa con el diferencial de tasas reales.",
+    formula: "DLA_Z_BAR{+1} = RR_BAR - RR_RW_BAR - PREM",
+    opts: [
+      "En el largo plazo, la tasa de cambio nominal no depende de ningún otro desarrollo de largo plazo",
+      "En el largo plazo, la tasa de cambio real está determinada solo por la tasa de cambio nominal y el diferencial de inflación",
+      "El banco central con IT debe simultáneamente fijar el tipo de cambio nominal",
+      "En el largo plazo, la tasa de cambio nominal está plenamente determinada por la meta de inflación doméstica, la externa y la tasa de cambio real de largo plazo"
+    ],
+    ans: 3,
+    exp: "La condición de consistencia dice que la <strong>depreciación nominal de largo plazo</strong> está determinada por: meta de inflación doméstica − meta de inflación externa + cambio del tipo de cambio real de tendencia. Esto es la <strong>PPP relativa</strong>: el tipo de cambio nominal de largo plazo refleja el diferencial de inflaciones más los cambios estructurales del tipo de cambio real. El banco central IT no puede fijar el nominal — solo la inflación."
+  },
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "En el QPM calibrado, g1(0.7) en la regla de Taylor controla el suavizamiento de la tasa de interés. ¿Qué implica un g1 cercano a 1?",
+    hint: "La regla de Taylor del QPM es: RS = g1·RS{-1} + (1-g1)·(RSNEUTRAL + reacción). Si g1=1, la tasa no cambia nunca (solo depende de sí misma). Si g1=0, la tasa salta inmediatamente al nivel 'deseado' por la regla. g1=0.7 es intermedio — ¿qué implica en términos de comportamiento del banco central?",
+    formula: "RS = g1(0.7)*RS{-1} + (1-g1(0.7))*(RSNEUTRAL + g2*(D4L_CPI{+4} - TAR{+4}) + g3*L_GDP_GAP) + shock",
+    opts: [
+      "El banco central reacciona agresivamente y de manera inmediata a las desviaciones de inflación",
+      "El banco central ajusta la tasa lentamente y de manera gradual, priorizando la estabilidad financiera",
+      "La tasa de interés es completamente exógena y no responde a condiciones macroeconómicas",
+      "El banco central solo reacciona a shocks de tipo de cambio, no a shocks de inflación"
+    ],
+    ans: 1,
+    exp: "g1=0.7 captura el <strong>interest rate smoothing</strong>: el banco central ajusta la tasa <strong>gradualmente</strong>, no de un salto. Con g1=0.7, en cada período la tasa se mueve solo el 30% del camino hacia el nivel 'deseado' por la regla. Esto refleja preferencias reales de los bancos centrales: los cambios bruscos generan volatilidad en mercados, afectan credibilidad y crean costos de información. Un g1 cercano a 1 → ajuste muy lento; g1 cercano a 0 → ajuste inmediato."
+  },
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "El coeficiente g2(0.5) en la regla de Taylor del QPM controla la reacción a la brecha de inflación proyectada 4 trimestres hacia adelante. ¿Qué implica un g2 menor que 0.5 en términos de política monetaria?",
+    hint: "La brecha de inflación es (D4L_CPI{+4} − D4L_CPI_TAR{+4}): cuánto se desvía la inflación proyectada a 4 trimestres de la meta. Si g2 es pequeño, la tasa reacciona poco ante esa desviación. Pensá en la condición de Taylor: para estabilizar la inflación, la tasa real debe subir más que la inflación (principio de Taylor). ¿Se cumple eso?",
+    formula: "RS = g1*RS{-1} + (1-g1)*(RSNEUTRAL + g2*(D4L_CPI{+4} - TAR{+4}) + g3*L_GDP_GAP)",
+    opts: [
+      "El banco central reacciona más agresivamente a la inflación, garantizando el principio de Taylor",
+      "El banco central reacciona menos agresivamente a la inflación, pudiendo violar el principio de Taylor y generar indeterminación",
+      "El banco central estabiliza el tipo de cambio nominal en lugar de la inflación",
+      "El banco central amplía el horizonte de proyección para decidir la tasa de política"
+    ],
+    ans: 1,
+    exp: "El <strong>principio de Taylor</strong> requiere que la tasa nominal suba más que la inflación cuando esta sube (para elevar la tasa real). Si g2 es muy bajo, ante un aumento de inflación la tasa sube poco → la tasa real baja → condiciones más laxas → más inflación. Esto puede generar <strong>indeterminación</strong> (múltiples soluciones de equilibrio) porque la política monetaria valida la inflación en lugar de combatirla. g2 debe ser suficientemente grande para cumplir el principio de Taylor."
+  },
+  {
+    section: "m6", sectionLabel: "Módulo 6 · Calibración del Modelo",
+    q: "¿Cuál es la lógica de la UIP modificada del QPM en un régimen de tipo de cambio flexible con IT?",
+    hint: "La UIP dice que el diferencial de tasas debe igualar la depreciación esperada más la prima de riesgo. En el QPM, la UIP es 'modificada' porque mezcla componentes forward-looking y backward-looking del tipo de cambio. El banco central no interviene sistemáticamente: el tipo de cambio lo determina el mercado, guiado por el diferencial de tasas.",
+    formula: "L_S = (1-e1)*L_S{+1} + e1*(L_S{-1} + ...) + (-RS + RS_RW + PREM)/4 + shock",
+    opts: [
+      "La oferta y demanda en el mercado cambiario responde al diferencial de tasas y prima de riesgo, y el banco central interviene para mantener el tipo de cambio fijo",
+      "La oferta y demanda en el mercado cambiario responde al diferencial de tasas y prima de riesgo, y el banco central ajusta la oferta de dinero para suavizar el tipo de cambio",
+      "La oferta y demanda en el mercado cambiario responde al diferencial de tasas y prima de riesgo y determina el tipo de cambio nominal, sin intervención sistemática del banco central",
+      "La meta de depreciación, la tasa externa y la prima de riesgo determinan plenamente la tasa doméstica, siendo la tasa de interés irrelevante como instrumento"
+    ],
+    ans: 2,
+    exp: "En el QPM bajo IT con tipo de cambio <strong>flexible</strong>, el mercado determina el tipo de cambio nominal a través del diferencial de tasas (RS − RS_RW) y la prima de riesgo (PREM). El banco central <strong>no interviene sistemáticamente</strong> en el mercado cambiario — su única herramienta es RS. Esto es la consistencia del esquema IT puro: un instrumento (tasa) para un objetivo (inflación). Las intervenciones cambiarias episódicas podrían modelarse como shocks a PREM."
+  }
+];
+
+let answered = 0;
+let correctCount = 0;
+let correctM4 = 0, correctM5 = 0, correctM6 = 0;
+let lastDetails = [];
+let total = questions.length;
+let currentFilter = 'all';
+
+function build(filter) {
+  const container = document.getElementById('quiz');
+  container.innerHTML = '';
+  let lastSection = '';
+
+  questions.forEach((q, i) => {
+    if (filter !== 'all' && q.section !== filter) return;
+
+    if (q.sectionLabel !== lastSection) {
+      const sh = document.createElement('div');
+      sh.className = 'section-header';
+      sh.textContent = q.sectionLabel;
+      container.appendChild(sh);
+      lastSection = q.sectionLabel;
+    }
+
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.id = `q${i}`;
+
+    const num = String(i + 1).padStart(2, '0');
+    const formulaHtml = q.formula
+      ? `<div class="q-formula">${q.formula}</div>` : '';
+
+    const optsHtml = q.opts.map((o, j) => `
+      <button class="opt" onclick="answer(${i},${j})" id="opt${i}_${j}">
+        <span class="opt-key">${String.fromCharCode(65+j)}</span>
+        <span>${o}</span>
+      </button>
+    `).join('');
+
+    block.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">${num}</span>
+        <span class="q-text">${q.q}</span>
+      </div>
+      ${formulaHtml}
+      <div class="hint-box">${q.hint}</div>
+      <div class="options">${optsHtml}</div>
+      <div class="feedback" id="fb${i}">${q.exp}</div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+function answer(qi, oi) {
+  const q = questions[qi];
+  const block = document.getElementById(`q${qi}`);
+  const fb = document.getElementById(`fb${qi}`);
+
+  if (!block || block.dataset.answered) return;
+  block.dataset.answered = '1';
+
+  q.opts.forEach((_, j) => {
+    const btn = document.getElementById(`opt${qi}_${j}`);
+    if (!btn) return;
+    btn.disabled = true;
+    if (j === q.ans) btn.classList.add('reveal');
+  });
+
+  const chosen = document.getElementById(`opt${qi}_${oi}`);
+  if (oi === q.ans) {
+    chosen.classList.add('correct');
+    block.classList.add('answered-correct');
+    correctCount++;
+    if (q.section === 'm4') correctM4++;
+    else if (q.section === 'm5') correctM5++;
+    else correctM6++;
+  } else {
+    chosen.classList.add('wrong');
+    block.classList.add('answered-wrong');
+  }
+  lastDetails.push({ qIndex: qi, chosen: oi, isCorrect: oi === q.ans });
+
+  fb.classList.add('show');
+  answered++;
+  updateProgress();
+
+  if (answered === total) setTimeout(showScore, 700);
+}
+
+function updateProgress() {
+  const pct = Math.round(answered / total * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${answered} / ${total} respondidas`;
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+function showScore() {
+  const panel = document.getElementById('scorePanel');
+  document.getElementById('scoreNum').textContent = `${correctCount}/${total}`;
+
+  if (currentFilter === 'all') {
+    document.getElementById('scoreBreak').innerHTML =
+      `Módulo 4 (Datos): ${correctM4}/10 &nbsp;·&nbsp; Módulo 5 (Kalman): ${correctM5}/9 &nbsp;·&nbsp; Módulo 6 (Calibración): ${correctM6}/9`;
+  } else {
+    const labels = { m4: 'Módulo 4 (Datos)', m5: 'Módulo 5 (Kalman)', m6: 'Módulo 6 (Calibración)' };
+    document.getElementById('scoreBreak').innerHTML =
+      `Resultado parcial — sección: <strong>${labels[currentFilter]}</strong> (${total} preguntas)`;
+  }
+  panel.classList.add('show');
+  panel.scrollIntoView?.({ behavior: 'smooth' });
+
+  AcertiLab.saveModuleResult('C', {
+    correct: correctCount,
+    total: total,
+    details: lastDetails,
+    breakdown: { m4: correctM4, m5: correctM5, m6: correctM6 },
+    partial: currentFilter !== 'all',
+    section: currentFilter
+  });
+  AcertiLabUI.renderBanner({
+    moduleId: 'C',
+    bannerEl: document.getElementById('alBanner'),
+    reviewEl: document.getElementById('alReview'),
+    getQuestion: (i) => questions[i]
+  });
+}
+
+function filterSection(section, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  build(section);
+  currentFilter = section;
+  total = section === 'all' ? questions.length : questions.filter(q => q.section === section).length;
+  answered = 0; correctCount = 0; correctM4 = 0; correctM5 = 0; correctM6 = 0; lastDetails = [];
+  updateProgress();
+}
+
+build('all');
+AcertiLabUI.renderBanner({
+  moduleId: 'C',
+  bannerEl: document.getElementById('alBanner'),
+  reviewEl: document.getElementById('alReview'),
+  getQuestion: (i) => questions[i]
+});
+</script>
+</body>
+</html>
