@@ -192,6 +192,49 @@
       letter-spacing: 0.1em; cursor: pointer;
     }
     .btn-retry:hover { background: var(--accent); color: var(--bg); }
+
+    /* ── AcertiLab: banner de progreso + revisión ─────────── */
+    .al-banner {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .al-banner .al-badge { font-weight: 700; color: var(--accent); }
+    .al-banner .al-muted { color: var(--muted); }
+    .al-banner .al-link-btn {
+      margin-left: auto;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .al-banner .al-link-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .al-review-panel {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+    }
+    .al-review-panel.show { display: block; }
+    .al-review-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .al-review-item:last-child { border-bottom: none; }
+    .al-review-item.wrong { color: #f78166; }
+    .al-review-item.correct { color: #7ee89a; }
   </style>
 </head>
 <body>
@@ -210,6 +253,12 @@
 
   <h1>Modelo QPM</h1>
   <p class="subtitle">28 preguntas · Núcleo técnico + IMF Post-Course</p>
+
+  <div class="al-banner" id="alBanner"></div>
+  <div class="al-review-panel" id="alReview"></div>
+  <div style="text-align:right;margin-bottom:1rem;">
+    <button class="al-link-btn" style="margin-left:0;" onclick="AcertiLabExport.exportModule('B', {sectionLabels:{nucleo:'Núcleo QPM', post:'Post-Course IMF'}})">📄 Exportar resultado (PDF)</button>
+  </div>
 
   <div class="section-tabs">
     <button class="tab-btn active" onclick="filterSection('all', this)">Todas</button>
@@ -236,6 +285,9 @@
 
 </div>
 
+<script src="acertilab-storage.js"></script>
+<script src="acertilab-export.js"></script>
+<script src="acertilab-ui.js"></script>
 <script>
 const questions = [
   // ── NÚCLEO QPM ──────────────────────────────────────────────────────────
@@ -616,7 +668,9 @@ let answered = 0;
 let correctCount = 0;
 let correctNucleo = 0;
 let correctPost = 0;
-const total = questions.length;
+let lastDetails = [];
+let total = questions.length;
+let currentFilter = 'all';
 
 function build(filter) {
   const container = document.getElementById('quiz');
@@ -691,6 +745,7 @@ function answer(qi, oi) {
     chosen.classList.add('wrong');
     block.classList.add('answered-wrong');
   }
+  lastDetails.push({ qIndex: qi, chosen: oi, isCorrect: oi === q.ans });
 
   fb.classList.add('show');
   answered++;
@@ -709,21 +764,51 @@ function updateProgress() {
 function showScore() {
   const panel = document.getElementById('scorePanel');
   document.getElementById('scoreNum').textContent = `${correctCount}/${total}`;
-  document.getElementById('scoreBreak').innerHTML =
-    `Núcleo QPM: ${correctNucleo}/15 &nbsp;·&nbsp; Post-Course IMF: ${correctPost}/13`;
+
+  if (currentFilter === 'all') {
+    document.getElementById('scoreBreak').innerHTML =
+      `Núcleo QPM: ${correctNucleo}/15 &nbsp;·&nbsp; Post-Course IMF: ${correctPost}/13`;
+  } else {
+    const label = currentFilter === 'nucleo' ? 'Núcleo QPM' : 'Post-Course IMF';
+    document.getElementById('scoreBreak').innerHTML =
+      `Resultado parcial — sección: <strong>${label}</strong> (${total} preguntas)`;
+  }
   panel.classList.add('show');
-  panel.scrollIntoView({ behavior: 'smooth' });
+  panel.scrollIntoView?.({ behavior: 'smooth' });
+
+  AcertiLab.saveModuleResult('B', {
+    correct: correctCount,
+    total: total,
+    details: lastDetails,
+    breakdown: { nucleo: correctNucleo, post: correctPost },
+    partial: currentFilter !== 'all',
+    section: currentFilter
+  });
+  AcertiLabUI.renderBanner({
+    moduleId: 'B',
+    bannerEl: document.getElementById('alBanner'),
+    reviewEl: document.getElementById('alReview'),
+    getQuestion: (i) => questions[i]
+  });
 }
 
 function filterSection(section, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   build(section);
-  answered = 0; correctCount = 0; correctNucleo = 0; correctPost = 0;
+  currentFilter = section;
+  total = section === 'all' ? questions.length : questions.filter(q => q.section === section).length;
+  answered = 0; correctCount = 0; correctNucleo = 0; correctPost = 0; lastDetails = [];
   updateProgress();
 }
 
 build('all');
+AcertiLabUI.renderBanner({
+  moduleId: 'B',
+  bannerEl: document.getElementById('alBanner'),
+  reviewEl: document.getElementById('alReview'),
+  getQuestion: (i) => questions[i]
+});
 </script>
 </body>
 </html>

@@ -465,6 +465,49 @@
     .module-nav { flex-wrap: wrap; }
     .btn-mod { font-size: 12px; padding: 8px 12px; }
   }
+
+  /* ── AcertiLab: banner de progreso + revisión ─────────── */
+  .al-banner {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+  .al-banner .al-badge { font-weight: 700; color: var(--accent); }
+  .al-banner .al-muted { color: var(--muted); }
+  .al-banner .al-link-btn {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .al-banner .al-link-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .al-review-panel {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+  }
+  .al-review-panel.show { display: block; }
+  .al-review-item { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .al-review-item:last-child { border-bottom: none; }
+  .al-review-item.wrong { color: #f78166; }
+  .al-review-item.correct { color: #7ee89a; }
 </style>
 </head>
 <body>
@@ -502,6 +545,12 @@
     <div class="info-card"><div class="val">28</div><div class="key">Preguntas</div></div>
     <div class="info-card"><div class="val">30</div><div class="key">Minutos</div></div>
     <div class="info-card"><div class="val">M1–M6</div><div class="key">Cobertura</div></div>
+  </div>
+
+  <div class="al-banner" id="alBanner"></div>
+  <div class="al-review-panel" id="alReview"></div>
+  <div style="text-align:right;margin-bottom:1rem;">
+    <button class="al-link-btn" style="margin-left:0;" onclick="AcertiLabExport.exportModule('D')">📄 Exportar resultado (PDF)</button>
   </div>
 
   <div class="rules">
@@ -586,6 +635,9 @@
   Módulo D
 </footer>
 
+<script src="acertilab-storage.js"></script>
+<script src="acertilab-export.js"></script>
+<script src="acertilab-ui.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════
 //  BANCO DE PREGUNTAS — 28 preguntas M1–M6
@@ -950,6 +1002,28 @@ let timerInterval = null;
 let secondsLeft   = 30 * 60;
 let startTime     = null;
 let examFinished  = false;
+let resultPersisted = false;
+
+// ═══════════════════════════════════════════════════════
+//  AcertiLab: banner de progreso + revisión
+// ═══════════════════════════════════════════════════════
+function renderAlBanner() {
+  AcertiLabUI.renderBanner({
+    moduleId: 'D',
+    bannerEl: document.getElementById('alBanner'),
+    reviewEl: document.getElementById('alReview'),
+    getQuestion: (i) => {
+      const item = QUESTIONS[i];
+      if (!item) return null;
+      const letters = ['A', 'B', 'C', 'D'];
+      return {
+        q: item.q,
+        exp: `Respuesta correcta: ${letters[item.ans]}) ${item.opts[item.ans]}` + (item.hint ? ` — ${item.hint}` : '')
+      };
+    }
+  });
+}
+renderAlBanner();
 
 // ═══════════════════════════════════════════════════════
 //  INICIO
@@ -994,7 +1068,44 @@ function timeOut() {
   examFinished = true;
   document.getElementById('screen-exam').style.display    = 'none';
   document.getElementById('screen-timeout').style.display = 'block';
+  persistResult(); // guarda ya: no depender de que el usuario haga clic en "Ver mis resultados"
 }
+
+// ═══════════════════════════════════════════════════════
+//  PERSISTENCIA (separada del render de resultados)
+// ═══════════════════════════════════════════════════════
+function persistResult() {
+  if (resultPersisted) return;
+  resultPersisted = true;
+
+  let ok = 0;
+  QUESTIONS.forEach((q, i) => { if (confirmed[i] && answers[i] === q.ans) ok++; });
+
+  const elapsed = Math.round((Date.now() - startTime) / 1000);
+
+  const mods = {};
+  QUESTIONS.forEach((q, i) => {
+    if (!mods[q.mod]) mods[q.mod] = { ok: 0, total: 0 };
+    mods[q.mod].total++;
+    if (confirmed[i] && answers[i] === q.ans) mods[q.mod].ok++;
+  });
+
+  const lastDetails = QUESTIONS.map((q, i) => ({
+    qIndex: i,
+    chosen: confirmed[i] ? answers[i] : null,
+    isCorrect: confirmed[i] ? answers[i] === q.ans : false
+  })).filter(d => d.chosen !== null);
+
+  AcertiLab.saveModuleResult('D', {
+    correct: ok,
+    total: QUESTIONS.length,
+    elapsedSeconds: elapsed,
+    details: lastDetails,
+    breakdown: mods
+  });
+  renderAlBanner();
+}
+
 
 // ═══════════════════════════════════════════════════════
 //  RENDER PREGUNTA
@@ -1200,6 +1311,10 @@ function showResults() {
         </div>`;
       }).join('')}
     </div>`;
+
+  // ── AcertiLab: persistir resultado de este intento ──
+  // (idempotente: si ya se guardó por timeOut(), no se duplica)
+  persistResult();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1211,6 +1326,7 @@ function retakeExam() {
   current   = 0;
   secondsLeft   = 30 * 60;
   examFinished  = false;
+  resultPersisted = false;
 
   document.getElementById('screen-result').style.display  = 'none';
   document.getElementById('screen-exam').style.display    = 'block';
