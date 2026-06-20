@@ -1,0 +1,894 @@
+[
+  {
+    "id": "M0-001",
+    "module": "M0-Intro",
+    "title": "Qué es el QPM - Definición y Propósito",
+    "content": "El Quarterly Projection Model (QPM) es uno de los marcos estándar del FMI para el análisis de política monetaria y forma un componente central de un Sistema de Pronóstico y Análisis de Política (FPAS) orientado hacia el futuro. Fue desarrollado por Berg, Karam y Laxton (2006) como un enfoque práctico basado en modelos para el análisis de política monetaria. El QPM es un modelo semiestructural neokeynesiano de brechas (gap model) diseñado para apoyar a los bancos centrales en la conducción del análisis de política monetaria y la elaboración de pronósticos. Se ha convertido en un modelo de trabajo utilizado extensamente por bancos centrales y oficiales de escritorios de países del FMI.",
+    "tags": [
+      "introducción",
+      "definición",
+      "FPAS",
+      "Berg-Karam-Laxton",
+      "modelo semiestructural",
+      "neokeynesiano"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M0-002",
+    "module": "M0-Intro",
+    "title": "Características Clave del QPM",
+    "content": "El QPM presenta las siguientes características fundamentales: (1) Semiestructural: las ecuaciones tienen interpretaciones económicas con parámetros cuyos valores se estiman o fijan fuera del modelo. (2) Neokeynesiano: incorpora rigideces reales y nominales. (3) Modelo de brechas: estima brechas en producción, inflación, tasa de interés real y tipo de cambio real. (4) Prospectivo: incluye expectativas racionales. (5) Neutralidad de la política monetaria a largo plazo: la política monetaria puede afectar la trayectoria del producto alrededor de su equilibrio pero no puede afectar el nivel de producto a mediano plazo. (6) Economía abierta pequeña. (7) Vinculado a datos trimestrales. Estas características lo hacen transparente, simple pero con las características clave de la economía para el análisis de política monetaria.",
+    "tags": [
+      "características",
+      "semiestructural",
+      "neokeynesiano",
+      "brechas",
+      "expectativas racionales",
+      "neutralidad monetaria"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M0-003",
+    "module": "M0-Intro",
+    "title": "Rol del QPM dentro del FPAS",
+    "content": "El QPM sirve como la herramienta analítica central dentro del Sistema de Pronóstico y Análisis de Política (FPAS), que apoya a los bancos centrales en: (a) Tomar decisiones de política monetaria de manera sistemática y prospectiva. (b) Informar las decisiones de política con datos económicos y análisis. (c) Comunicar las decisiones de política de manera transparente. (d) Proporcionar un marco para la discusión de política y el análisis de escenarios. El FPAS requiere típicamente experiencia acumulada durante múltiples años para evitar el riesgo de inconsistencia a través del tiempo. El modelo fortalece el marco de política prospectiva para la economía en el logro de sus objetivos de estabilidad de precios.",
+    "tags": [
+      "FPAS",
+      "rol del QPM",
+      "decisiones de política",
+      "comunicación",
+      "análisis de escenarios"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M1-001",
+    "module": "M1-Fundamentos",
+    "title": "Fundamentos Neokeynesianos del QPM",
+    "content": "El QPM está construido sobre fundamentos neokeynesianos donde: (a) Los precios nominales son rígidos (rigideces de precios). (b) El producto es determinado por la demanda en el corto plazo. (c) La política monetaria es no neutral en el corto plazo pero neutral en el largo plazo. (d) El comportamiento prospectivo de los agentes económicos. (e) Las expectativas racionales juegan un papel clave. El modelo es estructural porque puede interpretar la intuición económica a través de sus ecuaciones. De esta manera, la causalidad y la identificación no están en cuestión. El modelo asume superneutralidad: no hay trade-off a largo plazo entre producto e inflación.",
+    "tags": [
+      "fundamentos teóricos",
+      "neokeynesiano",
+      "rigideces de precios",
+      "demanda",
+      "neutralidad monetaria",
+      "expectativas racionales"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M1-002",
+    "module": "M1-Fundamentos",
+    "title": "Enfoque de Brechas (Gap Approach)",
+    "content": "El modelo separa las variables en: (1) Componentes de tendencia (equilibrio de largo plazo): producto potencial, tipo de cambio real de equilibrio, tasa de interés real neutral. (2) Componentes de brecha (desviaciones cíclicas): brecha de producto, brecha de inflación, brecha de tasa de interés real, brecha de tipo de cambio real. El modelo en sí no intenta explicar los movimientos en el producto potencial u otras tendencias, sino que las toma como dadas. La superneutralidad implica que no hay trade-off a largo plazo entre producto e inflación. El producto retorna a su nivel potencial a mediano plazo.",
+    "tags": [
+      "brechas",
+      "tendencia",
+      "producto potencial",
+      "equilibrio",
+      "superneutralidad",
+      "ciclo económico"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M1-003",
+    "module": "M1-Fundamentos",
+    "title": "Supuestos de Economía Abierta Pequeña",
+    "content": "El QPM opera bajo supuestos de economía abierta pequeña: (a) La economía doméstica no afecta al resto del mundo. (b) Las variables externas (inflación extranjera, brecha de producto, tasas de interés) son exógenas. (c) La dinámica del tipo de cambio sigue la Paridad de Tasas de Interés Descubierta (UIP). (d) El comercio internacional y los flujos de capital afectan la economía doméstica. (e) Los choques externos se transmiten a través de la demanda externa (exportaciones), precios de importaciones, y tasas de interés internacionales. El sector externo se modela típicamente con datos de EE.UU. o zona euro.",
+    "tags": [
+      "economía abierta",
+      "exógeno",
+      "UIP",
+      "comercio internacional",
+      "flujos de capital",
+      "choques externos"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M2-001",
+    "module": "M2-Estructura",
+    "title": "Curva IS - Demanda Agregada",
+    "content": "La brecha de producto se modela como función de: (a) Brecha de producto pasada (persistencia): y_hat_t-1. (b) Brecha de producto futura esperada: E_t[y_hat_t+1]. (c) Índice real de condiciones monetarias (rmci): promedio ponderado de la brecha de tasa de interés real y brecha de tipo de cambio real. (d) Brecha de producto externo: y_hat_t_star. (e) Choque de demanda agregada: epsilon_y. Ecuación: y_hat_t = a1*y_hat_t-1 + a2*E_t[y_hat_t+1] - a3*rmci_t + a4*y_hat_t_star + epsilon_y, donde rmci_t = a5*r_hat_t + (1-a5)*(-z_hat_t). Parámetros a calibrar: a1 (persistencia), a2 (elasticidad esperada), a3 (passthrough monetario), a4 (influencia externa), a5 (peso tasa de interés vs tipo de cambio).",
+    "tags": [
+      "IS curve",
+      "demanda agregada",
+      "brecha de producto",
+      "condiciones monetarias",
+      "choque de demanda",
+      "calibración"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M2-002",
+    "module": "M2-Estructura",
+    "title": "Curva de Phillips - Oferta Agregada",
+    "content": "La dinámica inflacionaria sigue una curva de Phillips de economía abierta prospectiva: (a) Inflación pasada (inercia): pi_t-1. (b) Inflación futura esperada: E_t[pi_t+1]. (c) Costos marginales reales (rmc): promedio ponderado de brecha de producto y brecha de tipo de cambio real. (d) Choques de costos (cost-push): epsilon_pi. Ecuación: pi_t = b1*pi_t-1 + (1-b1)*E_t[pi_t+1] + b2*rmc_t + epsilon_pi, donde rmc_t = phi*y_hat_t + (1-phi)*z_hat_t. La curva de Phillips puede incluir subcomponentes: núcleo (core), alimentos y energía. La inflación general se combina usando los pesos relevantes en la canasta del IPC. Parámetros: b1 (persistencia inflación), b2 (pendiente Phillips), phi (peso producto vs tipo de cambio).",
+    "tags": [
+      "Phillips curve",
+      "oferta agregada",
+      "inflación",
+      "costos marginales",
+      "inercia inflacionaria",
+      "expectativas"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M2-003",
+    "module": "M2-Estructura",
+    "title": "Paridad de Tasas de Interés Descubierta (UIP)",
+    "content": "La dinámica del tipo de cambio se modela vía UIP: (a) El tipo de cambio actual iguala el tipo de cambio esperado ajustado por diferencial de tasas de interés. (b) Componente de prima de riesgo. (c) Las expectativas de tipo de cambio pueden ser híbridas (prospectivas + retrospectivas). Ecuación: s_t = s_t^e + (i_t_star - i_t + prem_t)/4 + epsilon_s, donde s_t^e = c1*E_t[s_t+1] + (1-c1)*(s_t-1 + (2/4)*delta_s_bar_t). El parámetro c1 captura el grado de flexibilidad del tipo de cambio. Valores más altos de c1 implican mayor flexibilidad. Para regímenes de tipo de cambio fijo o administrado, se ajusta la ecuación UIP. La prima de riesgo soberano se modela típicamente como un proceso AR(1) convergiendo a su estado estacionario.",
+    "tags": [
+      "UIP",
+      "tipo de cambio",
+      "expectativas híbridas",
+      "prima de riesgo",
+      "flexibilidad cambiaria",
+      "regímenes cambiarios"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M2-004",
+    "module": "M2-Estructura",
+    "title": "Función de Reacción de Política Monetaria (Regla de Taylor)",
+    "content": "El banco central fija tasas de interés basándose en: (a) Suavización de tasas de interés (persistencia): i_t-1. (b) Tasa real neutral más inflación esperada. (c) Brecha de inflación (desviación del objetivo). (d) Brecha de producto. (e) Choque de política monetaria. Ecuación: i_t = gamma1*i_t-1 + (1-gamma1)*[E_t[pi_t+1] + r_bar_t + gamma2*(E_t[pi_t+3] - pi_bar_t) + gamma3*y_hat_t] + epsilon_i. Parámetros: gamma1 (suavización), gamma2 (peso inflación), gamma3 (peso producto). La regla puede modificarse para reflejar diferentes grados de element prospectivo en las expectativas inflacionarias. Para bancos centrales con control limitado sobre tasas de interés, se puede modelar un spread entre la tasa interbancaria y la tasa de política.",
+    "tags": [
+      "regla de Taylor",
+      "función de reacción",
+      "tasa de interés",
+      "suavización",
+      "brecha de inflación",
+      "brecha de producto"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M3-001",
+    "module": "M3-Extensiones",
+    "title": "Descomposición Sectorial",
+    "content": "Los QPM extendidos pueden incluir descomposición sectorial: (a) Brecha de producto del sector agricultura. (b) Brecha de producto del sector petróleo/commodities. (c) Brecha de producto no-agricultura no-petróleo (NANO). (d) Curva de Phillips de inflación de alimentos. (e) Curva de Phillips de inflación núcleo (core). (f) Pesos sectoriales en la canasta del IPC. La brecha de producto total es un promedio ponderado: y_hat_t = omega1*y_hat_agr + omega2*y_hat_oil + (1-omega1-omega2)*y_hat_nano. Los choques en el sector agrícola pueden aproximar el impacto de choques climáticos. Los choques en el sector petrolero afectan los flujos de divisas y la dinámica del tipo de cambio.",
+    "tags": [
+      "descomposición sectorial",
+      "agricultura",
+      "petróleo",
+      "NANO",
+      "inflación de alimentos",
+      "inflación núcleo"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M3-002",
+    "module": "M3-Extensiones",
+    "title": "Bloque Fiscal",
+    "content": "El bloque fiscal en el QPM incluye: (a) Descomposición del déficit primario en estructural y cíclico. (b) El déficit cíclico está vinculado a la brecha de producto total: def_cyc = -f1*y_hat_t. (c) El déficit primario estructural se modela como un proceso AR(1) convergiendo a su estado estacionario. (d) El impulso fiscal aparece en la ecuación de demanda NANO. (e) f1 representa el grado de contraciclicidad de la política fiscal. (f) f2 captura la persistencia del déficit estructural. El impulso fiscal se mide como choque al déficit estructural basado en el déficit primario, enfatizando el impacto de decisiones discrecionales de política actual sobre el ciclo económico.",
+    "tags": [
+      "bloque fiscal",
+      "déficit estructural",
+      "déficit cíclico",
+      "impulso fiscal",
+      "política fiscal",
+      "AR(1)"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M3-003",
+    "module": "M3-Extensiones",
+    "title": "Sector Externo y Variables Foráneas",
+    "content": "El sector externo en el QPM: (a) Variables foráneas son exógenas (datos de EE.UU. o zona euro). (b) Inflación externa, brecha de producto externo, tasas de interés reales externas. (c) Precios mundiales de commodities (petróleo, alimentos). (d) Prima de riesgo soberano modelada como función de reservas internacionales. (e) Tipo de cambio real de equilibrio y su tendencia. (f) Cuenta corriente y balanza de pagos. Las variables externas siguen procesos univariados tipo AR(1) convergiendo a estados estacionarios. Los choques externos se transmiten a través de: demanda externa (exportaciones), precios de importaciones, y condiciones financieras internacionales.",
+    "tags": [
+      "sector externo",
+      "variables foráneas",
+      "commodities",
+      "prima de riesgo",
+      "cuenta corriente",
+      "exógeno"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M3-004",
+    "module": "M3-Extensiones",
+    "title": "Extensiones del Sector Financiero",
+    "content": "Extensiones financieras del QPM: (a) Prima de riesgo crediticio. (b) Spread entre tasa interbancaria y tasa de política: ib_t = i_t + sp_t. (c) Fricciones financieras en la transmisión de política monetaria. (d) Efectos de dolarización en economías altamente dolarizadas. (e) Spread modelado como proceso AR(1) con media cero en estado estacionario. (f) Consideraciones de liquidez en mercados financieros. La prima de riesgo crediticio afecta el índice de condiciones monetarias reales. En economías dolarizadas, la política monetaria puede tener efectos limitados debido a la indexación al dólar.",
+    "tags": [
+      "sector financiero",
+      "prima de riesgo crediticio",
+      "spread",
+      "fricciones financieras",
+      "dolarización",
+      "transmisión monetaria"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M4-001",
+    "module": "M4-Datos",
+    "title": "Requerimientos de Datos para el QPM",
+    "content": "Series de datos clave necesarias para el QPM: (a) PIB real (trimestral, desestacionalizado). (b) Índice de Precios al Consumidor (IPC) y componentes (núcleo, alimentos, energía). (c) Tasa de interés de política nominal. (d) Tipo de cambio nominal. (e) Variables foráneas (PIB, inflación, tasas de interés de EE.UU. o zona euro). (f) Precios mundiales de commodities (petróleo, alimentos). (g) Variables fiscales (déficit, deuda). (h) Reservas internacionales. Los datos deben ser trimestrales y preferiblemente desestacionalizados antes del análisis. La calidad y disponibilidad de datos es un desafío particular en economías en desarrollo.",
+    "tags": [
+      "datos",
+      "PIB",
+      "IPC",
+      "tasas de interés",
+      "tipo de cambio",
+      "commodities",
+      "fiscal",
+      "trimestral"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M4-002",
+    "module": "M4-Datos",
+    "title": "Descomposición Tendencia-Ciclo",
+    "content": "Métodos para separar tendencias de ciclos: (a) Filtro Hodrick-Prescott (HP): método univariado ampliamente usado. (b) Filtro de Kalman: método multivariado y estructural. (c) Detrending de Watson: mayor persistencia del ciclo; componente de tendencia sigue un paseo aleatorio con deriva. (d) Detrending de Harvey-Clark: modelo de tendencia lineal local. (e) Filtro Bandpass: análisis en dominio de frecuencia, no ampliamente usado. El análisis de series temporales se basa en suavizar datos pasados para separar el patrón subyacente de la aleatoriedad. No hay técnicas generales-automáticas para el detrending. Las técnicas simples incluyen promedios móviles.",
+    "tags": [
+      "tendencia-ciclo",
+      "HP filter",
+      "Kalman filter",
+      "Watson",
+      "Harvey-Clark",
+      "bandpass",
+      "desestacionalización"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M4-003",
+    "module": "M4-Datos",
+    "title": "Ajuste Estacional",
+    "content": "El ajuste estacional es crucial para el QPM: (a) Los datos deben ser desestacionalizados antes del análisis. (b) Se utilizan rutinas X12/X13-ARIMA. (c) La desestacionalización elimina patrones estacionales regulares para revelar el componente tendencia-ciclo subyacente. (d) Es importante verificar la calidad del ajuste estacional. (e) Los datos ajustados por estacionalidad permiten comparaciones significativas entre trimestres. El programa 1_makedata.prg en la implementación EViews incluye código para desestacionalizar datos brutos usando la rutina X12/X13.",
+    "tags": [
+      "ajuste estacional",
+      "X12",
+      "X13",
+      "ARIMA",
+      "desestacionalización",
+      "datos trimestrales"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M4-004",
+    "module": "M4-Datos",
+    "title": "Valores de Estado Estacionario",
+    "content": "Configuración de parámetros de largo plazo: (a) Tasa de crecimiento del producto potencial (ej. 2.5% anual). (b) Objetivo de inflación doméstica (ej. 2%). (c) Objetivo de inflación externa (ej. 2% para zona euro). (d) Apreciación/depreciación de equilibrio del tipo de cambio real (ej. 1.5% anual). (e) Tasa de interés real neutral doméstica (ej. 2%, implica tasa nominal de 4%). (f) Tasa de interés real neutral externa (ej. 0.75%, implica tasa nominal de 2.75%). Estos valores son fijados exógenamente. El QPM converge hacia los valores de largo plazo de crecimiento potencial, apreciación del tipo de cambio real de equilibrio, y tasas de interés reales de tendencia domésticas y externas.",
+    "tags": [
+      "estado estacionario",
+      "producto potencial",
+      "inflación objetivo",
+      "tasa neutral",
+      "tipo de cambio de equilibrio",
+      "largo plazo"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M5-001",
+    "module": "M5-Kalman",
+    "title": "Representación en Espacio de Estados",
+    "content": "El QPM puede representarse en forma de espacio de estados: (a) Variables de estado (no observables): brecha de producto, expectativas de inflación, etc. (b) Variables observables: PIB real, IPC, tasas de interés, tipos de cambio. (c) Ecuaciones de medición: vinculan observables con estados. (d) Ecuaciones de transición: describen la dinámica de los estados. La representación en espacio de estados permite la aplicación del filtro de Kalman para la estimación óptima de variables no observables. Los elementos clave en forma de espacio de estados incluyen: choques, variables observables y no observables, ecuaciones de medición y transición, parámetros de estado estacionario, y coeficientes de ecuaciones.",
+    "tags": [
+      "espacio de estados",
+      "variables de estado",
+      "variables observables",
+      "ecuaciones de medición",
+      "ecuaciones de transición",
+      "Kalman"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M5-002",
+    "module": "M5-Kalman",
+    "title": "Aplicaciones del Filtro de Kalman",
+    "content": "El filtro de Kalman tiene múltiples aplicaciones en el QPM: (a) Descomposición histórica de choques: entender factores que dan forma a la dinámica de inflación y brecha de producto. (b) Filtrado de variables no observables: brechas, expectativas. (c) Extracción de señal de datos ruidosos. (d) Estimación en tiempo real de estados económicos. (e) Descomposición de costos marginales reales en componentes de brecha de producto doméstica y tipo de cambio real. (f) Descomposición de inflación en: expectativas, persistencia pasada, brecha de producto, tipo de cambio, choques. (g) Descomposición de brecha de producto en: choques de demanda, condiciones monetarias, tipo de cambio, tasa de interés.",
+    "tags": [
+      "filtro de Kalman",
+      "descomposición histórica",
+      "variables no observables",
+      "extracción de señal",
+      "estimación en tiempo real"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M5-003",
+    "module": "M5-Kalman",
+    "title": "Identificación de Choques Estructurales",
+    "content": "La identificación de choques en el QPM: (a) Choques estructurales vs. residuos de forma reducida. (b) Enfoque narrativo para identificación de choques. (c) Emparejamiento de choques estructurales con variables a exogenizar. (d) Juicio experto en identificación de choques. (e) Los choques estructurales son perturbaciones económicamente interpretables. (f) Los residuos de forma reducida son términos de error estadístico. La descomposición narrativa informa la acción de política para los responsables de política. Los supuestos no-modelo y sus impactos, incluyendo efectos específicos de choques, se imponen a través del juicio experto.",
+    "tags": [
+      "choques estructurales",
+      "forma reducida",
+      "identificación",
+      "juicio experto",
+      "narrativa",
+      "exogenización"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M6-001",
+    "module": "M6-Calibración",
+    "title": "Calibración vs. Estimación",
+    "content": "En el QPM, la calibración se favorece sobre la estimación debido a: (a) Restricciones prácticas y limitaciones de datos. (b) Series temporales cortas en economías en desarrollo. (c) Cambios de régimen que afectan la estabilidad de parámetros. (d) Integración transparente de conocimientos expertos. (e) Datos ruidosos dificultan la estimación. (f) La calibración aprovecha evidencia empírica existente y conocimiento teórico para fijar valores de parámetros directamente. (g) Alinea modelos con comportamiento económico observado evitando desafíos computacionales de la estimación. (h) Permite incorporar insights de expertos cuando ciertos parámetros son difíciles de estimar.",
+    "tags": [
+      "calibración",
+      "estimación",
+      "limitaciones de datos",
+      "cambios de régimen",
+      "juicio experto",
+      "evidencia empírica"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M6-002",
+    "module": "M6-Calibración",
+    "title": "Pasos de Calibración",
+    "content": "Pasos de calibración del QPM: (1) Fijar valores de estado estacionario: crecimiento potencial, objetivo de inflación, tasas neutrales. (2) Fijar trayectorias de tendencia para variables endógenas clave. (3) Calibrar parámetros de ecuaciones individuales para que el QPM imite hechos estilizados conocidos de la economía. (4) Validar mediante análisis de respuestas al impulso. (5) Verificar simulaciones dentro de muestra. (6) Evaluar residuos por sesgos sistemáticos. La calibración debe hacer que el modelo muestre canales de transmisión teóricamente consistentes. El registro de pronósticos fuera de muestra confirma la robustez del ajuste del QPM a los datos.",
+    "tags": [
+      "pasos de calibración",
+      "estado estacionario",
+      "tendencias",
+      "validación",
+      "respuestas al impulso",
+      "residuos"
+    ],
+    "type": "Calibration_Example",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M6-003",
+    "module": "M6-Calibración",
+    "title": "Validación de Parámetros",
+    "content": "Técnicas de validación de parámetros: (a) Funciones de respuesta al impulso: verificar consistencia teórica. Las respuestas al impulso se generan introduciendo un choque unitario de un período (1%) a errores estructurales específicos. (b) Simulaciones dentro de muestra: comparar predicciones del modelo con datos actuales. (c) Pronósticos fuera de muestra: evaluar precisión predictiva. (d) Análisis de residuos: verificar patrones sistemáticos. (e) Comparación de momentos: comparar momentos del modelo con momentos de datos. (f) Identificar sesgos sistemáticos en residuos. (g) Los parámetros deben elegirse para dar un comportamiento de modelo razonable, resolviendo conflictos entre parámetros estimados y calibrados.",
+    "tags": [
+      "validación",
+      "respuestas al impulso",
+      "simulaciones",
+      "pronósticos fuera de muestra",
+      "residuos",
+      "momentos"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M6-004",
+    "module": "M6-Calibración",
+    "title": "Objetivos Clave de Calibración",
+    "content": "Objetivos de calibración importantes: (a) Ratio de sacrificio: pérdida acumulada de producto por punto porcentual de reducción inflacionaria. (b) Lags de transmisión de política monetaria. (c) Traspaso del tipo de cambio a inflación (exchange rate pass-through). (d) Persistencia inflacionaria. (e) Persistencia de brecha de producto. (f) Pendiente de la curva de Phillips. (g) Grado de suavización de tasas de interés. (h) Peso de estabilización de inflación vs. producto en la regla de política. (i) Grado de flexibilidad del tipo de cambio. (j) Elasticidad de demanda agregada a condiciones monetarias. Estos objetivos se derivan de hechos estilizados de la economía de interés.",
+    "tags": [
+      "objetivos de calibración",
+      "ratio de sacrificio",
+      "lags de transmisión",
+      "pass-through",
+      "persistencia",
+      "Phillips"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M7-001",
+    "module": "M7-Solución",
+    "title": "Solución de Línea Base",
+    "content": "La solución de línea base del QPM: (a) Resolver el modelo sin choques. (b) Generar pronósticos incondicionales. (c) Internalizar características principales del arreglo institucional. (d) Proyecciones de mediano plazo (típicamente 3-5 años). (e) La solución de línea base proporciona el punto de referencia para el análisis de escenarios. (f) Requiere inicializar todas las variables endógenas y exógenas. (g) Las condiciones iniciales deben especificarse para variables con fechas futuras. (h) El solver itera hasta que las variables convergen a la solución de expectativas racionales. La solución de línea base típicamente se produce sin choques exógenos.",
+    "tags": [
+      "solución de línea base",
+      "pronósticos incondicionales",
+      "expectativas racionales",
+      "convergencia",
+      "mediano plazo"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M7-002",
+    "module": "M7-Solución",
+    "title": "Análisis de Escenarios",
+    "content": "El análisis de escenarios en el QPM: (a) Escenarios alternativos con choques específicos. (b) Experimentos de política: cambios en tasas de interés, medidas fiscales. (c) Choques externos: precios de commodities, demanda externa. (d) Choques de confianza. (e) Comparar trayectoria de línea base vs. alternativa. (f) Un escenario alternativo introduce un choque cambiando el valor de una o más variables de choque ('shk_') a un valor no-cero. (g) El choque puede ser para un solo período, un rango contiguo, o varios períodos no adyacentes. (h) Es imperativo retornar la variable de choque a cero después de la simulación para no afectar simulaciones subsecuentes.",
+    "tags": [
+      "análisis de escenarios",
+      "choques",
+      "experimentos de política",
+      "línea base",
+      "alternativa",
+      "simulación"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M7-003",
+    "module": "M7-Solución",
+    "title": "Herramientas de Implementación",
+    "content": "Herramientas para implementar el QPM: (a) MATLAB/Octave con toolbox IRIS. (b) EViews 14 (o EViews 13 con paquete MCE del Federal Reserve Board). (c) Software especializado de modelación macroeconómica. (d) Capacidades de procesamiento de datos. (e) Herramientas de visualización. Estructura de archivos típica en EViews: 0_qpm.prg (programa conductor), 1_makedata.prg (preparación de datos), 2_definemodel.prg (definición de ecuaciones), 3_solve_model.prg (solución y escenarios), 10_compare.prg (comparación línea base vs. alternativa). El programa conductor 0_qpm.prg debe ejecutarse primero para inicializar parámetros clave.",
+    "tags": [
+      "implementación",
+      "MATLAB",
+      "Octave",
+      "IRIS",
+      "EViews",
+      "MCE",
+      "estructura de archivos"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M8-001",
+    "module": "M8-Aplicaciones",
+    "title": "Trade-offs de Política Monetaria",
+    "content": "Trade-offs clave en política monetaria con el QPM: (a) Inflación vs. estabilización del producto: el banco central debe sacrificar algo de producto para llevar la inflación de vuelta al objetivo. (b) Costos a corto plazo vs. beneficios a largo plazo. (c) Análisis del ratio de sacrificio: pérdida acumulada de producto vs. reducción inflacionaria. (d) Mezcla óptima de política bajo diferentes choques. (e) Para reducir la inflación al objetivo, la política monetaria debe mantener una postura restrictiva agresiva por un cierto período. (f) La cantidad de ajuste de producto es necesaria para dirigir la inflación. (g) El banco central enfrenta un trade-off entre dos objetivos: inflación estable y crecimiento del producto.",
+    "tags": [
+      "trade-offs",
+      "inflación vs producto",
+      "ratio de sacrificio",
+      "política óptima",
+      "postura restrictiva",
+      "objetivos"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M8-002",
+    "module": "M8-Aplicaciones",
+    "title": "Análisis de Choques",
+    "content": "Tipos de choques analizados en el QPM: (a) Choques de demanda: efectos en brecha de producto, inflación, tipo de cambio. Un choque de demanda positivo abre una brecha de producto positiva, presiona al alza la inflación, deprecia la moneda, y el banco central aumenta la tasa de interés. (b) Choques de oferta (cost-push): efectos inflacionarios, respuesta de política. (c) Choques de tipo de cambio: traspaso a inflación, efectos en producto. (d) Choques de política monetaria: mecanismo de transmisión. (e) Choques externos: demanda externa, precios de commodities. (f) Los choques de oferta presentan trade-offs desafiantes para los responsables de política, potencialmente requiriendo una respuesta de política monetaria si hay riesgos de efectos de segunda ronda.",
+    "tags": [
+      "choques",
+      "demanda",
+      "oferta",
+      "cost-push",
+      "tipo de cambio",
+      "política monetaria",
+      "externos"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M8-003",
+    "module": "M8-Aplicaciones",
+    "title": "Comunicación de Política",
+    "content": "El QPM apoya la comunicación de política monetaria: (a) Los pronósticos incondicionales sirven como herramienta de comunicación. (b) El análisis de escenarios para opciones de política. (c) Implicaciones de forward guidance. (d) Apoyo al marco de objetivos de inflación. (e) Publicación de pronósticos incondicionales mejora la transparencia. (f) El modelo proporciona una narrativa coherente sobre mecanismos de transmisión. (g) Permite evaluar escenarios contrafactuales para evaluar opciones de política. (h) Facilita la discusión de política entre departamentos y junta del banco central. (i) Soporta la transición a un régimen de objetivos de inflación.",
+    "tags": [
+      "comunicación",
+      "pronósticos",
+      "forward guidance",
+      "objetivos de inflación",
+      "transparencia",
+      "narrativa"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M8-004",
+    "module": "M8-Aplicaciones",
+    "title": "Temas Especiales",
+    "content": "Aplicaciones especiales del QPM: (a) Choques climáticos e inflación de alimentos: el modelo puede extenderse para descomponer la demanda agregada en sectores agricultura y no-agricultura, y desagregar el IPC en precios de alimentos y no-alimentos (núcleo). (b) Implicaciones del cambio climático. (c) Consideraciones de estabilidad financiera. (d) Efectos de dolarización. (e) Extensiones para economías ricas en recursos. (f) Los choques climáticos son inherentemente de oferta y presentan desafíos significativos para la política monetaria. (g) La respuesta de política depende de la duración del choque: transitorio vs. persistente. (h) La credibilidad del banco central y el anclaje de expectativas inflacionarias son cruciales para la respuesta óptima.",
+    "tags": [
+      "temas especiales",
+      "clima",
+      "alimentos",
+      "cambio climático",
+      "estabilidad financiera",
+      "dolarización",
+      "recursos"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M9-001",
+    "module": "M9-Validación",
+    "title": "Técnicas de Validación",
+    "content": "Técnicas de validación del QPM: (a) Pronósticos pseudo fuera de muestra. (b) Comparación con modelos benchmark (SVAR, etc.). (c) Comparación de momentos (datos vs. modelo). (d) Plausibilidad de respuestas al impulso. (e) Métricas de precisión de pronósticos. (f) El modelo debe poder reproducir datos observados. (g) Los canales de transmisión deben ser teóricamente consistentes. (h) Las narrativas de política deben ser coherentes. (i) El registro de pronósticos fuera de muestra confirma la robustez. (j) Las dinámicas históricas del ciclo de negocios deben estar bien identificadas.",
+    "tags": [
+      "validación",
+      "pronósticos fuera de muestra",
+      "benchmark",
+      "momentos",
+      "respuestas al impulso",
+      "coherencia"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M9-002",
+    "module": "M9-Validación",
+    "title": "Criterios de Desempeño",
+    "content": "Criterios de desempeño del QPM: (a) Capacidad de reproducir datos observados. (b) Canales de transmisión teóricamente consistentes. (c) Narrativas de política coherentes. (d) Registro robusto de pronósticos fuera de muestra. (e) Dinámicas históricas del ciclo de negocios bien identificadas. (f) Descomposición en fuerzas impulsoras subyacentes. (g) Escenarios contrafactuales relevantes para evaluar opciones de política. (h) El modelo debe mostrar un ajuste robusto a los datos del país. (i) Las funciones de respuesta al impulso deben replicar priors sensatos sobre la reacción de variables macroeconómicas a choques estándar.",
+    "tags": [
+      "desempeño",
+      "reproducción de datos",
+      "transmisión",
+      "narrativas",
+      "pronósticos",
+      "ciclo de negocios"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M9-003",
+    "module": "M9-Validación",
+    "title": "Limitaciones del Modelo",
+    "content": "Limitaciones del QPM: (a) Limitaciones de modelo lineal: el efecto acumulado en el producto es muy cercano a cero (característica de modelos lineales). (b) Naturaleza de forma reducida de algunas relaciones. (c) Dependencia de la calidad de la calibración. (d) Restricciones de calidad y disponibilidad de datos. (e) Representación simplificada del sector financiero. (f) No modela explícitamente el producto potencial u otras tendencias. (g) Requiere supuestos sobre formación de expectativas. (h) Puede no capturar no-linearidades importantes. (i) La calibración requiere juicio experto significativo. (j) Los modelos son simplificaciones de la realidad económica.",
+    "tags": [
+      "limitaciones",
+      "linealidad",
+      "forma reducida",
+      "calibración",
+      "datos",
+      "sector financiero",
+      "no-linearidades"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M10-001",
+    "module": "M10-Adaptaciones",
+    "title": "Regímenes de Objetivos de Inflación",
+    "content": "Adaptaciones del QPM para diferentes regímenes de objetivos de inflación: (a) Objetivos de inflación flexibles. (b) Objetivos puntuales vs. bandas de objetivo. (c) Reglas de política prospectivas. (d) Estrategias de comunicación. (e) El modelo puede adaptarse para reflejar diferentes grados de flexibilidad en el cumplimiento del objetivo. (f) La regla de reacción de política monetaria puede ajustarse para reflejar diferentes ponderaciones en los objetivos de estabilización. (g) La publicación de pronósticos incondicionales mejora la transparencia y credibilidad. (h) El modelo soporta la transición hacia regímenes de objetivos de inflación.",
+    "tags": [
+      "objetivos de inflación",
+      "flexible",
+      "banda",
+      "reglas de política",
+      "comunicación",
+      "transparencia"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M10-002",
+    "module": "M10-Adaptaciones",
+    "title": "Regímenes de Tipo de Cambio",
+    "content": "Adaptaciones del QPM para diferentes regímenes cambiarios: (a) Tipos de cambio flotantes (modelo canónico). (b) Tipos de cambio fijos/pegados. (c) Flotaciones administradas. (d) Uniones monetarias (WAEMU, etc.). Para tipos de cambio fijos, la ecuación UIP se modifica para reflejar el anclaje cambiario. Para flotaciones administradas, el parámetro de control del banco central (h2) refleja el grado de control sobre el tipo de cambio nominal. En uniones monetarias, el modelo regional incorpora la paridad fija con la moneda ancla. El modelo puede capturar operaciones ocasionales del banco central para minimizar volatilidad cambiaria excesiva.",
+    "tags": [
+      "regímenes cambiarios",
+      "flotante",
+      "fijo",
+      "administrado",
+      "unión monetaria",
+      "UIP",
+      "paridad"
+    ],
+    "type": "Equation",
+    "generic_flag": false,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M10-003",
+    "module": "M10-Adaptaciones",
+    "title": "Estructuras Económicas Especiales",
+    "content": "Adaptaciones para estructuras económicas especiales: (a) Economías ricas en recursos (petróleo, minerales): extensión del bloque de commodities, efectos en tipo de cambio y balanza de pagos. (b) Economías altamente dolarizadas: efectos limitados de política monetaria, indexación al dólar. (c) Economías dependientes de agricultura: extensión sectorial, choques climáticos. (d) Economías de pequeñas islas. (e) Economías post-conflicto. (f) Cada adaptación mantiene la parsimonia del modelo mientras captura características clave de la economía. (g) Las extensiones documentadas incluyen: Ghana, Jordania, Camboya, Marruecos, Filipinas, Vietnam, India, RDC, Rwanda, Laos, Sri Lanka, WAEMU.",
+    "tags": [
+      "economías especiales",
+      "recursos naturales",
+      "dolarización",
+      "agricultura",
+      "extensiones",
+      "aplicaciones"
+    ],
+    "type": "Explanation",
+    "generic_flag": false,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M11-001",
+    "module": "M11-Técnico",
+    "title": "Requisitos de Software",
+    "content": "Requisitos de software para implementar el QPM: (a) MATLAB/Octave con toolbox IRIS (Integrated Modeling Platform). (b) EViews 14 con capacidad de resolver modelos con variables prospectivas. (c) EViews 13 requiere el paquete MCE_SOLVE_LIBRARY del Federal Reserve Board. (d) Capacidades de procesamiento de datos. (e) Herramientas de visualización. (f) Conocimiento de programación en lenguaje de EViews o MATLAB. (g) El curso MPAFx del FMI proporciona entrenamiento en implementación. (h) Los participantes deben tener antecedentes en macroeconomía de pregrado, estadística y econometría.",
+    "tags": [
+      "software",
+      "MATLAB",
+      "Octave",
+      "IRIS",
+      "EViews",
+      "MCE",
+      "programación",
+      "entrenamiento"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M11-002",
+    "module": "M11-Técnico",
+    "title": "Estructura de Archivos EViews",
+    "content": "Estructura típica de archivos en implementación EViews: (a) 0_qpm.prg: programa conductor que inicializa parámetros clave y llama otros programas. Debe ejecutarse primero. (b) 1_makedata.prg: preparación de datos, desestacionalización, cálculo de tendencias y brechas usando filtro HP. (c) 2_definemodel.prg: definición de ecuaciones del modelo, especificación de regímenes cambiarios y reglas de política. (d) 3_solve_model.prg: solución del modelo, implementación de escenarios alternativos. (e) 10_compare.prg: comparación de línea base vs. escenario alternativo, generación de gráficos y tablas. El programa conductor usa comandos 'include' para llamar otros programas en secuencia.",
+    "tags": [
+      "archivos EViews",
+      "programa conductor",
+      "makedata",
+      "definemodel",
+      "solve_model",
+      "compare"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M11-003",
+    "module": "M11-Técnico",
+    "title": "Tareas de Programación Clave",
+    "content": "Tareas de programación esenciales: (a) Importación y transformación de datos. (b) Ajuste estacional (X12/X13). (c) Descomposición tendencia-ciclo (filtro HP, Kalman). (d) Inicialización de variables (brechas, tendencias, estados estacionarios). (e) Especificación de ecuaciones del modelo. (f) Implementación de choques. (g) Algoritmos de solución para expectativas racionales. (h) Reportes de salida y visualización. (i) El paquete EViews incluye código para todas estas tareas. (j) Los usuarios no necesitan ser proficientes en programación EViews para calibrar y resolver el QPM canónico. (k) Solo se necesita la capacidad de recolectar datos requeridos y modificar código existente correctamente.",
+    "tags": [
+      "programación",
+      "importación",
+      "ajuste estacional",
+      "tendencia-ciclo",
+      "inicialización",
+      "solución",
+      "reportes"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "GLO-001",
+    "module": "Glosario",
+    "title": "Glosario de Términos Clave QPM - Parte 1",
+    "content": "FPAS: Forecasting and Policy Analysis System - Sistema de Pronóstico y Análisis de Política. QPM: Quarterly Projection Model - Modelo de Proyección Trimestral. IS Curve: Curva Inversión-Ahorro (demanda agregada). Phillips Curve: Curva de Phillips (oferta agregada/inflación). UIP: Uncovered Interest Parity - Paridad de Tasas de Interés Descubierta (tipo de cambio). Taylor Rule: Regla de Taylor - función de reacción de política monetaria. Output Gap: Brecha de producto - desviación del producto actual respecto al potencial. Inflation Gap: Brecha de inflación - desviación de la inflación respecto al objetivo.",
+    "tags": [
+      "glosario",
+      "FPAS",
+      "QPM",
+      "IS",
+      "Phillips",
+      "UIP",
+      "Taylor",
+      "brecha de producto",
+      "brecha de inflación"
+    ],
+    "type": "Definition",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "GLO-002",
+    "module": "Glosario",
+    "title": "Glosario de Términos Clave QPM - Parte 2",
+    "content": "Real Exchange Rate Gap: Brecha de tipo de cambio real - desviación respecto a la tendencia. Real Interest Rate Gap: Brecha de tasa de interés real - desviación respecto a la tasa neutral. RMCI: Real Monetary Conditions Index - Índice Real de Condiciones Monetarias. RMC: Real Marginal Costs - Costos Marginales Reales. HP Filter: Filtro Hodrick-Prescott para extracción de tendencia. Kalman Filter: Filtro de Kalman - algoritmo de estimación óptima de estados. State-Space: Espacio de estados - representación de sistema dinámico con variables observables y no observables. Structural Shock: Choque estructural - perturbación económicamente interpretable.",
+    "tags": [
+      "glosario",
+      "brecha cambiaria",
+      "brecha de tasa de interés",
+      "RMCI",
+      "RMC",
+      "HP filter",
+      "Kalman filter",
+      "espacio de estados"
+    ],
+    "type": "Definition",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "GLO-003",
+    "module": "Glosario",
+    "title": "Glosario de Términos Clave QPM - Parte 3",
+    "content": "Reduced-Form Residual: Residuo de forma reducida - término de error estadístico. Sacrifice Ratio: Ratio de sacrificio - costo de producto de la desinflación. Forward-Looking Expectations: Expectativas prospectivas - expectativas racionales de variables futuras. Backward-Looking Expectations: Expectativas retrospectivas - expectativas adaptativas basadas en valores pasados. Super-Neutrality: Superneutralidad - neutralidad de la política monetaria a largo plazo. Potential Output: Producto potencial - nivel máximo sostenible de producto. Neutral Rate: Tasa neutral - tasa de interés real consistente con el producto potencial. Steady State: Estado estacionario - valores de equilibrio de largo plazo.",
+    "tags": [
+      "glosario",
+      "forma reducida",
+      "ratio de sacrificio",
+      "expectativas",
+      "superneutralidad",
+      "producto potencial",
+      "tasa neutral",
+      "estado estacionario"
+    ],
+    "type": "Definition",
+    "generic_flag": true,
+    "source": "QPM_Knowledge_Base.md"
+  },
+  {
+    "id": "M2-TNM-001",
+    "module": "M2-Estructura",
+    "title": "Ecuación de Demanda Agregada (IS Curve) — TNM/2026/03",
+    "content": "Según el documento técnico del FMI TNM/2026/03 (Ouliaris & Rochon, 2026), la brecha del producto y_t depende de su propia persistencia (y_t-1), un índice de condiciones monetarias (mci_t, promedio ponderado de la brecha de tasa de interés real respecto a la neutral, opcionalmente con prima de riesgo crediticio, y la brecha del tipo de cambio real efectivo z_t), la brecha del producto externo (y*_t), y un choque de demanda agregada (epsilon_y). La ecuación depende de cinco parámetros a calibrar: b1, b2, b3, b4, b5.",
+    "tags": [
+      "IS curve",
+      "output gap",
+      "demanda agregada",
+      "monetary conditions index",
+      "TNM/2026/03"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "TNM/2026/03 (Ouliaris & Rochon, 2026)"
+  },
+  {
+    "id": "M2-TNM-002",
+    "module": "M2-Estructura",
+    "title": "Curva de Phillips y componentes de alimentos/energía — TNM/2026/03",
+    "content": "La curva de Phillips forward-looking de economía abierta para la inflación core depende de tres parámetros (a1, a2, a3): persistencia de la inflación pasada, expectativas de inflación futura, y costos marginales reales (promedio ponderado de la brecha del producto y la brecha del tipo de cambio real), más choques de costos (epsilon_pi). El bloque incluye subcomponentes análogos para inflación de alimentos y energía, que se combinan con los pesos de la canasta del IPC para obtener la inflación general (headline).",
+    "tags": [
+      "Phillips curve",
+      "inflación",
+      "cost-push",
+      "food inflation",
+      "energy inflation",
+      "TNM/2026/03"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "TNM/2026/03 (Ouliaris & Rochon, 2026)"
+  },
+  {
+    "id": "M2-TNM-003",
+    "module": "M2-Estructura",
+    "title": "Paridad de Interés Descubierta (UIP) — TNM/2026/03",
+    "content": "La ecuación UIP vincula el tipo de cambio nominal s_t con su valor futuro esperado, el diferencial entre tasas de interés doméstica y externa, y una prima de riesgo. Incluye un componente backward-looking (extrapolación del tipo de cambio pasado ajustado por la tendencia de apreciación real y el diferencial de inflación promedio), cuyo peso lo determina el parámetro e1 a calibrar (rango 0=completamente forward-looking a 1=completamente backward-looking).",
+    "tags": [
+      "UIP",
+      "uncovered interest parity",
+      "tipo de cambio",
+      "exchange rate",
+      "TNM/2026/03"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "TNM/2026/03 (Ouliaris & Rochon, 2026)"
+  },
+  {
+    "id": "M2-TNM-004",
+    "module": "M2-Estructura",
+    "title": "Regla de Taylor / Función de Reacción de Política Monetaria — TNM/2026/03",
+    "content": "La tasa de política nominal i_t se fija en función de la persistencia de la tasa (i_t-1), la desviación de la inflación esperada respecto al objetivo, y la brecha del producto. La tasa neutral nominal es la suma de la tasa real de tendencia y las expectativas de inflación consistentes con el modelo. Depende de tres parámetros a calibrar (g1=persistencia, g2=reacción a inflación, g3=reacción a la brecha del producto); puede combinarse con un componente UIP para modelar regímenes intermedios entre flotación libre y tipo de cambio fijo.",
+    "tags": [
+      "Taylor rule",
+      "regla de política monetaria",
+      "policy rate",
+      "TNM/2026/03"
+    ],
+    "type": "Equation",
+    "generic_flag": true,
+    "source": "TNM/2026/03 (Ouliaris & Rochon, 2026)"
+  },
+  {
+    "id": "M6-TNM-001",
+    "module": "M6-Calibración",
+    "title": "Pasos de Calibración del QPM — TNM/2026/03",
+    "content": "Según el TNM/2026/03, calibrar el QPM implica dos pasos principales: primero, modelar las trayectorias de tendencia de las variables endógenas clave (incluyendo sus valores de estado estacionario, que se fijan exógenamente); segundo, calibrar los parámetros de cada ecuación para que el modelo reproduzca las propiedades conocidas del ciclo económico del país (por ejemplo, cómo cambios en la tasa de política afectan a las variables reales). La idoneidad de la calibración se evalúa generando funciones de impulso-respuesta y comparándolas con los hechos estilizados del país de interés.",
+    "tags": [
+      "calibración",
+      "estado estacionario",
+      "impulse response",
+      "TNM/2026/03"
+    ],
+    "type": "Calibration_Example",
+    "generic_flag": true,
+    "source": "TNM/2026/03 (Ouliaris & Rochon, 2026)"
+  },
+  {
+    "id": "M6-TNM-002",
+    "module": "M6-Calibración",
+    "title": "Tabla 1 — Valores de Calibración del QPM Canónico (ilustrativo, 'Country Z')",
+    "content": "Tabla 1 del TNM/2026/03, valores ilustrativos para un país ficticio ('Country Z'). Demanda agregada: b1 (persistencia del producto)=0.7, b2 (efecto de condiciones monetarias)=0.2, b3 (efecto del producto externo)=0.3, b4 (peso tasa real/tipo de cambio en el MCI)=0.7, b5 (persistencia prima de crédito)=0.7. Curva de Phillips: a1 (persistencia inflación core)=0.5, a2 (pass-through de costos marginales)=0.25, a3 (peso de costos domésticos)=0.65. Regla de Taylor: g1 (persistencia tasa de política)=0.75, g2 (reacción a inflación)=0.25, g3 (reacción a brecha del producto)=0.25. UIP: e1 (persistencia tipo de cambio nominal)=0.20.",
+    "tags": [
+      "calibración",
+      "Country Z",
+      "parámetros",
+      "b1",
+      "a1",
+      "g1",
+      "TNM/2026/03"
+    ],
+    "type": "Calibration_Example",
+    "generic_flag": true,
+    "source": "TNM/2026/03 (Ouliaris & Rochon, 2026)"
+  },
+  {
+    "id": "M6-TNM-003",
+    "module": "M6-Calibración",
+    "title": "Tabla 1 — Objetivos de Estado Estacionario (ilustrativo, 'Country Z')",
+    "content": "Valores de estado estacionario ilustrativos del TNM/2026/03 para 'Country Z': crecimiento del producto potencial = 2.5% anual, meta de inflación doméstica = 2%, meta de inflación externa (zona euro) = 2%, apreciación de tendencia del tipo de cambio real = 1.5% anual, tasa real neutral doméstica = 2% (tasa nominal neutral implícita = 4%), tasa real neutral externa = 0.75% (tasa nominal neutral implícita = 2.75%). Estos valores se fijan exógenamente y el modelo converge hacia ellos en el largo plazo.",
+    "tags": [
+      "estado estacionario",
+      "steady state",
+      "inflation target",
+      "potential output",
+      "TNM/2026/03"
+    ],
+    "type": "Calibration_Example",
+    "generic_flag": true,
+    "source": "TNM/2026/03 (Ouliaris & Rochon, 2026)"
+  },
+  {
+    "id": "M11-TNM-001",
+    "module": "M11-Técnico",
+    "title": "Flujo de Trabajo del Paquete EViews del QPM — TNM/2026/03",
+    "content": "El paquete EViews del QPM (TNM/2026/03) usa un programa driver (0_qpm.prg) que invoca, en orden: 1_makedata.prg (prepara datos históricos, desestacionaliza, calcula tendencia/brecha vía filtro HP), 2_definemodel.prg (define el objeto modelo con 83 ecuaciones, la mayoría identidades, y fija los parámetros calibrados), y 3_solve_model.prg (resuelve la solución baseline y escenarios alternativos vía choques en variables 'shk_'). Programas con prefijo '4_' a '6_' generan reportes y gráficos; los con prefijo '7_' muestran escenarios complejos con múltiples restricciones simultáneas. El solver usado es E-QNewton.",
+    "tags": [
+      "EViews",
+      "0_qpm.prg",
+      "workflow",
+      "implementación",
+      "TNM/2026/03"
+    ],
+    "type": "Explanation",
+    "generic_flag": true,
+    "source": "TNM/2026/03 (Ouliaris & Rochon, 2026)"
+  }
+]
