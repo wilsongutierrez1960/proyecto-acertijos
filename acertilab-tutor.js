@@ -1,10 +1,16 @@
 /* ──────────────────────────────────────────────────────────
-   AcertiLabTutor — widget flotante de tutor QPM (RAG + Ollama)
+   AcertiLabTutor — widget flotante de tutor (RAG + Ollama)
    Se autoinyecta (HTML+CSS+JS) en cualquier módulo con solo:
      <script src="acertilab-tutor.js"></script>
      <script>AcertiLabTutor.init({ moduleHint: 'M5-Kalman' });</script>
    moduleHint es opcional: si se pasa, prioriza chunks de ese módulo
    en el retrieval (no lo excluye del todo, solo le da prioridad).
+
+   Parámetros opcionales nuevos de init():
+     embeddingsPath: ruta al JSON de embeddings (default: QPM)
+     label:          nombre corto del tema, p.ej. 'Matemática' (default: 'QPM')
+     subjectDesc:    descripción larga para el prompt del modelo
+                      (default: descripción de QPM)
    ────────────────────────────────────────────────────────── */
 const AcertiLabTutor = (function () {
 
@@ -13,7 +19,9 @@ const AcertiLabTutor = (function () {
     OLLAMA_URL: 'http://localhost:11434',
     CHAT_MODEL: 'qwen2.5:3b',          // cambiar a phi3:mini o llama3.2:3b si hace falta más velocidad
     EMBED_MODEL: 'nomic-embed-text',
-    EMBEDDINGS_PATH: 'knowledge-base/QPM_Embeddings.json',
+    DEFAULT_EMBEDDINGS_PATH: 'knowledge-base/QPM_Embeddings.json',
+    DEFAULT_LABEL: 'QPM',
+    DEFAULT_SUBJECT_DESC: 'el Quarterly Projection Model (QPM) del FMI',
     TOP_K: 4,
     MODULE_BOOST: 0.12                 // bonus de similitud para chunks del módulo actual
   };
@@ -21,6 +29,9 @@ const AcertiLabTutor = (function () {
   let embeddingsData = null;
   let loadingEmbeddings = null;
   let moduleHint = null;
+  let embeddingsPath = CONFIG.DEFAULT_EMBEDDINGS_PATH;
+  let subjectLabel = CONFIG.DEFAULT_LABEL;
+  let subjectDesc = CONFIG.DEFAULT_SUBJECT_DESC;
   let chatHistory = []; // [{role:'user'|'assistant', content:'...'}]
 
   // ── Inyección de CSS ────────────────────────────────────
@@ -90,7 +101,7 @@ const AcertiLabTutor = (function () {
     const fab = document.createElement('button');
     fab.id = 'al-tutor-fab';
     fab.innerHTML = '🎓';
-    fab.title = 'Tutor QPM (local, Ollama)';
+    fab.title = 'Tutor ' + subjectLabel + ' (local, Ollama)';
     fab.onclick = togglePanel;
     document.body.appendChild(fab);
 
@@ -98,13 +109,13 @@ const AcertiLabTutor = (function () {
     panel.id = 'al-tutor-panel';
     panel.innerHTML = `
       <div id="al-tutor-head">
-        <span>🎓 Tutor QPM ${moduleHint ? '· ' + moduleHint : ''}</span>
+        <span>🎓 Tutor ${subjectLabel} ${moduleHint ? '· ' + moduleHint : ''}</span>
         <button id="al-tutor-close">✕</button>
       </div>
       <div id="al-tutor-log"></div>
       <div id="al-tutor-hint">Corre 100% local vía Ollama — necesita <code>ollama serve</code> activo.</div>
       <div id="al-tutor-inputwrap">
-        <textarea id="al-tutor-input" rows="1" placeholder="Preguntá sobre QPM..."></textarea>
+        <textarea id="al-tutor-input" rows="1" placeholder="Preguntá sobre ${subjectLabel}..."></textarea>
         <button id="al-tutor-send">➤</button>
       </div>
     `;
@@ -137,9 +148,9 @@ const AcertiLabTutor = (function () {
 
   // ── Carga de embeddings precalculados ──────────────────
   function loadEmbeddings() {
-    loadingEmbeddings = fetch(CONFIG.EMBEDDINGS_PATH)
+    loadingEmbeddings = fetch(embeddingsPath)
       .then(function (r) {
-        if (!r.ok) throw new Error('No se encontró ' + CONFIG.EMBEDDINGS_PATH);
+        if (!r.ok) throw new Error('No se encontró ' + embeddingsPath);
         return r.json();
       })
       .then(function (data) {
@@ -147,7 +158,7 @@ const AcertiLabTutor = (function () {
       })
       .catch(function (e) {
         addMsg('bot', '⚠️ No pude cargar la base de conocimiento (' + e.message + '). ' +
-          'Generá QPM_Embeddings.json con el script de la guía antes de usar el tutor.', 'err');
+          'Generá el archivo de embeddings correspondiente antes de usar el tutor.', 'err');
       });
     return loadingEmbeddings;
   }
@@ -201,7 +212,7 @@ const AcertiLabTutor = (function () {
       return (m.role === 'user' ? 'Alumno: ' : 'Tutor: ') + m.content;
     }).join('\n');
 
-    return 'Eres un tutor experto en el Quarterly Projection Model (QPM) del FMI, ' +
+    return 'Eres un tutor experto en ' + subjectDesc + ', ' +
       'parte de la plataforma de estudio AcertiLab. Respondé en español, de forma clara ' +
       'y técnica pero accesible, basándote ÚNICAMENTE en el contexto provisto. ' +
       'Si la respuesta no está en el contexto, decilo honestamente en vez de inventar.\n\n' +
@@ -256,6 +267,9 @@ const AcertiLabTutor = (function () {
   function init(opts) {
     opts = opts || {};
     moduleHint = opts.moduleHint || null;
+    embeddingsPath = opts.embeddingsPath || CONFIG.DEFAULT_EMBEDDINGS_PATH;
+    subjectLabel = opts.label || CONFIG.DEFAULT_LABEL;
+    subjectDesc = opts.subjectDesc || CONFIG.DEFAULT_SUBJECT_DESC;
     injectStyles();
     injectDOM();
   }
