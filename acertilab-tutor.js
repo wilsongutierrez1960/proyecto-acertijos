@@ -67,6 +67,11 @@ const AcertiLabTutor = (function () {
       }
       #al-tutor-head span { color: #f7a531; font-weight: 700; font-size: 13px; letter-spacing: .03em; }
       #al-tutor-close { background: none; border: none; color: #8b949e; font-size: 18px; cursor: pointer; line-height: 1; }
+
+	#al-tutor-clear { background: none; border: none; color: #8b949e; font-size: 14px; cursor: pointer; margin-right: 8px; }
+	#al-tutor-clear:hover { color: #f7a531; }
+
+	
       #al-tutor-close:hover { color: #fff; }
       #al-tutor-log {
         flex: 1; overflow-y: auto; padding: 12px 14px;
@@ -110,7 +115,8 @@ const AcertiLabTutor = (function () {
     panel.innerHTML = `
       <div id="al-tutor-head">
         <span>🎓 Tutor ${subjectLabel} ${moduleHint ? '· ' + moduleHint : ''}</span>
-        <button id="al-tutor-close">✕</button>
+        <button id="al-tutor-clear" title="Limpiar conversación">🗑️</button>
+	<button id="al-tutor-close">✕</button>
       </div>
       <div id="al-tutor-log"></div>
       <div id="al-tutor-hint">Corre 100% local vía Ollama — necesita <code>ollama serve</code> activo.</div>
@@ -120,7 +126,7 @@ const AcertiLabTutor = (function () {
       </div>
     `;
     document.body.appendChild(panel);
-
+document.getElementById('al-tutor-clear').onclick = clearConversation;
     document.getElementById('al-tutor-close').onclick = togglePanel;
     document.getElementById('al-tutor-send').onclick = handleSend;
     document.getElementById('al-tutor-input').addEventListener('keydown', function (e) {
@@ -262,6 +268,15 @@ const AcertiLabTutor = (function () {
       sendBtn.disabled = false;
     }
   }
+
+
+function clearConversation() {
+  chatHistory = [];
+  const log = document.getElementById('al-tutor-log');
+  log.innerHTML = '';
+}
+
+
 
   // ── API pública ──────────────────────────────────────────
   function init(opts) {
