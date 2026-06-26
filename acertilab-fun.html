@@ -276,7 +276,7 @@
   </nav>
 
   <h1>Matemática &amp; Lógica</h1>
-  <p class="subtitle">10 acertijos · Seleccioná la opción correcta en cada pregunta</p>
+  <p class="subtitle">61 acertijos · Seleccioná la opción correcta en cada pregunta</p>
 
   <div class="al-banner" id="alBanner"></div>
   <div class="al-review-panel" id="alReview"></div>
@@ -290,7 +290,7 @@
 
   <div class="score-panel" id="scorePanel">
     <div class="score-num" id="scoreNum"></div>
-    <div class="score-label">respuestas correctas de 10</div>
+    <div class="score-label">respuestas correctas de 61</div>
     <button class="btn-retry" onclick="location.reload()">Reintentar</button>
   </div>
 
@@ -302,64 +302,614 @@
 <script>
 const questions = [
   {
-    q: "Una secuencia sigue la regla: cada término es la suma de los dos anteriores. Si los primeros dos términos son 2 y 3, ¿cuál es el quinto término?",
-    opts: ["10", "13", "18", "21"],
+    id: "A001",
+    capitulo: 1,
+    categoria: "personajes",
+    q: "Durante siglos, ciertos calculistas relámpago asombraban al público resolviendo multiplicaciones enormes de cabeza. ¿Cuál es la explicación real detrás de esta habilidad?",
+    opts: ["Memorizan tablas de multiplicar hasta el número 1000", "Usan atajos algebraicos y patrones numéricos en lugar de fuerza bruta", "Tienen una capacidad cerebral distinta de nacimiento", "Es un truco de magia con números preestablecidos"],
     ans: 1,
-    exp: "La secuencia es 2, 3, 5, 8, <strong>13</strong>. Cada término = suma de los dos anteriores (tipo Fibonacci)."
+    exp: "Los llamados 'magos del cálculo' no poseen poderes especiales: aplican técnicas como descomposición de números, propiedades de cuadrados perfectos y aproximaciones sucesivas. Por ejemplo, multiplicar 97 x 98 es más fácil si se piensa como (100-3)(100-2) = 10000 - 500 + 6. La práctica intensiva en estos atajos, no la memoria bruta, es la clave.",
+    dificultad: null
   },
   {
-    q: "Si el 30 % de un número es 72, ¿cuál es el 50 % de ese mismo número?",
-    opts: ["108", "120", "144", "96"],
+    id: "A002",
+    capitulo: 1,
+    categoria: "personajes",
+    q: "¿Qué técnica permite elevar al cuadrado rápidamente un número que termina en 5, como 35 o 65?",
+    opts: ["Multiplicar el número por sí mismo dígito a dígito", "Tomar la decena, multiplicarla por la decena+1, y agregar 25 al final", "Sumar el número 5 veces", "No existe ningún atajo para estos números"],
     ans: 1,
-    exp: "El número es 72 / 0.3 = 240. El 50 % de 240 = <strong>120</strong>."
+    exp: "Para un número como 35: la decena es 3, se calcula 3 x 4 = 12, y se agrega 25 al final: resultado 1225. En efecto 35² = 1225. Esto funciona porque (10n+5)² = 100·n(n+1) + 25, una identidad algebraica simple detrás de un truco que parece magia.",
+    dificultad: null
   },
   {
-    q: "Un tren parte a las 14:45 y llega a destino 3 h 50 min después. ¿A qué hora llega?",
-    opts: ["18:25", "18:35", "18:15", "18:45"],
+    id: "A003",
+    capitulo: 1,
+    categoria: "personajes",
+    q: "Un 'mago' adivina el resultado de: piensa un número, súmale 5, multiplícalo por 2, réstale 10, divide entre 2. ¿Qué obtienes siempre?",
+    opts: ["El doble del número original", "El número original", "El número original más 5", "Siempre 10"],
     ans: 1,
-    exp: "14:45 + 3:50 = 17:95 → 18:<strong>35</strong>. (95 min = 1 h 35 min)"
+    exp: "Sea x el número: (x+5)·2 = 2x+10; restando 10 da 2x; dividiendo entre 2 da x. El 'truco' siempre devuelve el número inicial porque las operaciones se cancelan algebraicamente. Este es el principio detrás de muchos juegos de 'magia matemática'.",
+    dificultad: null
   },
   {
-    q: "¿Cuántos cuadrados hay en total en una cuadrícula de 3 × 3?",
-    opts: ["9", "12", "14", "16"],
+    id: "A004",
+    capitulo: 2,
+    categoria: "geometria",
+    q: "El filósofo Kant consideraba que las verdades geométricas (como que la suma de ángulos de un triángulo es 180°) eran conocidas de forma especial. ¿Cómo las clasificaba?",
+    opts: ["Como verdades empíricas, descubiertas solo midiendo triángulos reales", "Como verdades a priori, conocidas independientemente de la experiencia", "Como opiniones sin valor de verdad", "Como verdades que cambian según la cultura"],
+    ans: 1,
+    exp: "Kant sostenía que los juicios geométricos son 'sintéticos a priori': no se deducen solo de definiciones (como los analíticos), pero tampoco requieren experimentar con triángulos físicos para saber que es verdad. Curiosamente, el descubrimiento de geometrías no euclidianas en el siglo XIX puso en debate esta idea, ya que mostró que existen geometrías consistentes donde esa suma no es 180°.",
+    dificultad: null
+  },
+  {
+    id: "A005",
+    capitulo: 2,
+    categoria: "geometria",
+    q: "¿Por qué la suma de los ángulos internos de un triángulo puede NO ser 180° en ciertos contextos?",
+    opts: ["Eso nunca puede ocurrir bajo ninguna circunstancia", "Ocurre en superficies curvas, como la de una esfera, donde la geometría no es euclidiana", "Solo ocurre con triángulos muy pequeños", "Es un error de medición, nunca un hecho geométrico"],
+    ans: 1,
+    exp: "En geometría esférica (la superficie de una esfera, como la Tierra), un triángulo formado por arcos de círculos máximos puede tener ángulos que suman más de 180°. Por ejemplo, un triángulo con un vértice en el polo norte y dos en el ecuador separados 90° tiene tres ángulos de 90°, sumando 270°. Esto demuestra que la geometría euclidiana plana es solo un caso particular.",
+    dificultad: null
+  },
+  {
+    id: "A006",
+    capitulo: 3,
+    categoria: "curiosidades",
+    q: "Las abejas construyen sus celdas hexagonales de forma instintiva. ¿Por qué el hexágono es la forma matemáticamente más eficiente para este propósito?",
+    opts: ["Porque es la forma más fácil de dibujar", "Porque entre los polígonos regulares que cubren un plano sin huecos, el hexágono usa menos material de pared para encerrar la misma área", "Porque las abejas no pueden construir círculos", "El hexágono no tiene ninguna ventaja real, es solo casualidad"],
+    ans: 1,
+    exp: "Solo los triángulos, cuadrados y hexágonos regulares pueden teselar (cubrir) un plano sin dejar espacios. De estos tres, el hexágono es el que, para una misma área, tiene el menor perímetro total compartido entre celdas vecinas. Esto fue demostrado rigurosamente como el 'teorema del panal' (Honeycomb Conjecture) por el matemático Thomas Hales en 1999, confirmando una intuición que ya tenían los griegos antiguos.",
+    dificultad: null
+  },
+  {
+    id: "A007",
+    capitulo: 3,
+    categoria: "curiosidades",
+    q: "La secuencia de Fibonacci (1, 1, 2, 3, 5, 8, 13...) aparece en la disposición de semillas de un girasol. ¿Qué tienen en común estos números con el crecimiento natural?",
+    opts: ["No tienen relación real, es una leyenda urbana", "Permiten un empaquetamiento óptimo de semillas minimizando espacios vacíos", "Solo aparecen en girasoles, en ninguna otra planta", "Son simplemente números que el ser humano impuso a la naturaleza"],
+    ans: 1,
+    exp: "Las espirales de semillas en un girasol suelen seguir números consecutivos de Fibonacci (por ejemplo 34 y 55). Esto ocurre porque el ángulo de crecimiento entre semillas sucesivas tiende al 'ángulo dorado' (~137.5°), relacionado con la razón áurea, que es el límite de los cocientes de Fibonacci. Este ángulo permite que cada nueva semilla aproveche el espacio disponible de forma casi óptima, sin alinearse exactamente con las anteriores.",
+    dificultad: null
+  },
+  {
+    id: "A008",
+    capitulo: 4,
+    categoria: "curiosidades",
+    q: "Si una piña (fruto) tiene 8 espirales en un sentido y 13 en el otro, ¿qué relación matemática están mostrando estos números?",
+    opts: ["Son números primos sin relación entre sí", "Son números consecutivos de la secuencia de Fibonacci", "Suman exactamente 20, que es lo importante", "Son simplemente al azar"],
+    ans: 1,
+    exp: "8 y 13 son términos consecutivos de Fibonacci (1,1,2,3,5,8,13,21...). Esta secuencia aparece reiteradamente en estructuras de crecimiento espiral en la naturaleza —piñas, alcauciles, girasoles— porque optimiza el uso de espacio durante el crecimiento progresivo de la planta, generación tras generación de nuevas escamas o semillas.",
+    dificultad: null
+  },
+  {
+    id: "A009",
+    capitulo: 4,
+    categoria: "curiosidades",
+    q: "Si quieres apilar piñas en una caja cúbica del modo más compacto posible (sin dejar huecos grandes), ¿qué tipo de empaquetamiento usarías?",
+    opts: ["Empaquetamiento aleatorio, siempre es igual de eficiente", "Empaquetamiento cúbico simple, dejando cada esfera separada", "Empaquetamiento hexagonal compacto (como en una pila de naranjas en el mercado)", "No existe forma de optimizar el espacio con objetos redondeados"],
     ans: 2,
-    exp: "Cuadrados 1×1: 9 · Cuadrados 2×2: 4 · Cuadrado 3×3: 1 → Total = <strong>14</strong>."
+    exp: "El empaquetamiento hexagonal compacto (o cúbico centrado en las caras) llena aproximadamente el 74% del volumen, el máximo teórico para esferas iguales, según la conjetura de Kepler (demostrada formalmente en 1998-2014). Es el mismo patrón que usan instintivamente los verduleros al apilar naranjas o piñas en pirámide.",
+    dificultad: null
   },
   {
-    q: "Pedro tiene el doble de edad que Ana. Dentro de 10 años, Pedro tendrá 1.5 veces la edad de Ana. ¿Cuántos años tiene Ana ahora?",
-    opts: ["10", "15", "20", "25"],
+    id: "A010",
+    capitulo: 5,
+    categoria: "historia",
+    q: "¿La matemática fue 'inventada' por el ser humano o 'descubierta' como algo que ya existía independientemente de nosotros? ¿Cuál es la postura llamada 'platonismo matemático'?",
+    opts: ["Que la matemática es un invento arbitrario sin relación con la realidad", "Que los objetos matemáticos existen en un reino abstracto independiente, y los matemáticos los descubren", "Que solo existe la matemática que se puede medir físicamente", "Que cada cultura inventa su propia matemática sin ninguna verdad universal"],
+    ans: 1,
+    exp: "El platonismo matemático sostiene que números, conjuntos y estructuras matemáticas existen objetivamente, de forma similar a las Ideas de Platón, y que el trabajo del matemático es 'descubrirlas' más que inventarlas. La postura contraria, el formalismo o el constructivismo, sostiene que la matemática es una construcción humana basada en reglas. El debate sigue abierto en filosofía de la matemática.",
+    dificultad: null
+  },
+  {
+    id: "A011",
+    capitulo: 5,
+    categoria: "historia",
+    q: "¿Por qué se dice que los números negativos tardaron mucho en ser aceptados en la historia de la matemática?",
+    opts: ["Porque eran difíciles de calcular con ellos", "Porque no se les encontraba una interpretación física intuitiva, como 'tener menos que nada'", "Porque los números negativos no existen matemáticamente", "Porque ningún matemático antiguo los usó jamás"],
+    ans: 1,
+    exp: "Matemáticos como los griegos clásicos rechazaban los números negativos porque su geometría se basaba en longitudes y áreas, que no podían ser negativas. Recién con el desarrollo del álgebra en India y luego en Europa (siglos XVI-XVII) se aceptaron plenamente, al interpretarlos como deudas o direcciones opuestas en una recta numérica.",
+    dificultad: null
+  },
+  {
+    id: "A012",
+    capitulo: 6,
+    categoria: "curiosidades",
+    q: "En la ilusión de Müller-Lyer, dos segmentos de igual longitud parecen distintos porque tienen flechas en direcciones opuestas en sus extremos. ¿Qué nos enseña esto sobre la geometría y la percepción?",
+    opts: ["Que la geometría cambia según quien mire", "Que la medición exacta (con regla) puede contradecir lo que el ojo percibe", "Que las ilusiones ópticas no tienen relación con la matemática", "Que los segmentos en realidad sí tienen longitudes distintas"],
+    ans: 1,
+    exp: "Esta ilusión revela la diferencia entre la geometría 'objetiva' (medible con instrumentos) y la percepción visual humana, que interpreta el contexto (las flechas sugieren profundidad o distancia). Es un recordatorio de por qué la matemática usa demostraciones rigurosas en lugar de fiarse de la intuición visual.",
+    dificultad: null
+  },
+  {
+    id: "A013",
+    capitulo: 6,
+    categoria: "curiosidades",
+    q: "¿Por qué un cuadrado dibujado dentro de un círculo parece más pequeño que un círculo de igual área dibujado en otro contexto?",
+    opts: ["Porque el área nunca puede ser realmente igual", "Porque la percepción de tamaño depende de la forma y el contexto visual, no solo del área matemática", "Es imposible que esto ocurra", "El ojo humano siempre mide áreas con precisión perfecta"],
+    ans: 1,
+    exp: "Esta es la base de ilusiones de comparación de área: aunque dos figuras tengan exactamente la misma área (calculable algebraicamente), la forma, el borde y los elementos circundantes afectan cómo el cerebro estima su tamaño relativo. Por eso en diseño y cartografía se usan técnicas específicas para representar áreas de forma que coincidan con la percepción.",
+    dificultad: null
+  },
+  {
+    id: "A014",
+    capitulo: 7,
+    categoria: "historia",
+    q: "El papiro Rhind, uno de los documentos matemáticos egipcios más antiguos conservados (~1650 a.C.), contiene problemas prácticos. ¿Qué tipo de matemática predominaba allí?",
+    opts: ["Geometría abstracta sin aplicaciones prácticas", "Problemas aplicados: repartos de pan, cálculo de áreas de tierras, fracciones unitarias", "Álgebra simbólica con ecuaciones modernas", "Solo cálculos astronómicos"],
+    ans: 1,
+    exp: "El papiro Rhind contiene 84 problemas resueltos, muchos vinculados a necesidades cotidianas del antiguo Egipto: repartir panes entre trabajadores, calcular el área de campos para tributos, y un uso particular de fracciones (casi siempre expresadas como suma de fracciones unitarias, es decir con numerador 1). Refleja una matemática práctica más que teórica.",
+    dificultad: null
+  },
+  {
+    id: "A015",
+    capitulo: 7,
+    categoria: "historia",
+    q: "Los egipcios antiguos casi nunca escribían una fracción como 2/5; en cambio, la descomponían en suma de fracciones unitarias (con numerador 1), como 1/3 + 1/15. ¿Por qué resulta interesante este sistema?",
+    opts: ["Porque demuestra que no sabían sumar fracciones", "Porque exige encontrar descomposiciones no triviales, un problema combinatorio interesante incluso hoy", "Porque las fracciones unitarias son más fáciles de multiplicar siempre", "No tiene ningún interés matemático"],
+    ans: 1,
+    exp: "Encontrar la descomposición de una fracción en suma de fracciones unitarias distintas (fracciones egipcias) sigue siendo un tema de estudio en teoría de números. No siempre hay una única forma de hacerlo, y el problema de hallar descomposiciones 'cortas' o con denominadores pequeños puede ser sorprendentemente complejo.",
+    dificultad: null
+  },
+  {
+    id: "A016",
+    capitulo: 8,
+    categoria: "aplicaciones",
+    q: "Si un comerciante necesita repartir una ganancia de forma proporcional a la inversión de tres socios, ¿qué herramienta matemática debe usar?",
+    opts: ["Repartir en partes iguales sin importar la inversión", "Regla de reparto proporcional (reparto en partes proporcionales a una cantidad dada)", "Promedio simple de las tres inversiones", "No existe forma matemática de resolver esto con justicia"],
+    ans: 1,
+    exp: "El reparto proporcional consiste en dividir una cantidad total en partes que mantengan la misma proporción que ciertos valores de referencia (en este caso, las inversiones). Si los socios invirtieron en relación 2:3:5, la ganancia se reparte también en esa proporción, dividiendo el total en 10 partes (2+3+5) y asignando 2, 3 y 5 partes respectivamente.",
+    dificultad: null
+  },
+  {
+    id: "A017",
+    capitulo: 8,
+    categoria: "aplicaciones",
+    q: "Un campesino vende parte de su cosecha y reinvierte las ganancias en nuevas semillas, repitiendo el proceso cada temporada con una tasa de crecimiento constante. ¿Qué tipo de crecimiento matemático describe esta situación?",
+    opts: ["Crecimiento lineal (suma siempre la misma cantidad)", "Crecimiento exponencial (se multiplica por un factor constante cada vez)", "Decrecimiento constante", "No sigue ningún patrón matemático"],
+    ans: 1,
+    exp: "Cuando una cantidad se multiplica por el mismo factor en cada período (por ejemplo, crece un 10% cada temporada), el crecimiento es exponencial: C(n) = C0 × (1+r)^n. Este es el mismo principio detrás del interés compuesto, y explica por qué pequeñas tasas de crecimiento sostenidas en el tiempo producen resultados sorprendentemente grandes a largo plazo.",
+    dificultad: null
+  },
+  {
+    id: "A018",
+    capitulo: 9,
+    categoria: "personajes",
+    q: "Euclides organizó la geometría en un sistema de axiomas y teoremas en su obra 'Elementos'. ¿Por qué se considera esto una revolución metodológica?",
+    opts: ["Porque inventó todos los teoremas geométricos él mismo desde cero", "Porque estableció un método deductivo riguroso: a partir de pocos axiomas, demostrar todo lo demás lógicamente", "Porque solo trabajó con dibujos, sin demostraciones", "Porque fue el primero en usar números"],
+    ans: 1,
+    exp: "Euclides no inventó la mayoría de los teoremas (muchos ya eran conocidos), pero sistematizó la geometría con un método axiomático: partiendo de definiciones, postulados y axiomas simples, demostró cientos de proposiciones de forma encadenada. Este método deductivo se convirtió en el modelo de rigor matemático durante más de 2000 años.",
+    dificultad: null
+  },
+  {
+    id: "A019",
+    capitulo: 9,
+    categoria: "personajes",
+    q: "Arquímedes calculó una aproximación del número π usando polígonos inscritos y circunscritos en un círculo. ¿Cuál era la idea central de su método?",
+    opts: ["Medir círculos físicos con una cinta métrica", "Aumentar progresivamente el número de lados de los polígonos para acercarse al círculo desde adentro y desde afuera", "Usar calculadoras mecánicas", "Adivinar el valor basándose en intuición"],
+    ans: 1,
+    exp: "Arquímedes inscribió y circunscribió polígonos regulares (llegando a 96 lados) alrededor de un círculo. El perímetro del polígono inscrito es menor que la circunferencia, y el del circunscrito es mayor; al aumentar los lados, ambos perímetros se acercan al valor real de la circunferencia, acotando π entre 223/71 y 22/7. Es un antecedente directo del método de límites usado en el cálculo moderno.",
+    dificultad: null
+  },
+  {
+    id: "A020",
+    capitulo: 10,
+    categoria: "curiosidades",
+    q: "Contar elementos repetitivos en una obra literaria (como versos, estrofas o palabras) es un ejercicio de conteo. Si un poema tiene 10 cantos y cada canto tiene un número distinto de estrofas, ¿qué operación matemática básica se necesita para hallar el total de estrofas?",
+    opts: ["Multiplicación de los 10 valores", "Suma de los 10 valores individuales", "Promedio de los valores", "No se puede calcular sin ver el poema físicamente"],
+    ans: 1,
+    exp: "Para hallar un total a partir de partes desiguales, se suman todas las partes. Esto parece trivial, pero ilustra cómo el conteo riguroso (la base de la aritmética) permite verificar afirmaciones literarias o históricas, como cuántos versos tiene una epopeya clásica, en lugar de basarse en estimaciones.",
+    dificultad: null
+  },
+  {
+    id: "A021",
+    capitulo: 10,
+    categoria: "curiosidades",
+    q: "Si cada estrofa de un poema épico tiene exactamente 8 versos (como en la octava real, esquema usado en 'Os Lusíadas'), y el poema tiene 1102 estrofas, ¿cuántos versos tiene en total?",
+    opts: ["8816 versos", "1110 versos", "8816 no es correcto, son 1102 versos", "Imposible saberlo sin contar uno por uno"],
     ans: 0,
-    exp: "P = 2A. En 10 años: (2A+10) = 1.5(A+10) → 2A+10 = 1.5A+15 → 0.5A = 5 → A = <strong>10</strong>."
+    exp: "Basta multiplicar 1102 × 8 = 8816. Este es un ejemplo simple de cómo la multiplicación reemplaza el conteo repetitivo: en lugar de contar verso por verso, conocer la estructura regular (8 versos por estrofa) permite calcular el total de forma inmediata.",
+    dificultad: null
   },
   {
-    q: "Si LUNA = 4 y SOL = 3, ¿cuánto vale ECLIPSE?",
-    opts: ["5", "6", "7", "8"],
-    ans: 2,
-    exp: "El valor es el número de <strong>letras vocales</strong>: LUNA (U,A)=2… no, es número de letras: LUNA=4, SOL=3, ECLIPSE=<strong>7</strong>."
-  },
-  {
-    q: "Una canilla llena un tanque en 6 horas. Otra lo vacía en 9 horas. Si ambas operan juntas con el tanque lleno, ¿en cuántas horas se vacía?",
-    opts: ["12", "15", "18", "20"],
-    ans: 2,
-    exp: "Tasa neta = 1/9 − 1/6 = −1/18 (se vacía). Tiempo = <strong>18</strong> horas."
-  },
-  {
-    q: "En una sala hay 100 personas. El 99 % son adultos. ¿Cuántos adultos deben salir para que los adultos sean el 98 % del total?",
-    opts: ["1", "50", "49", "51"],
+    id: "A022",
+    capitulo: 11,
+    categoria: "curiosidades",
+    q: "¿Qué tiene de curioso el producto 12345679 × 9 = 111111111?",
+    opts: ["Es pura coincidencia sin ninguna estructura matemática", "Se debe a que 12345679 × 9 está relacionado con 1/9 expresado como número periódico, y a la ausencia deliberada del dígito 8", "Funciona solo con el número 9, ningún otro número produce resultados así", "Es un error de cálculo"],
     ans: 1,
-    exp: "Hay 99 adultos y 1 menor. Para que 1 sea el 2%: total = 50. Deben salir 99 − 49 = <strong>50</strong> adultos."
+    exp: "El número 12345679 (nótese que falta el 8 a propósito) multiplicado por 9 da 111111111. Y si lo multiplicas por 18, 27, 36... (múltiplos de 9) obtienes 222222222, 333333333, etc. Esto está relacionado con la estructura decimal de fracciones como 1/81 y con patrones de repetición en la base 10; no es magia, sino una consecuencia de cómo se construyen los múltiplos de 9 en notación decimal.",
+    dificultad: null
   },
   {
-    q: "¿Cuál es el siguiente número en la serie: 1, 4, 9, 16, 25, ___?",
-    opts: ["30", "36", "34", "32"],
+    id: "A023",
+    capitulo: 11,
+    categoria: "curiosidades",
+    q: "El número 1089 tiene una propiedad curiosa: si tomas un número de 3 cifras distintas, le restas su reverso (o viceversa, el mayor menos el menor), y al resultado le sumas su propio reverso, casi siempre obtienes 1089. ¿Qué nombre tiene este tipo de comportamiento numérico?",
+    opts: ["Es un ejemplo de número perfecto", "Es un ejemplo de 'número de Kaprekar' o curiosidad numérica relacionada con operaciones de resta y reverso", "Es simplemente un número primo especial", "No tiene nombre, es solo una anécdota sin estudio matemático"],
     ans: 1,
-    exp: "Son cuadrados perfectos: 1², 2², 3², 4², 5², <strong>6² = 36</strong>."
+    exp: "Este fenómeno (a veces llamado 'el truco del 1089') es un ejemplo de constantes que emergen de operaciones repetidas con dígitos y reversos, área relacionada con los estudios de D.R. Kaprekar sobre rutinas numéricas (como la constante de Kaprekar 6174 para números de 4 cifras). Son curiosidades aritméticas bien documentadas, demostrables algebraicamente descomponiendo el número en centenas, decenas y unidades.",
+    dificultad: null
   },
   {
-    q: "Un reloj marca las 3:00. ¿Cuántos grados forma el ángulo entre el minutero y el horario?",
-    opts: ["60°", "75°", "90°", "120°"],
-    ans: 2,
-    exp: "A las 3:00 el horario apunta al 3 (90°) y el minutero al 12 (0°). Ángulo = <strong>90°</strong>."
+    id: "A024",
+    capitulo: 12,
+    categoria: "geometria",
+    q: "Henri Poincaré defendía una visión 'convencionalista' de la geometría. ¿En qué consiste esta idea?",
+    opts: ["Que solo existe una geometría verdadera y las demás son falsas", "Que la elección entre geometría euclidiana y no euclidiana es una cuestión de conveniencia práctica, no de verdad absoluta", "Que la geometría no tiene ninguna utilidad práctica", "Que la geometría debe basarse únicamente en mediciones físicas"],
+    ans: 1,
+    exp: "Poincaré argumentaba que ningún experimento físico puede determinar de forma definitiva si el espacio es euclidiano o no euclidiano, porque siempre se puede 'salvar' un modelo geométrico ajustando otras leyes físicas (como las de la óptica). Por eso decía que elegimos la geometría euclidiana no porque sea 'más verdadera', sino porque es más simple y conveniente para describir el mundo a escala humana.",
+    dificultad: null
+  },
+  {
+    id: "A025",
+    capitulo: 12,
+    categoria: "geometria",
+    q: "En el modelo del disco de Poincaré (una representación de geometría hiperbólica), las 'líneas rectas' se dibujan como arcos curvos dentro de un círculo. ¿Por qué esto no contradice la geometría?",
+    opts: ["Porque es simplemente un dibujo artístico sin rigor matemático", "Porque 'recta' significa el camino más corto entre dos puntos según la métrica definida en ese espacio, que no es la métrica euclidiana habitual", "Porque en realidad sí son líneas rectas euclidianas, solo que mal dibujadas", "Porque ese modelo está matemáticamente equivocado"],
+    ans: 1,
+    exp: "Una 'geodésica' (la generalización de recta) es el camino más corto entre dos puntos según la métrica del espacio en cuestión. En el disco de Poincaré, la distancia se define de forma que crece muchísimo cerca del borde; por eso, el camino más corto entre dos puntos se curva, visto con ojos euclidianos, aunque sea 'recto' según esa métrica hiperbólica. Es una de las representaciones más famosas de geometría no euclidiana.",
+    dificultad: null
+  },
+  {
+    id: "A026",
+    capitulo: 13,
+    categoria: "aplicaciones",
+    q: "Un agricultor deja en testamento que su tierra (un terreno rectangular) se divida en partes iguales entre sus 3 hijos, pero solo con un cordel y estacas. ¿Qué procedimiento geométrico permite dividir un rectángulo en 3 áreas exactamente iguales sin calculadora?",
+    opts: ["Es imposible hacerlo sin instrumentos de medición modernos", "Trazar dos líneas paralelas a un lado, separando el rectángulo en 3 franjas de igual ancho", "Dividir solo por la mitad y repetir indefinidamente", "Usar únicamente las diagonales del rectángulo"],
+    ans: 1,
+    exp: "Si se divide la longitud de un lado en 3 partes iguales (con el cordel doblado en tres) y se trazan líneas paralelas al lado opuesto desde esos puntos, se obtienen 3 franjas rectangulares de igual ancho y, por lo tanto, de igual área (ya que el área de un rectángulo depende linealmente del ancho cuando el alto es el mismo). Es un ejemplo de cómo la geometría práctica resolvía problemas reales de herencias y repartos de tierra desde la antigüedad.",
+    dificultad: null
+  },
+  {
+    id: "A027",
+    capitulo: 13,
+    categoria: "aplicaciones",
+    q: "Si un terreno triangular debe dividirse en 2 partes de igual área mediante una línea que pase por uno de sus vértices, ¿dónde debe caer el otro extremo de esa línea?",
+    opts: ["En cualquier punto del lado opuesto", "Exactamente en el punto medio del lado opuesto a ese vértice (la mediana)", "En el vértice opuesto", "No es posible dividir un triángulo en dos áreas iguales con una sola línea recta"],
+    ans: 1,
+    exp: "La mediana de un triángulo (el segmento que va de un vértice al punto medio del lado opuesto) siempre divide al triángulo en dos triángulos de igual área, porque ambos comparten la misma altura desde el vértice y tienen bases iguales (las dos mitades del lado dividido). Esta propiedad se usa desde la antigüedad para repartos justos de terrenos triangulares.",
+    dificultad: null
+  },
+  {
+    id: "A028",
+    capitulo: 14,
+    categoria: "historia",
+    q: "¿Cuál es el origen más aceptado del símbolo '+' para la suma?",
+    opts: ["Siempre existió como símbolo independiente desde la antigüedad egipcia", "Es una abreviatura evolucionada de la palabra latina 'et' (que significa 'y'), usada en manuscritos medievales", "Fue inventado por los árabes junto con los números indo-arábigos", "Proviene de un símbolo religioso sin relación con el lenguaje"],
+    ans: 1,
+    exp: "Una de las hipótesis más respaldadas históricamente sugiere que el signo '+' evolucionó de la abreviatura cursiva de 'et' (latín para 'y'), usada por copistas medievales al escribir suma de cantidades. Con el tiempo, la escritura apresurada de esa abreviatura se simplificó hasta convertirse en la cruz que usamos hoy, popularizada en textos matemáticos europeos del siglo XV en adelante.",
+    dificultad: null
+  },
+  {
+    id: "A029",
+    capitulo: 14,
+    categoria: "historia",
+    q: "Antes de que existieran los símbolos +, −, ×, ÷ tal como los conocemos, ¿cómo expresaban los matemáticos antiguos las operaciones aritméticas?",
+    opts: ["Con palabras completas escritas en prosa ('retórica matemática')", "Usando exactamente los mismos símbolos modernos, solo que dibujados distinto", "No realizaban operaciones aritméticas en absoluto", "Usando exclusivamente diagramas geométricos"],
+    ans: 0,
+    exp: "Durante la llamada 'etapa retórica' del álgebra (predominante hasta la Edad Media), los problemas y sus soluciones se escribían completamente en palabras, sin símbolos abreviados: 'la cosa más cinco es igual a diez' en lugar de 'x + 5 = 10'. La introducción gradual de símbolos (lo que se llama álgebra 'sincopada' y luego 'simbólica') facilitó enormemente el desarrollo posterior de la matemática.",
+    dificultad: null
+  },
+  {
+    id: "A030",
+    capitulo: 15,
+    categoria: "curiosidades",
+    q: "Dos números se llaman 'amigos' (o amicables) si la suma de los divisores propios de uno es igual al otro número, y viceversa. ¿Cuál es el par de números amigos más pequeño conocido?",
+    opts: ["10 y 20", "220 y 284", "100 y 100", "6 y 28"],
+    ans: 1,
+    exp: "Los divisores propios de 220 (excluyendo el propio 220) son 1,2,4,5,10,11,20,22,44,55,110, que suman 284. Y los divisores propios de 284 (1,2,4,71,142) suman 220. Este par era conocido desde la antigüedad (atribuido a los pitagóricos) y es el ejemplo más célebre de números amigos, un concepto que sigue generando curiosidad en teoría de números.",
+    dificultad: null
+  },
+  {
+    id: "A031",
+    capitulo: 15,
+    categoria: "curiosidades",
+    q: "¿En qué se diferencia un 'número perfecto' de un 'número amigo'?",
+    opts: ["Son exactamente lo mismo, solo con nombres distintos", "Un número perfecto es igual a la suma de sus propios divisores propios; un número amigo necesita de otro número distinto para que se cumpla esa relación cruzada", "Un número amigo siempre es mayor que un número perfecto", "No existe ninguna relación entre ambos conceptos"],
+    ans: 1,
+    exp: "Un número perfecto (como 6 = 1+2+3, o 28 = 1+2+4+7+14) es autosuficiente: la suma de sus divisores propios da el mismo número. Un número amigo, en cambio, necesita de su 'pareja': la suma de los divisores de A da B, y la suma de los divisores de B da A. Son conceptos relacionados pero distintos dentro de la teoría de números sobre sumas de divisores.",
+    dificultad: null
+  },
+  {
+    id: "A032",
+    capitulo: 16,
+    categoria: "geometria",
+    q: "Una hipérbola es una curva con dos ramas que se abren en direcciones opuestas. ¿Qué propiedad geométrica define a todos los puntos de una hipérbola respecto a sus dos focos?",
+    opts: ["La suma de las distancias a ambos focos es constante", "La diferencia (en valor absoluto) de las distancias a ambos focos es constante", "La distancia a un solo foco es siempre cero", "No existe ninguna relación entre los puntos y los focos"],
+    ans: 1,
+    exp: "Mientras que en una elipse la SUMA de distancias a los dos focos es constante, en una hipérbola es la DIFERENCIA (en valor absoluto) la que permanece constante para todo punto de la curva. Esta propiedad se usa, por ejemplo, en sistemas de navegación por radio (como LORAN), donde la diferencia de tiempos de llegada de señales desde dos antenas ubica al receptor sobre una rama de hipérbola.",
+    dificultad: null
+  },
+  {
+    id: "A033",
+    capitulo: 16,
+    categoria: "geometria",
+    q: "Cuando un poeta usa una 'hipérbole' (figura retórica de exageración, como decir 'te lo he dicho un millón de veces'), ¿qué relación tiene esta palabra con la curva matemática llamada hipérbola?",
+    opts: ["Ninguna, son palabras que coinciden por pura casualidad fonética", "Comparten la misma raíz griega 'hyperbole' (exceso, ir más allá), aludiendo a un exceso o desproporción", "La curva matemática fue nombrada en honor a la figura retórica", "Son sinónimos exactos en cualquier contexto"],
+    ans: 1,
+    exp: "Ambas palabras derivan del griego 'hyperbolé' (de 'hyper', sobre/más allá, y 'ballein', lanzar), que significa 'exceso' o 'ir más allá de cierto límite'. Apolonio de Perga usó este nombre para la curva porque, en términos de las secciones cónicas que estudiaba, la hipérbola corresponde al caso donde el plano de corte supera cierta inclinación límite respecto al cono, en contraste con la elipse (defecto) y la parábola (igualdad).",
+    dificultad: null
+  },
+  {
+    id: "A034",
+    capitulo: 17,
+    categoria: "historia",
+    q: "Los babilonios (caldeos) usaban un sistema numérico de base 60 (sexagesimal). ¿Qué huella de ese sistema sigue presente en la vida moderna?",
+    opts: ["Ninguna, fue completamente reemplazado", "La división de la hora en 60 minutos y el minuto en 60 segundos, además de los 360° de un círculo", "El sistema decimal que usamos hoy proviene directamente de ellos", "Solo se usa en astrología, sin ninguna aplicación científica actual"],
+    ans: 1,
+    exp: "El sistema sexagesimal babilónico se eligió posiblemente porque 60 tiene muchos divisores (1,2,3,4,5,6,10,12,15,20,30), facilitando cálculos con fracciones. Su legado perdura en la medición del tiempo (60 segundos, 60 minutos) y de ángulos (360° = 6×60°), un ejemplo notable de cómo una convención antigua sigue vigente miles de años después.",
+    dificultad: null
+  },
+  {
+    id: "A035",
+    capitulo: 17,
+    categoria: "historia",
+    q: "Las tablillas babilónicas de arcilla, como la famosa Plimpton 322, muestran que ya conocían ternas relacionadas con triángulos rectángulos. ¿A qué teorema moderno se asocian estas ternas?",
+    opts: ["Al teorema fundamental del álgebra", "Al teorema de Pitágoras (ternas pitagóricas, como 3-4-5)", "Al teorema de Tales", "No tiene relación con ningún teorema conocido"],
+    ans: 1,
+    exp: "La tablilla Plimpton 322 (c. 1800 a.C.) contiene listas de números que forman ternas pitagóricas (donde a²+b²=c²), más de mil años antes de que Pitágoras naciera. Esto demuestra que los babilonios ya manejaban relaciones aritméticas equivalentes al teorema que hoy lleva el nombre del filósofo griego, aunque no se sabe con certeza si tenían una demostración general o solo ejemplos prácticos.",
+    dificultad: null
+  },
+  {
+    id: "A036",
+    capitulo: 18,
+    categoria: "aplicaciones",
+    q: "El 'disco de Faraday' fue uno de los primeros generadores eléctricos, basado en un disco metálico girando dentro de un campo magnético. ¿Qué relación matemática describe la fuerza electromotriz (voltaje) generada en función de la velocidad de giro?",
+    opts: ["Es totalmente independiente de la velocidad", "Es directamente proporcional a la velocidad angular de rotación del disco", "Es inversamente proporcional al cuadrado de la velocidad", "Solo depende del tamaño físico del disco, nunca de su movimiento"],
+    ans: 1,
+    exp: "Según la ley de inducción de Faraday, la fuerza electromotriz inducida es proporcional a la tasa de cambio del flujo magnético, que a su vez depende linealmente de la velocidad angular del disco. Esto significa que duplicar la velocidad de giro duplica (aproximadamente) el voltaje generado, una relación lineal simple que sirvió de base para el desarrollo de generadores eléctricos modernos.",
+    dificultad: null
+  },
+  {
+    id: "A037",
+    capitulo: 18,
+    categoria: "aplicaciones",
+    q: "Si un molino de viento gira con una frecuencia constante, ¿qué tipo de función matemática describe la posición de la punta de una de sus aspas a lo largo del tiempo?",
+    opts: ["Una función lineal creciente sin límite", "Una función periódica (como seno o coseno), ya que la posición se repite cada vuelta", "Una función exponencial", "No existe una función matemática que describa este movimiento"],
+    ans: 1,
+    exp: "El movimiento circular uniforme se describe naturalmente con funciones trigonométricas: la altura de la punta del aspa respecto al suelo, por ejemplo, oscila siguiendo una función tipo seno, repitiéndose con un período igual al tiempo que tarda una vuelta completa. Este es uno de los ejemplos más clásicos para introducir las funciones periódicas en el estudio del movimiento circular.",
+    dificultad: null
+  },
+  {
+    id: "A038",
+    capitulo: 19,
+    categoria: "curiosidades",
+    q: "El número 142857 tiene una propiedad fascinante: al multiplicarlo por 2, 3, 4, 5 o 6, se obtienen los mismos dígitos en distinto orden cíclico. ¿De dónde proviene esta propiedad?",
+    opts: ["Es pura coincidencia sin explicación matemática", "Es el período decimal de la fracción 1/7, y su estructura cíclica deriva de las propiedades del residuo en la división", "Fue diseñado artificialmente por matemáticos modernos sin relación con fracciones", "Solo funciona multiplicando por 2, ningún otro número produce el efecto"],
+    ans: 1,
+    exp: "1/7 = 0.142857142857... (período de 6 cifras). Al multiplicar 142857 por 2,3,4,5,6 se obtienen permutaciones cíclicas de las mismas seis cifras (285714, 428571, 571428, 714285, 857142), porque corresponden a las fracciones 2/7, 3/7, 4/7, 5/7 y 6/7, cuyos restos en la división van recorriendo cíclicamente los mismos valores. Multiplicarlo por 7 da 999999, cerrando el ciclo perfectamente.",
+    dificultad: null
+  },
+  {
+    id: "A039",
+    capitulo: 19,
+    categoria: "curiosidades",
+    q: "¿Por qué 1/7 tiene un período decimal de exactamente 6 cifras, mientras que 1/3 tiene un período de solo 1 cifra (0.333...)?",
+    opts: ["Es completamente aleatorio, no depende del denominador", "La longitud del período está relacionada con el orden multiplicativo de 10 módulo el denominador (en este caso, módulo 7 y módulo 3)", "Siempre depende de si el numerador es 1", "El período siempre tiene la misma longitud que el denominador menos 2"],
+    ans: 1,
+    exp: "La longitud del período de 1/n (para n coprimo con 10) es el menor exponente k tal que 10^k ≡ 1 (mod n), es decir, el orden multiplicativo de 10 módulo n. Para n=7, ese orden es 6 (10^6 ≡ 1 mod 7), de ahí el período de 6 cifras. Para n=3, el orden es 1 (10^1 ≡ 1 mod 3), de ahí el período de 1 cifra. Esta es un área clásica de la teoría de números relacionada con congruencias.",
+    dificultad: null
+  },
+  {
+    id: "A040",
+    capitulo: 20,
+    categoria: "historia",
+    q: "Según el historiador griego Herodoto, ¿qué necesidad práctica habría impulsado el desarrollo temprano de la geometría en el antiguo Egipto?",
+    opts: ["El estudio puramente filosófico de las formas", "La necesidad de remedir los terrenos agrícolas tras las inundaciones anuales del Nilo, que borraban los límites entre parcelas", "Construir pirámides únicamente con fines religiosos sin cálculo", "El comercio marítimo con otras civilizaciones"],
+    ans: 1,
+    exp: "Herodoto relató que las crecidas anuales del río Nilo arrasaban con los límites entre terrenos agrícolas, obligando a 'agrimensores' (literalmente 'medidores de tierra', de donde viene la palabra 'geometría': geo=tierra, metron=medida) a recalcular y restablecer los límites cada año usando cuerdas y triángulos. Esta necesidad práctica habría sido una de las semillas del desarrollo geométrico, luego sistematizado teóricamente por los griegos.",
+    dificultad: null
+  },
+  {
+    id: "A041",
+    capitulo: 20,
+    categoria: "historia",
+    q: "Los 'estiradores de cuerdas' egipcios usaban una cuerda con 12 nudos equidistantes para construir ángulos rectos en el terreno. ¿Cómo lograban un ángulo de 90° exacto con esa cuerda?",
+    opts: ["Solo con la intuición visual, sin ningún fundamento matemático", "Formando un triángulo de lados 3, 4 y 5 nudos, que por el teorema de Pitágoras siempre da un ángulo recto", "Doblando la cuerda exactamente por la mitad", "Esa técnica es solo una leyenda sin base histórica ni matemática"],
+    ans: 1,
+    exp: "Si se forma un triángulo con lados de 3, 4 y 5 unidades (nudos), se cumple que 3²+4²=5² (9+16=25), por lo que el ángulo opuesto al lado de 5 unidades es necesariamente recto, según el teorema de Pitágoras. Esta terna (3,4,5) es la más simple de las ternas pitagóricas y permitía a constructores antiguos trazar ángulos rectos precisos sin instrumentos sofisticados, solo con una cuerda y nudos.",
+    dificultad: null
+  },
+  {
+    id: "A042",
+    capitulo: 21,
+    categoria: "personajes",
+    q: "Tales de Mileto es famoso por calcular la altura de una pirámide usando solo la longitud de su sombra. ¿Qué principio geométrico aplicó?",
+    opts: ["Adivinación basada en proporciones arbitrarias", "Semejanza de triángulos: la razón entre altura y sombra de un objeto conocido (como un bastón) es igual a la de la pirámide en el mismo momento", "Medición directa subiendo a la pirámide", "Cálculo basado en el peso de la piedra"],
+    ans: 1,
+    exp: "Tales comparó la sombra de un bastón de altura conocida con su propia altura, obteniendo una razón (por ejemplo, sombra igual a la altura, o el doble, etc.). Como ambos objetos son iluminados por el mismo sol en el mismo instante, sus triángulos (objeto-sombra-rayo de luz) son semejantes, así que aplicó la misma razón a la sombra de la pirámide para deducir su altura sin necesidad de subir a ella.",
+    dificultad: null
+  },
+  {
+    id: "A043",
+    capitulo: 21,
+    categoria: "personajes",
+    q: "Eratóstenes calculó la circunferencia de la Tierra hace más de 2200 años con notable precisión. ¿Qué dato clave utilizó?",
+    opts: ["Viajó alrededor de todo el planeta para medirlo directamente", "Comparó el ángulo de la sombra del sol en dos ciudades distintas (Alejandría y Siena) a la misma hora, conociendo la distancia entre ellas", "Usó instrumentos de navegación satelital", "Se basó únicamente en cálculos teóricos sin ninguna medición"],
+    ans: 1,
+    exp: "Eratóstenes sabía que en Siena (actual Asuán), al mediodía del solsticio de verano, el sol caía exactamente vertical (sin sombra en un pozo). En Alejandría, en el mismo momento, un obelisco proyectaba una sombra con un ángulo de aproximadamente 7.2°. Como ese ángulo representa una fracción del círculo completo (7.2°/360° = 1/50), y conocía la distancia aproximada entre ambas ciudades, multiplicó esa distancia por 50 para estimar la circunferencia terrestre, con un resultado sorprendentemente cercano al valor real.",
+    dificultad: null
+  },
+  {
+    id: "A044",
+    capitulo: 22,
+    categoria: "curiosidades",
+    q: "Casos famosos como el del 'caballo Hans', que parecía resolver operaciones matemáticas dando golpes con la pata, resultaron tener una explicación distinta a la capacidad de calcular. ¿Cuál fue esa explicación?",
+    opts: ["El caballo realmente sabía aritmética", "El caballo respondía a señales corporales involuntarias y sutiles de su entrenador (efecto conocido como 'efecto Clever Hans')", "Era un truco de ventriloquia", "Nunca se investigó el caso"],
+    ans: 1,
+    exp: "El psicólogo Oskar Pfungst investigó el caso del caballo 'Clever Hans' a inicios del siglo XX y descubrió que el animal detectaba cambios mínimos e involuntarios en la postura o tensión corporal de las personas presentes, deteniéndose justo cuando 'debía'. El caballo no calculaba: respondía a señales no verbales. Este descubrimiento dio origen al término 'efecto Clever Hans' en metodología científica, usado para describir sesgos similares en experimentos.",
+    dificultad: null
+  },
+  {
+    id: "A045",
+    capitulo: 22,
+    categoria: "curiosidades",
+    q: "Estudios serios sobre cognición numérica en animales (como cuervos o primates) muestran que sí distinguen cantidades, aunque sin usar simbolismo matemático humano. ¿Qué término describe esta capacidad básica?",
+    opts: ["Álgebra intuitiva", "Subitización o sentido numérico aproximado: la capacidad de distinguir cantidades pequeñas sin contar simbólicamente", "Cálculo diferencial animal", "No existe evidencia de que los animales distingan cantidades"],
+    ans: 1,
+    exp: "La 'subitización' es la capacidad de reconocer instantáneamente cantidades pequeñas (hasta 4 o 5 elementos) sin contar uno por uno, presente en humanos y en varias especies animales. Estudios con cuervos, monos y hasta peces muestran que pueden distinguir 'más' de 'menos' en conjuntos, e incluso realizar comparaciones aproximadas con cantidades mayores, lo que sugiere un 'sentido numérico' básico compartido evolutivamente, muy distinto del cálculo simbólico humano.",
+    dificultad: null
+  },
+  {
+    id: "A046",
+    capitulo: 23,
+    categoria: "historia",
+    q: "Aristóteles defendía que la Tierra era esférica basándose en evidencia observacional. ¿Cuál de los siguientes era uno de sus argumentos?",
+    opts: ["La forma de la sombra de la Tierra sobre la Luna durante un eclipse lunar es siempre circular", "Ningún argumento observacional, solo fe filosófica", "La medición directa con instrumentos modernos de su época", "El testimonio de viajeros que habían rodeado el planeta"],
+    ans: 0,
+    exp: "Aristóteles observó que durante los eclipses lunares, la sombra que la Tierra proyecta sobre la Luna siempre tiene un borde circular, sin importar la posición relativa de ambos cuerpos. Solo una esfera proyecta una sombra circular desde cualquier ángulo; otras formas (como un disco) proyectarían sombras de forma variable según su orientación. Este es uno de los primeros argumentos geométricos rigurosos en favor de la esfericidad terrestre.",
+    dificultad: null
+  },
+  {
+    id: "A047",
+    capitulo: 23,
+    categoria: "historia",
+    q: "Otro argumento observacional usado desde la antigüedad para la esfericidad de la Tierra es que distintas estrellas son visibles desde distintas latitudes. ¿Qué explicación geométrica tiene esto?",
+    opts: ["Las estrellas se mueven de posición según la hora del día solamente", "La curvatura de la superficie terrestre cambia el horizonte visible, ocultando o revelando distintas regiones del cielo según la latitud del observador", "No existe relación entre la forma de la Tierra y las estrellas visibles", "Las estrellas visibles dependen únicamente de la contaminación lumínica"],
+    ans: 1,
+    exp: "En una superficie curva, el plano del horizonte de un observador se inclina de forma distinta según su latitud, revelando u ocultando ciertas constelaciones. Por ejemplo, la Cruz del Sur es visible desde el hemisferio sur pero no desde gran parte del hemisferio norte. Si la Tierra fuera plana, todos los observadores (sin obstáculos) verían esencialmente las mismas estrellas en el cielo nocturno, lo cual contradice la observación real.",
+    dificultad: null
+  },
+  {
+    id: "A048",
+    capitulo: 24,
+    categoria: "historia",
+    q: "El planeta Neptuno fue descubierto en 1846 gracias a cálculos matemáticos antes de ser observado directamente. ¿Qué motivó esos cálculos?",
+    opts: ["Una búsqueda al azar en el cielo sin ninguna predicción previa", "Irregularidades inexplicadas en la órbita de Urano sugerían la presencia de un cuerpo masivo desconocido cuya gravedad la perturbaba", "Un telescopio nuevo permitió verlo por casualidad", "Cálculos religiosos sobre la disposición de los astros"],
+    ans: 1,
+    exp: "Los astrónomos Urbain Le Verrier y John Couch Adams notaron que la órbita observada de Urano no coincidía exactamente con la predicha por las leyes de gravitación de Newton. Calcularon matemáticamente la posición y masa de un planeta hipotético cuya atracción gravitatoria explicaría esas discrepancias. Cuando se apuntó un telescopio a la posición calculada, ¡allí estaba Neptuno! Es uno de los triunfos más célebres de la predicción matemática en la historia de la ciencia.",
+    dificultad: null
+  },
+  {
+    id: "A049",
+    capitulo: 24,
+    categoria: "historia",
+    q: "El método usado para predecir la posición de Neptuno se basa en resolver un problema inverso: a partir de un efecto observado (perturbación orbital), deducir su causa (un cuerpo no visto). ¿Cómo se llama este tipo de razonamiento en ciencia?",
+    opts: ["Razonamiento deductivo puro, sin datos observacionales", "Problema inverso: inferir causas desconocidas a partir de efectos medibles, usando modelos matemáticos", "Adivinación estadística sin fundamento", "Experimentación directa controlada"],
+    ans: 1,
+    exp: "Un 'problema inverso' consiste en deducir parámetros o causas no observadas directamente (la posición y masa de Neptuno) a partir de mediciones de un efecto (las perturbaciones en la órbita de Urano), usando un modelo matemático conocido (las leyes de gravitación de Newton) para conectar causa y efecto. Esta misma lógica se usa hoy en campos tan diversos como la tomografía médica, la sismología y la astrofísica de exoplanetas.",
+    dificultad: null
+  },
+  {
+    id: "A050",
+    capitulo: 25,
+    categoria: "aplicaciones",
+    q: "Si alguien deposita $100.000 a un interés compuesto del 5% anual, ¿aproximadamente cuántos años tardará en duplicarse ese monto, usando la 'regla del 72'?",
+    opts: ["Aproximadamente 5 años", "Aproximadamente 14.4 años", "Aproximadamente 50 años", "Nunca se duplica con interés compuesto"],
+    ans: 1,
+    exp: "La 'regla del 72' es un atajo aproximado: dividir 72 entre la tasa de interés anual (en porcentaje) da el número de años aproximado para duplicar una inversión con interés compuesto. 72/5 = 14.4 años. Esta regla surge de aproximar la fórmula exacta basada en logaritmos: el tiempo exacto de duplicación es ln(2)/ln(1+r), que para tasas pequeñas se aproxima bien con 0.72/r (de ahí el 72, número conveniente por tener muchos divisores).",
+    dificultad: null
+  },
+  {
+    id: "A051",
+    capitulo: 25,
+    categoria: "aplicaciones",
+    q: "Si un cheque de $100.000 se cobra con un cargo fijo del 2% más una comisión adicional de $500, ¿cuál es la fórmula correcta para calcular el monto neto recibido?",
+    opts: ["Monto neto = $100.000 - 2% - $500 (restando directamente el porcentaje como si fuera un número)", "Monto neto = $100.000 - (0.02 × $100.000) - $500 = $100.000 - $2.000 - $500 = $97.500", "Monto neto = $100.000 + $500 - 2%", "Monto neto = $100.000 × 0.02 + $500"],
+    ans: 1,
+    exp: "Un error común es restar un porcentaje como si fuera una cantidad fija ('100.000 - 2'), cuando en realidad hay que calcular el 2% del monto ($2.000) y luego restarlo junto con la comisión fija. El cálculo correcto es: 100.000 - (0.02×100.000) - 500 = 100.000 - 2.000 - 500 = 97.500. Este tipo de error de interpretación entre porcentajes y cantidades fijas es muy frecuente en problemas financieros cotidianos.",
+    dificultad: null
+  },
+  {
+    id: "A052",
+    capitulo: 26,
+    categoria: "historia",
+    q: "¿Cuál es una de las hipótesis históricas sobre el origen del símbolo '−' para la resta?",
+    opts: ["Proviene de marcar con una raya horizontal las cantidades faltantes en barriles de mercaderías, una práctica de comerciantes medievales", "Fue diseñado matemáticamente por Newton en el siglo XVII", "Siempre existió igual desde la antigüedad griega", "Proviene de un jeroglífico egipcio sin relación con el comercio"],
+    ans: 0,
+    exp: "Una hipótesis histórica sostiene que comerciantes alemanes marcaban barriles con una raya horizontal para indicar cuánto faltaba de su capacidad total (es decir, cuánto 'restaba' o faltaba), y con una raya cruzada (cercana a nuestra +) cuando estaban completos o con excedente. Aunque hay otras teorías sobre su origen exacto, esta práctica comercial es una de las explicaciones documentadas que conectan el símbolo con el lenguaje cotidiano de pérdida o falta.",
+    dificultad: null
+  },
+  {
+    id: "A053",
+    capitulo: 26,
+    categoria: "historia",
+    q: "El matemático alemán Johannes Widmann fue uno de los primeros en imprimir los símbolos + y − en un libro (1489). ¿Para qué los usaba originalmente, según los registros históricos?",
+    opts: ["Para representar exclusivamente números negativos abstractos", "Para indicar excedentes y déficits en contextos comerciales, antes de generalizarse como operadores aritméticos completos", "Para marcar notas musicales", "Nunca usó esos símbolos, es un error histórico común"],
+    ans: 1,
+    exp: "En su obra 'Mercantile Arithmetic' (1489), Widmann utilizó + y − principalmente en contextos comerciales, para indicar sobrantes y faltantes en mercancías o cuentas. Solo con el tiempo, estos símbolos se generalizaron como operadores abstractos de suma y resta en el álgebra simbólica que se desarrolló en los siglos siguientes, separándose de su origen práctico-comercial.",
+    dificultad: null
+  },
+  {
+    id: "A054",
+    capitulo: 27,
+    categoria: "geometria",
+    q: "El filósofo Louis Couturat defendía una visión logicista de la geometría, ligada al trabajo de Hilbert sobre axiomatización. ¿En qué consiste el enfoque axiomático moderno de Hilbert respecto al de Euclides?",
+    opts: ["Es idéntico al de Euclides, sin ninguna diferencia", "Hilbert eliminó la dependencia de definiciones intuitivas (como 'punto' o 'línea') y formalizó axiomas puramente lógicos sobre relaciones entre objetos abstractos", "Hilbert rechazó por completo el uso de axiomas", "Solo se aplica a la aritmética, nunca a la geometría"],
+    ans: 1,
+    exp: "Mientras Euclides definía 'punto' como 'aquello que no tiene partes' (una definición intuitiva, no operativa), David Hilbert en sus 'Fundamentos de la Geometría' (1899) propuso tratar 'punto', 'línea' y 'plano' como términos primitivos sin definición, cuyas propiedades quedan determinadas únicamente por las relaciones axiomáticas entre ellos. Esto eliminó ambigüedades intuitivas y permitió un rigor lógico-formal mucho mayor, influenciando directamente el pensamiento logicista de Couturat.",
+    dificultad: null
+  },
+  {
+    id: "A055",
+    capitulo: 27,
+    categoria: "geometria",
+    q: "Uno de los descubrimientos importantes en geometría axiomática del siglo XIX fue la independencia del quinto postulado de Euclides (el de las paralelas). ¿Qué significa esta 'independencia'?",
+    opts: ["Que el postulado es falso y debe eliminarse de toda geometría", "Que no se puede demostrar a partir de los otros cuatro postulados; se pueden construir geometrías consistentes tanto aceptándolo como negándolo", "Que el postulado es trivialmente verdadero y no necesita ser un axioma", "Que solo aplica a triángulos, no a otras figuras"],
+    ans: 1,
+    exp: "Durante más de 2000 años, los matemáticos intentaron 'demostrar' el quinto postulado (esencialmente, que por un punto exterior a una recta pasa una única paralela) a partir de los otros cuatro. En el siglo XIX, Lobachevsky, Bolyai y Gauss mostraron que negando ese postulado (permitiendo cero o infinitas paralelas) se obtienen geometrías igualmente consistentes (hiperbólica y elíptica), demostrando que el quinto postulado es lógicamente independiente de los demás.",
+    dificultad: null
+  },
+  {
+    id: "A056",
+    capitulo: 28,
+    categoria: "aplicaciones",
+    q: "Si una plancha metálica rectangular se calienta uniformemente, su área se expande según un coeficiente de dilatación superficial. Si el lado original mide L y se dilata un porcentaje p, ¿qué aproximación describe el cambio de área?",
+    opts: ["El área se duplica exactamente sin importar p", "El área aumenta aproximadamente en 2p (el doble del porcentaje de dilatación lineal), para valores pequeños de p", "El área permanece exactamente igual", "El área disminuye siempre con el calor"],
+    ans: 1,
+    exp: "Si cada lado se dilata en un factor (1+p), el área nueva es L²(1+p)² = L²(1+2p+p²). Para valores pequeños de p, el término p² es despreciable, por lo que el aumento relativo de área es aproximadamente 2p: el doble del coeficiente de dilatación lineal. Este es un ejemplo clásico de aproximación lineal (despreciar términos de orden superior) muy usado en física e ingeniería.",
+    dificultad: null
+  },
+  {
+    id: "A057",
+    capitulo: 28,
+    categoria: "aplicaciones",
+    q: "Una plancha cuadrada de lado 'a' tiene un agujero circular en el centro de radio 'r'. Si se calienta y ambos materiales se dilatan con el mismo coeficiente, ¿qué ocurre con el tamaño del agujero?",
+    opts: ["El agujero se hace más pequeño, porque el metal se expande hacia el centro", "El agujero también se agranda, en la misma proporción que el resto de la plancha", "El agujero permanece exactamente del mismo tamaño", "Es imposible predecirlo sin más información"],
+    ans: 1,
+    exp: "Este es un resultado contraintuitivo pero correcto en física: cuando un material se dilata térmicamente de forma uniforme, todas las distancias (incluidas las que rodean un agujero) se escalan por el mismo factor. El agujero se comporta como si estuviera hecho del mismo material que se expande: se agranda en la misma proporción que toda la plancha, en lugar de cerrarse. Esto se debe a que la dilatación termina afectando proporcionalmente todas las longitudes del objeto, incluyendo el contorno del hueco.",
+    dificultad: null
+  },
+  {
+    id: "A058",
+    capitulo: 29,
+    categoria: "personajes",
+    q: "Carl Friedrich Gauss, siendo niño, sorprendió a su maestro al sumar rápidamente los números del 1 al 100. ¿Qué método utilizó (según la anécdota más difundida)?",
+    opts: ["Sumó uno por uno mentalmente con extrema rapidez", "Emparejó los números de los extremos (1+100, 2+99, 3+98...) notando que cada par suma 101, y multiplicó 101 por 50 pares", "Adivinó el resultado sin ningún razonamiento", "Usó una calculadora mecánica de la época"],
+    ans: 1,
+    exp: "La anécdota (cuya veracidad histórica exacta se debate, pero ilustra un método real) cuenta que Gauss notó que sumando el primer y último número (1+100=101), el segundo y penúltimo (2+99=101), y así sucesivamente, se obtienen 50 pares que suman siempre 101. Por lo tanto, la suma total es 50×101=5050. Esta idea generaliza en la fórmula de suma de una progresión aritmética: S = n(a1+an)/2.",
+    dificultad: null
+  },
+  {
+    id: "A059",
+    capitulo: 29,
+    categoria: "personajes",
+    q: "Blaise Pascal, a los 16 años, escribió un 'Ensayo sobre las cónicas' que incluía un teorema importante sobre hexágonos inscritos en una cónica. ¿Cómo se conoce hoy este resultado?",
+    opts: ["Teorema de Pitágoras", "Teorema del hexágono de Pascal (o 'Hexagrama místico'), sobre puntos de intersección alineados", "Teorema fundamental del álgebra", "Postulado de las paralelas"],
+    ans: 1,
+    exp: "El teorema del hexágono de Pascal afirma que si se inscribe un hexágono (no necesariamente regular) en una cónica (círculo, elipse, parábola o hipérbola), los puntos de intersección de los tres pares de lados opuestos siempre están alineados en una misma recta. Pascal demostró este resultado de geometría proyectiva siendo apenas un adolescente, lo que asombró a los matemáticos de la época, incluido Descartes, quien inicialmente dudó que un joven pudiera haberlo escrito solo.",
+    dificultad: null
+  },
+  {
+    id: "A060",
+    capitulo: 30,
+    categoria: "personajes",
+    q: "Sobre la entrada de la Academia de Platón se decía que había una inscripción famosa. ¿Cuál era, según la tradición?",
+    opts: ["'Aquí no se admiten extranjeros'", "'Que no entre quien no sepa geometría' (o frase equivalente)", "'Solo para filósofos, no para matemáticos'", "No existe ninguna tradición de este tipo"],
+    ans: 1,
+    exp: "Según una tradición ampliamente citada (aunque de autenticidad histórica debatida por los especialistas), en la entrada de la Academia platónica se leía una frase similar a 'que no entre aquí quien no sepa geometría'. Esto refleja la importancia que Platón otorgaba al razonamiento matemático riguroso como entrenamiento previo necesario para el pensamiento filosófico abstracto, ya que consideraba que la geometría entrenaba la mente para captar verdades eternas e inmutables.",
+    dificultad: null
+  },
+  {
+    id: "A061",
+    capitulo: 30,
+    categoria: "personajes",
+    q: "Los 'sólidos platónicos' son cinco poliedros regulares (tetraedro, cubo, octaedro, dodecaedro, icosaedro) que Platón asoció con los elementos clásicos. ¿Por qué son exactamente cinco y no más?",
+    opts: ["Porque Platón decidió arbitrariamente detenerse en cinco", "Porque se puede demostrar geométricamente que solo existen 5 poliedros donde todas las caras son polígonos regulares idénticos y todos los vértices son iguales", "Existen infinitos, pero solo se conocían cinco en la antigüedad", "Porque corresponden exactamente a los 5 sentidos humanos"],
+    ans: 1,
+    exp: "Se puede demostrar mediante un argumento angular simple: en cada vértice de un poliedro convexo, la suma de los ángulos de las caras que se encuentran allí debe ser menor a 360°. Al analizar las combinaciones posibles de polígonos regulares (triángulos, cuadrados, pentágonos) que cumplen esta condición, solo aparecen cinco configuraciones válidas, correspondientes exactamente a los cinco sólidos platónicos. Es una de las demostraciones más elegantes de la geometría clásica, presente ya en los 'Elementos' de Euclides.",
+    dificultad: null
   }
 ];
 
@@ -431,7 +981,7 @@ function updateProgress() {
 
 function showScore() {
   const panel = document.getElementById('scorePanel');
-  document.getElementById('scoreNum').textContent = `${correct}/10`;
+  document.getElementById('scoreNum').textContent = `${correct}/${questions.length}`;
   panel.classList.add('show');
 
   AcertiLab.saveModuleResult('A', { correct: correct, total: questions.length, details: lastDetails });
